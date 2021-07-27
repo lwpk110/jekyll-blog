@@ -8,6 +8,9 @@ tags:
   - readability
   - standard
 date_format: "%Y-%m-%d"
+gallery: true
+cover_image: /assets/images/cover7.jpeg 
+
 ---
 
 This post has been updated and should show a modified date if used in a layout.

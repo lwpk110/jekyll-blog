@@ -5,6 +5,9 @@ categories:
 tags:
   - Post Formats
   - notice
+gallery: true
+cover_image: /assets/images/cover6.jpeg
+
 ---
 
 A notice displays information that explains nearby content. Often used to call attention to a particular detail.

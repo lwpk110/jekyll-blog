@@ -1,5 +1,5 @@
 ---
-title: "网站标题"
+title: "Sweet Dumpling"
 layout: splash
 permalink: /home/
 date: 2016-03-23T11:48:41-04:00
@@ -10,10 +10,10 @@ header:
   actions:
     # - label: "Download"
     #   url: "https://github.com/mmistakes/minimal-mistakes/"
-  caption: "高科技: [**高科技上网**](https://baidu.com)"
-excerpt: "随便什么的网站口号"
+  caption: "甜饺子: [**甜饺子**](https://baidu.com)"
+excerpt: "年年冬至家家煮，一岁潜添晓得无"
 intro: 
-  - excerpt: '一段介绍 `type="center"`'
+  - excerpt: '有物混成，先天地生。寂兮寥兮，独立而不改，周行而不殆，可以为天地母。吾不知其名，字之曰道，强为之名曰大。大曰逝，逝曰远，远曰反。故道大，天大，地大，人亦大。域中有四大，而人居其一焉。人法地，地法天，天法道，道法自然。'
 # 参见 `_include/feature_row`文件
 feature_row:
   - image_path: assets/images/unsplash-gallery-image-1-th.jpg
@@ -57,12 +57,12 @@ feature_row4:
     btn_class: "btn--primary"
 ---
 
-{% include feature_row id="intro" type="center" %}
+{% include feature_row_newblog id="intro" type="center" %}
 
-{% include feature_row %}
+{% include feature_row_newblog gallery=true %}
 
-{% include feature_row id="feature_row2" type="left" %}
+{% include feature_row_newblog id="feature_row1" gallery=false type="left" %}
 
-{% include feature_row id="feature_row3" type="right" %}
+{% include feature_row_newblog id="feature_row2" gallery=false type="right" %}
 
-{% include feature_row id="feature_row4" type="center" %}
+{% include feature_row_newblog id="feature_row3" gallery=false type="center" %}
