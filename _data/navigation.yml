@@ -1,0 +1,10 @@
+# main links
+main:
+  - title: "首页"
+    url: /home/
+  - title: "博客"
+    url: /year-archive/
+  - title: "标签"
+    url: /tag-archive/
+  - title: "Sitemap"
+    url: /sitemap/
