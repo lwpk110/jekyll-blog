@@ -40,7 +40,8 @@ jobs:
         connect_timeout: 10s
         first_ssh: |
           rm -rf /home/site/wwwroot/jekyll-blog
-          ls -la  
+          ls -la 
+          hostnamectl
           echo $WELCOME 
           mkdir -p /home/site/wwwroot/jekyll-blog
         scp: |
