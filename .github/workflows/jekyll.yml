@@ -1,5 +1,4 @@
 name: Jekyll site CI
-
 on:
   push:
     branches: [ main ]
@@ -7,10 +6,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  gh-pages-job:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Build & Deploy to GitHub Pages
@@ -19,3 +16,34 @@ jobs:
         GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
         GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
       uses: BryanSchuetz/jekyll-deploy-gh-pages@master
+  ssh-remote-job:
+    runs-on: ubuntu-latest
+    needs: [gh-pages-job]
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: gh-pages
+    - name: echo dir
+      run: |
+        pwd
+        ls -aF        
+    - name: ssh远程服务器
+      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+      env:
+        WELCOME: "开始同步gh-pages站点站点到服务器"
+        LASTSSH: "Doing something after copying"
+      with:
+        host: ${{ secrets.DC_HOST }}
+        user: ${{ secrets.DC_USER }}
+        pass: ${{ secrets.DC_PASS }}
+        port: ${{ secrets.DC_PORT }}
+        connect_timeout: 10s
+        first_ssh: |
+          rm -rf /home/site/wwwroot/jekyll-blog
+          ls -la  
+          echo $WELCOME 
+          mkdir -p /home/site/wwwroot/jekyll-blog
+        scp: |
+          './*' => /home/site/wwwroot/jekyll-blog
+        last_ssh: |
+          echo $LASTSSH
