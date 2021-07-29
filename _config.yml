@@ -13,21 +13,20 @@
 # theme                  : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "neon" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
-
 # Site Settings
 locale                   : "zh-CN"
 title                    : "SweetDumpling"
 date_format              : "%Y-%m-%d"  # 时间格式
 title_separator          : "|"
-subtitle                 : ^_^ # site tagline that appears below site title in masthead
+# subtitle                 : ^_^ # site tagline that appears below site title in masthead
 name                     : "Steven's Blog"
 description              : "我的第一个博客"
 url                      : "http://www.lwpk110.top" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "lwpk110/blog-comments"  # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : "/assets/images/tease.jpg"   # path of fallback teaser image, e.g. "/assets/images/500x300.png" 全局预览图片
-logo                     : "/assets/images/logo.png" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
-masthead_title           : "亚麻跌" # overrides the website title displayed in the masthead, use " " for no title
+# logo                     : "/assets/images/logo.png" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
+masthead_title           : "Sweet-Dumpling" # overrides the website title displayed in the masthead, use " " for no title
 breadcrumbs              : true # true, false (default) 面包屑
 words_per_minute         : 200  # 文档阅读时间
 comments:
@@ -216,8 +215,8 @@ sass:
 
 # Outputting
 permalink: /:categories/:title/
-paginate: 5 # amount of posts to show
-paginate_path: /page:num/
+paginate: 3 # amount of posts to show
+paginate_path: /blog/page:num/
 timezone: Asia/Shanghai # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
@@ -289,6 +288,5 @@ defaults:
       share: true
       related: true
       show_date: true
-      btn_label: "Read More"
       btn_class: "btn--primary"
 

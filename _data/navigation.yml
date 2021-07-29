@@ -1,10 +1,11 @@
 # main links
 main:
   - title: "首页"
-    url: /home/
+    url: "/"
   - title: "博客"
-    url: /year-archive/
+    url: /years/
   - title: "标签"
-    url: /tag-archive/
-  - title: "Sitemap"
-    url: /sitemap/
+    url: /tags/
+  - title: "画廊"
+    url: /comming-soon/
+  
