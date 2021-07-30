@@ -75,6 +75,7 @@ google_site_verification :
 bing_site_verification   :
 yandex_site_verification :
 naver_site_verification  :
+baidu_site_verification  : "code-5agakm6Ce9"
 
 # Social Sharing
 twitter:
@@ -109,7 +110,7 @@ author:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "lwpk110@163.com"
+      url: "mailto:lwpk110@163.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       url: "https://blog.lwpk110.top"
