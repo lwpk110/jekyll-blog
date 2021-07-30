@@ -12,6 +12,7 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
+JEKYLL_ENV: production
 destination: ./build
 minimal_mistakes_skin    : "neon" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 # Site Settings
@@ -21,10 +22,10 @@ date_format              : "%Y-%m-%d"  # 时间格式
 title_separator          : "|"
 # subtitle                 : ^_^ # site tagline that appears below site title in masthead
 name                     : "Steven's Blog"
-description              : "我的第一个博客"
+description              : "steve的博客，关注技术,热点资讯，金融"
 url                      : "http://www.lwpk110.top" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "/jekyll-blog" # the subpath of your site, e.g. "/blog"
-repository               : "lwpk110/blog-comments"  # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "lwpk110/jekyll-blog"  # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : "/assets/images/tease.jpg"   # path of fallback teaser image, e.g. "/assets/images/500x300.png" 全局预览图片
 # logo                     : "/assets/images/logo.png" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : "Sweet-Dumpling" # overrides the website title displayed in the masthead, use " " for no title
@@ -42,8 +43,8 @@ comments:
     num_posts            : # 5 (default)
     colorscheme          : # "light" (default), "dark"
   utterances:
-    theme                : # "github-light" (default), "github-dark"
-    issue_term           : # "pathname" (default)
+    theme                : github-light # "github-light" (default), "github-dark"
+    issue_term           : pathname # "pathname" (default)
   giscus:
     repo_id              : # Shown during giscus setup at https://giscus.app
     category_name        : # Full text name of the category
@@ -60,8 +61,8 @@ reCaptcha:
 atom_feed:
   path                   : # blank (default) uses feed.xml
   hide                   : # true, false (default)
-search                   : # true, false (default)
-search_full_content      : # true, false (default)
+search                   : true # true, false (default)
+search_full_content      : true # true, false (default)
 search_provider          : # lunr (default), algolia, google
 algolia:
   application_id         : # YOUR_APPLICATION_ID
@@ -110,35 +111,35 @@ author:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:your.name@email.com"
+      url: "lwpk110@163.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
-      url: "https://your-website.com"
+      url: "https://blog.lwpk110.top"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
+      url: "https://twitter.com/lwpk110"
     - label: "Facebook"
       icon: "fab fa-fw fa-facebook-square"
-      url: "https://facebook.com/"
+      url: "https://www.facebook.com/profile.php?id=100070358688174"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
+      url: "https://github.com/lwpk110"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
-      url: "https://instagram.com/"
+      url: 
 
 # Site Footer
 footer:
   links:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
+      url: "https://twitter.com/lwpk110"
     - label: "Facebook"
       icon: "fab fa-fw fa-facebook-square"
       url:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url:
+      url: "https://github.com/lwpk110"
     - label: "GitLab"
       icon: "fab fa-fw fa-gitlab"
       # url:
