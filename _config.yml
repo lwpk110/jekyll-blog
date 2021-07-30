@@ -98,6 +98,9 @@ analytics:
   google:
     tracking_id          : G-JF1M2LW00G
     anonymize_ip         : true # true, false (default)
+  baidu:
+    tracking_id          : ff6582f8dd1d23d56f977e28f7ec3fc3
+    
 
 
 # Site Author
