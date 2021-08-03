@@ -3,8 +3,7 @@ title: "Post: Notice"
 categories:
   - Blog
 tags:
-  - Post Formats
-  - notice
+  - jekyll
 gallery: true
 cover_image: /assets/images/cover6.jpeg
 

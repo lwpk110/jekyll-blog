@@ -12,6 +12,18 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
+web_counters:
+  provider               : websiteout  # "hitwebcounter","websiteout"  false(default)
+  websiteout:
+    style                : 24
+    uniq_visit           : false
+    initial              : 1000
+    digital_num          : 7
+  hitwebcounter:
+    style                : 0013
+    uniq_visit           : true
+    initial              : 10000
+    digital_num          : 7    
 minimal_mistakes_skin    : "neon" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 # Site Settings
 locale                   : "zh-CN"
@@ -21,7 +33,7 @@ title_separator          : "|"
 # subtitle                 : ^_^ # site tagline that appears below site title in masthead
 name                     : "Steven's Blog"
 description              : "steve的博客，关注技术,热点资讯，金融"
-url                      : "http://www.lwpk110.top" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : "http://localhost:4000" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "/jekyll-blog" # the subpath of your site, e.g. "/blog"
 repository               : "lwpk110/jekyll-blog"  # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : "/assets/images/tease.jpg"   # path of fallback teaser image, e.g. "/assets/images/500x300.png" 全局预览图片

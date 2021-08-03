@@ -1,0 +1,6 @@
+<!-- https://www.websiteout.net/counter.php?C=24&D=7&N=10000&M=0 -->
+{% assign unique_visit= 0 %}
+{% if site.web_counters.websiteout.uniq_visit == true %}
+    {% assign unique_visit= 1 %}
+{% endif %}
+<script type="text/javascript" src="//counter.websiteout.net/js/{{site.web_counters.websiteout.style}}/{{site.web_counters.websiteout.digital_num}}/{{site.web_counters.websiteout.initial}}/{{unique_visit}}"></script>

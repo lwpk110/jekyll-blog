@@ -3,8 +3,7 @@ title: "Post: Quote"
 categories:
   - Blog
 tags:
-  - Post Formats
-  - quote
+  - jekyll
 cover_image: /assets/images/cover5.jpeg
   
 ---

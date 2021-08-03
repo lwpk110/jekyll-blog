@@ -6,10 +6,10 @@
 
 <div class="feature__wrapper">
   {% if include.gallery==true %}
-    {% assign feature_row = site.posts | where: "gallery", true| slice: 0,3 %}
+    {% assign feature_row = site.posts | where: "gallery", true | where_exp: "item", "item.profile != 'test' " | slice: 0,3 %}
   {% elsif  include.gallery==false %}
     {% assign post_idx =  include.id | remove: "feature_row" | minus: 1 %} 
-    {% assign feature_row = site.posts  | where: 'gallery', nil | slice: post_idx,post_idx+1 %}
+    {% assign feature_row = site.posts  | where: 'gallery', nil | where_exp: "item", "item.profile != 'test' " |slice: post_idx,post_idx+1 %}
   {% endif%}  
   {% for f in feature_row %}
     <div class="feature__item{% if include.type %}--{{ include.type }}{% endif %}">

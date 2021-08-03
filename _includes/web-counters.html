@@ -1,0 +1,10 @@
+{% if jekyll.environment == 'production' and site.web_counters.provider  %}
+<div align="center">
+    {% case site.web_counters.provider %}
+        {% when "websiteout" %}
+            {% include /counters/websiteout-counter.html %}
+        {% when "hitwebcounter" %}
+            {% include /counters/hitwebcounter-counter.html %}
+    {% endcase %}
+</div>
+{% endif %}

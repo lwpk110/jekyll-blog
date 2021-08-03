@@ -4,9 +4,7 @@ excerpt_separator: "<!--more-->"
 categories:
   - Blog
 tags:
-  - Post Formats
-  - readability
-  - standard
+  - jekyll
 gallery: true
 cover_image: /assets/images/cover8.jpeg 
 

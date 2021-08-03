@@ -5,7 +5,6 @@ categories:
   - blog
 tags:
   - Jekyll
-  - update
 cover_image: /assets/images/cover3.jpeg
 ---
 
