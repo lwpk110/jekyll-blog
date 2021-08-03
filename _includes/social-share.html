@@ -3,7 +3,7 @@
     <h4 class="page__share-title">{{ site.data.ui-text[site.locale].share_on_label | default: "Share on" }}</h4>
   {% endif %}
 
-  <div style="float: left;">
+  <div>
     <wb:share-button appkey="956824685" addition="text" type="button" default_text="快来看鸭，我发现一篇“碉堡了”的博客" ralateUid="2816811374" pic="https%3A%2F%2Fwx3.sinaimg.cn%2Flarge%2Fa6a681ebgy1gp2009jj3kj20k00k0ta9.jpg"></wb:share-button>
   </div>
   <a href="https://twitter.com/intent/tweet?{% if site.twitter.username %}via={{ site.twitter.username | url_encode }}&{% endif %}text={{ page.title | url_encode }}%20{{ page.url | absolute_url | url_encode }}" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="{{ site.data.ui-text[site.locale].share_on_label | default: 'Share on' }} Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
