@@ -15,6 +15,7 @@
     {% unless site.atom_feed.hide %}
       <li><a href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ '/feed.xml' | relative_url }}{% endif %}"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].feed_label | default: "Feed" }}</a></li>
     {% endunless %}
+    <li><wb:follow-button uid="2816811374" type="red_1" width="67" height="24" ></wb:follow-button> </li>
   </ul>
 </div>
 

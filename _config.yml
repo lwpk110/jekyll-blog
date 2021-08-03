@@ -123,9 +123,9 @@ author:
   location         : "ShangHai China"
   email            : "lwpk110@163.com"
   links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:lwpk110@163.com"
+    - label: "微博"
+      icon: "fab fa-weibo"
+      url: "https://weibo.com/u/2816811374"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       url: "https://blog.lwpk110.top"
@@ -138,9 +138,6 @@ author:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/lwpk110"
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      url: 
 
 # Site Footer
 footer:
