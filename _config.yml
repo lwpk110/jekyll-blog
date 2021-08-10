@@ -33,7 +33,7 @@ title_separator          : "|"
 # subtitle                 : ^_^ # site tagline that appears below site title in masthead
 name                     : "Steven's Blog"
 description              : "steve的博客，关注技术,热点资讯，金融"
-url                      : "http://localhost:4000" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : "http://blog.lwpk110.top" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "/jekyll-blog" # the subpath of your site, e.g. "/blog"
 repository               : "lwpk110/jekyll-blog"  # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : "/assets/images/tease.jpg"   # path of fallback teaser image, e.g. "/assets/images/500x300.png" 全局预览图片
