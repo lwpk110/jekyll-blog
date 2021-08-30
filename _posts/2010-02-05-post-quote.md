@@ -3,7 +3,7 @@ title: "Post: Quote"
 categories:
   - Blog
 tags:
-  - jekyll
+  - Jekyll
 cover_image: /assets/images/cover5.jpeg
   
 ---

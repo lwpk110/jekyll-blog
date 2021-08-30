@@ -4,7 +4,7 @@ excerpt_separator: "<!--more-->"
 categories:
   - Blog
 tags:
-  - jekyll
+  - Jekyll
 gallery: true
 cover_image: /assets/images/cover8.jpeg 
 
