@@ -1,2 +1,8 @@
 # jekyll-blog
-blog generated with github action...
+
+
+
+image:https://img.shields.io/github/languages/code-size/lwpk110/jekyll-blog?style=for-the-badge[GitHub code size in bytes]
+
+
+
