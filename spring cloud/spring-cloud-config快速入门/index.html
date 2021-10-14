@@ -1,0 +1,1183 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html xmlns:wb="http://open.weibo.com/wb" lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>spring cloud config快速入门 | SweetDumpling</title>
+<meta name="description" content="Spring Cloud Config 跨多个应用程序和环境，用于存储和提供分布式配置的 clinet/server方案。 理想情况下，此配置存储在 Git 版本控制下进行版本控制，并且可以在应用程序运行时进行修改。 虽然它非常适合Spring applications所有支持的配置文件格式以及 Environment、PropertySource 或 @Value 等结构的 Spring 应用程序，但它也可以用于任何编程语言运行的任何环境使用。">
+
+
+  <meta name="author" content="steven lu">
+  
+  <meta property="article:author" content="steven lu">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="SweetDumpling">
+<meta property="og:title" content="spring cloud config快速入门">
+<meta property="og:url" content="http://blog.lwpk110.top/jekyll-blog/spring%20cloud/spring-cloud-config%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
+
+
+  <meta property="og:description" content="Spring Cloud Config 跨多个应用程序和环境，用于存储和提供分布式配置的 clinet/server方案。 理想情况下，此配置存储在 Git 版本控制下进行版本控制，并且可以在应用程序运行时进行修改。 虽然它非常适合Spring applications所有支持的配置文件格式以及 Environment、PropertySource 或 @Value 等结构的 Spring 应用程序，但它也可以用于任何编程语言运行的任何环境使用。">
+
+
+
+  <meta property="og:image" content="http://blog.lwpk110.top/jekyll-blog/assets/images/spring-cloud/spring-cloud-config-header.jpg">
+
+
+
+  <meta name="twitter:site" content="@lwpk110">
+  <meta name="twitter:title" content="spring cloud config快速入门">
+  <meta name="twitter:description" content="Spring Cloud Config 跨多个应用程序和环境，用于存储和提供分布式配置的 clinet/server方案。 理想情况下，此配置存储在 Git 版本控制下进行版本控制，并且可以在应用程序运行时进行修改。 虽然它非常适合Spring applications所有支持的配置文件格式以及 Environment、PropertySource 或 @Value 等结构的 Spring 应用程序，但它也可以用于任何编程语言运行的任何环境使用。">
+  <meta name="twitter:url" content="http://blog.lwpk110.top/jekyll-blog/spring%20cloud/spring-cloud-config%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="http://blog.lwpk110.top/jekyll-blog/assets/images/spring-cloud/spring-cloud-config-header.jpg">
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2021-07-30T00:00:00+08:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://blog.lwpk110.top/jekyll-blog/spring%20cloud/spring-cloud-config%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Steven's Blog",
+      "url": "http://blog.lwpk110.top/jekyll-blog/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="code-5agakm6Ce9">
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/jekyll-blog/feed.xml" type="application/atom+xml" rel="alternate" title="SweetDumpling Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/jekyll-blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/svg"  href="/favicon.svg">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/jekyll-blog/">
+          Sweet-Dumpling
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/jekyll-blog/">首页</a>
+            </li><li class="masthead__menu-item">
+              <a href="/jekyll-blog/years/">博客</a>
+            </li><li class="masthead__menu-item">
+              <a href="/jekyll-blog/tags/">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/jekyll-blog/comming-soon/">画廊</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">切换搜索</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero"
+  style=" background-image: url('');"
+>
+  
+    <img src="/jekyll-blog/assets/images/spring-cloud/spring-cloud-config-header.jpg" alt="spring cloud config快速入门" class="page__hero-image">
+  
+  
+    <span class="page__hero-caption">官网: <a href="https://spring.io/projects/spring-cloud-config"><strong>spring-cloud-config</strong></a>
+</span>
+  
+</div>
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://blog.lwpk110.top/jekyll-blog/" itemprop="item"><span itemprop="name">首页</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/jekyll-blog/categories/#spring-cloud" itemprop="item"><span itemprop="name">Spring cloud</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">spring cloud config快速入门</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/jekyll-blog/assets/images/avatar.png" alt="steven lu" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">steven lu</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am an <strong>amazing</strong> person.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">关注</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">ShangHai China</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://weibo.com/u/2816811374" rel="nofollow noopener noreferrer"><i class="fab fa-weibo" aria-hidden="true"></i><span class="label">微博</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.lwpk110.top" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/profile.php?id=100070358688174" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:lwpk110@163.com">
+            <meta itemprop="email" content="lwpk110@163.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">电子邮箱</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="spring cloud config快速入门">
+    <meta itemprop="description" content="Spring Cloud Config 跨多个应用程序和环境，用于存储和提供分布式配置的 clinet/server方案。理想情况下，此配置存储在 Git 版本控制下进行版本控制，并且可以在应用程序运行时进行修改。虽然它非常适合Spring applications所有支持的配置文件格式以及 Environment、PropertySource 或 @Value 等结构的 Spring 应用程序，但它也可以用于任何编程语言运行的任何环境使用。">
+    <meta itemprop="datePublished" content="2021-07-30T00:00:00+08:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">spring cloud config快速入门
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-07-30T00:00:00+08:00">2021-07-30</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><code class="language-plaintext highlighter-rouge">Spring Cloud Config</code> 跨多个应用程序和环境，用于存储和提供分布式配置的 <code class="language-plaintext highlighter-rouge">clinet/server</code>方案。
+理想情况下，此配置存储在 <code class="language-plaintext highlighter-rouge">Git</code> 版本控制下进行版本控制，并且可以在应用程序运行时进行修改。
+虽然它非常适合<code class="language-plaintext highlighter-rouge">Spring applications</code>所有支持的配置文件格式以及 <code class="language-plaintext highlighter-rouge">Environment</code>、<code class="language-plaintext highlighter-rouge">PropertySource</code> 或 <code class="language-plaintext highlighter-rouge">@Value</code> 等结构的 Spring 应用程序，但它也可以用于任何编程语言运行的任何环境使用。</p>
+
+<p>在这篇文章中，我们将重点介绍如何设置 <code class="language-plaintext highlighter-rouge">Git</code> 支持的配置服务器、在简单的 <code class="language-plaintext highlighter-rouge">REST</code> 应用程序服务器中使用它以及设置包括加密属性值在内的安全环境的示例。</p>
+
+<figure class="half ">
+  
+    
+      <a href="https://spring.io/projects/spring-cloud-config">
+          <img src="/jekyll-blog/assets/images/spring-cloud/spring-cloud-config1.jpeg" alt="Black and grays with a hint of green" />
+      </a>
+    
+  
+    
+      <a href="https://spring.io/projects/spring-cloud-config">
+          <img src="/jekyll-blog/assets/images/spring-cloud/spring-cloud-config3.jpg" alt="Fog in the trees" />
+      </a>
+    
+  
+  
+    <figcaption>spring cloud config 架构
+</figcaption>
+  
+</figure>
+
+<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 目录</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#项目依赖" id="markdown-toc-项目依赖">项目依赖</a></li>
+  <li><a href="#server端配置" id="markdown-toc-server端配置"><code class="language-plaintext highlighter-rouge">server</code>端配置</a></li>
+  <li><a href="#初始化-配置仓库" id="markdown-toc-初始化-配置仓库">初始化 <code class="language-plaintext highlighter-rouge">配置仓库</code></a></li>
+  <li><a href="#查询配置" id="markdown-toc-查询配置">查询配置</a></li>
+  <li><a href="#client配置" id="markdown-toc-client配置"><code class="language-plaintext highlighter-rouge">client</code>配置</a></li>
+  <li><a href="#加密和解密" id="markdown-toc-加密和解密">加密和解密</a></li>
+  <li><a href="#csrf" id="markdown-toc-csrf">CSRF</a></li>
+  <li><a href="#key管理" id="markdown-toc-key管理">key管理</a></li>
+  <li><a href="#使用多个keys" id="markdown-toc-使用多个keys">使用多个keys</a></li>
+  <li><a href="#加密配置" id="markdown-toc-加密配置">加密配置</a></li>
+  <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
+</ul>
+
+  </nav>
+</aside>
+
+<h2 id="项目依赖">项目依赖</h2>
+
+<ol>
+  <li>首先创建两个新的 <code class="language-plaintext highlighter-rouge">Maven</code> 项目。<code class="language-plaintext highlighter-rouge">server</code> 项目依赖于 <code class="language-plaintext highlighter-rouge">spring-cloud-config-server</code> 模块，以及 <code class="language-plaintext highlighter-rouge">spring-boot-starter-security</code> 和 <code class="language-plaintext highlighter-rouge">spring-boot-starter-web</code> 启动包.</li>
+</ol>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-config-server<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-security<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<ol>
+  <li>对于<code class="language-plaintext highlighter-rouge">client</code>项目，我们将只需要 <code class="language-plaintext highlighter-rouge">spring-cloud-starter-config</code> 和 <code class="language-plaintext highlighter-rouge">spring-boot-starter-web</code> 模块.</li>
+</ol>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.cloud<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-cloud-starter-config<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<h2 id="server端配置"><code class="language-plaintext highlighter-rouge">server</code>端配置</h2>
+
+<p><code class="language-plaintext highlighter-rouge">server</code>应用程序的主要部分是一个配置类——更具体地说是一个<code class="language-plaintext highlighter-rouge">@SpringBootApplication</code>——它通过自动配置注释<code class="language-plaintext highlighter-rouge">@EnableConfigServer</code> 引入所有需要的设置：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@SpringBootApplication</span>
+<span class="nd">@EnableConfigServer</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConfigServer</span> <span class="o">{</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">arguments</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="nc">ConfigServer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">arguments</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>配置服务器端口和一个提供版本控制的 <code class="language-plaintext highlighter-rouge">Git-url</code>。</p>
+
+<p class="notice--info"><strong>TIP:</strong> 如果您计划使用指向同一个配置存储库的多个配置服务器实例，您可以将服务器配置为将您的存储库克隆到本地临时文件夹中。但是请注意具有双因素身份验证的私有存储库，它们很难处理！在这种情况下，在本地文件系统上克隆它们并使用副本会更容易。</p>
+
+<p>还有一些占位符变量和搜索模式用于配置可用的存储库 <code class="language-plaintext highlighter-rouge">url</code>.但这超出了我们文章的范围。官方文档是一个很好的起点。 我们还需要在 <code class="language-plaintext highlighter-rouge">application.properties</code> 中为 <code class="language-plaintext highlighter-rouge">Basic-Authentication</code> 设置用户名和密码，以避免每次都自动生成密码 应用程序重启：</p>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">server.port</span><span class="p">=</span><span class="s">8888</span>
+<span class="py">spring.cloud.config.server.git.uri</span><span class="p">=</span><span class="s">ssh://localhost/config-repo</span>
+<span class="py">spring.cloud.config.server.git.clone-on-start</span><span class="p">=</span><span class="s">true</span>
+<span class="py">spring.security.user.name</span><span class="p">=</span><span class="s">root</span>
+<span class="py">spring.security.user.password</span><span class="p">=</span><span class="s">s3cr3t</span>
+
+</code></pre></div></div>
+
+<h2 id="初始化-配置仓库">初始化 <code class="language-plaintext highlighter-rouge">配置仓库</code></h2>
+
+<p>为了完成我们的服务器，我们必须在<code class="language-plaintext highlighter-rouge">server</code>  配置的 <code class="language-plaintext highlighter-rouge">spring.cloud.config.server.git.uri</code> 初始化一个 <code class="language-plaintext highlighter-rouge">Git repository</code>。 
+配置文件的名称像普通的 <code class="language-plaintext highlighter-rouge">Spring</code> <code class="language-plaintext highlighter-rouge">application.properties</code> 一样组成，但不是<code class="language-plaintext highlighter-rouge">application</code>这个词。例如：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$&gt;</span> git init
+<span class="nv">$&gt;</span> <span class="nb">echo</span> <span class="s1">'user.role=Developer'</span> <span class="o">&gt;</span> config-client-development.properties
+<span class="nv">$&gt;</span> <span class="nb">echo</span> <span class="s1">'user.role=User'</span>      <span class="o">&gt;</span> config-client-production.properties
+<span class="nv">$&gt;</span> git add <span class="nb">.</span>
+<span class="nv">$&gt;</span> git commit <span class="nt">-m</span> <span class="s1">'Initial config-client properties'</span>
+</code></pre></div></div>
+
+<h2 id="查询配置">查询配置</h2>
+
+<ol>
+  <li>启动<code class="language-plaintext highlighter-rouge">server</code> 端。</li>
+  <li>使用以下api 查询 配置信息.</li>
+</ol>
+
+<pre><code class="language-txt">  /{application}/{profile}[/{label}]
+  /{application}-{profile}.yml
+  /{label}/{application}-{profile}.yml
+  /{application}-{profile}.properties
+  /{label}/{application}-{profile}.properties
+</code></pre>
+
+<p>其中 <code class="language-plaintext highlighter-rouge">{label}</code> 占位符指的是 <code class="language-plaintext highlighter-rouge">Git</code> 分支，<code class="language-plaintext highlighter-rouge">{application}</code> 指的是客户端的应用程序名称，而 <code class="language-plaintext highlighter-rouge">{profile}</code> 指的是客户端当前活动的应用程序配置文件。</p>
+
+<p>比如， 我们可以通过以下方式检索在分支 <code class="language-plaintext highlighter-rouge">master</code> 下 <code class="language-plaintext highlighter-rouge">profile=development</code>的配置属性.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$&gt;</span> curl http://root:s3cr3t@localhost:8888/config-client/development/master
+</code></pre></div></div>
+
+<h2 id="client配置"><code class="language-plaintext highlighter-rouge">client</code>配置</h2>
+
+<p>这是一个非常简单的客户端应用程序，由一个带有一个 <code class="language-plaintext highlighter-rouge">GET</code> 方法的 <code class="language-plaintext highlighter-rouge">REST</code> 控制器组成。 用于获取服务器的配置必须放在名为 <code class="language-plaintext highlighter-rouge">bootstrap.application</code> 的<code class="language-plaintext highlighter-rouge">resource</code>文件中，因为该文件（顾名思义）将在应用程序启动时很早加载：</p>
+
+<ol>
+  <li>app:</li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@SpringBootApplication</span>
+<span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConfigClient</span> <span class="o">{</span>
+    
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${user.role}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">role</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="nc">ConfigClient</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span>
+      <span class="n">value</span> <span class="o">=</span> <span class="s">"/whoami/{username}"</span><span class="o">,</span>  
+      <span class="n">produces</span> <span class="o">=</span> <span class="nc">MediaType</span><span class="o">.</span><span class="na">TEXT_PLAIN_VALUE</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">whoami</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">"username"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">username</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"Hello! 
+          You're %s and you'll become a(n) %s...\n"</span><span class="o">,</span> <span class="n">username</span><span class="o">,</span> <span class="n">role</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li>bootstrap.properties:</li>
+</ol>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">spring.application.name</span><span class="p">=</span><span class="s">config-client</span>
+<span class="py">spring.profiles.active</span><span class="p">=</span><span class="s">development</span>
+<span class="py">spring.cloud.config.uri</span><span class="p">=</span><span class="s">http://localhost:8888</span>
+<span class="py">spring.cloud.config.username</span><span class="p">=</span><span class="s">root</span>
+<span class="py">spring.cloud.config.password</span><span class="p">=</span><span class="s">s3cr3t</span>
+</code></pre></div></div>
+
+<ol>
+  <li>test:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$&gt;</span> curl http://localhost:8080/whoami/Mr_Pink
+</code></pre></div></div>
+<ol>
+  <li>结果’</li>
+</ol>
+
+<pre><code class="language-txt">Hello! You're Mr_Pink and you'll become a(n) Developer...
+</code></pre>
+
+<h2 id="加密和解密">加密和解密</h2>
+
+<p class="notice--info"><strong>必须</strong>：要将“密码学“中强加密与 <code class="language-plaintext highlighter-rouge">Spring</code> 加密和解密功能一起使用，您需要在 JVM 中安装 <code class="language-plaintext highlighter-rouge">Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files</code>。这些可以从 Oracle 官网下载。</p>
+
+<p>由于配置服务器正在支持属性值的加密和解密，您可以使用公共存储库来存储诸如用户名和密码等敏感数据。加密值以字符串 {cipher} 为前缀。如果服务器配置为使用对称密钥或密钥对，则可以通过对路径<code class="language-plaintext highlighter-rouge">/encrypt</code>的 REST 调用生成加密信息。</p>
+
+<p>当然解密的端点也是可用的。加解密这两个端点都接受包含应用程序名称及其当前<code class="language-plaintext highlighter-rouge">profile</code>配置文件的占位符的路径：<code class="language-plaintext highlighter-rouge">/*/{name}/{profile}</code>。这对于控制每​​个客户端的加密特别有用。但是，在它们变得有用之前，您必须配置一个加密密钥，我们将在下一节中进行。</p>
+
+<p class="notice--info"><strong>TIP</strong>: 如果您使用 <code class="language-plaintext highlighter-rouge">curl</code> 调用 <code class="language-plaintext highlighter-rouge">en-/decryption</code> API，最好使用 <code class="language-plaintext highlighter-rouge">–data-urlencode</code> 选项（而不是 <code class="language-plaintext highlighter-rouge">–data/-d</code>），或者将 <code class="language-plaintext highlighter-rouge">Content-Type</code> 标头显式设置为 <code class="language-plaintext highlighter-rouge">text/plain</code>。这确保正确处理加密值中的特殊字符，如<code class="language-plaintext highlighter-rouge">+</code>。</p>
+
+<p>如果通过客户端获取配置时发现无法自动解密某个值，那么其keys将使用名称本身重命名，并以 <code class="language-plaintext highlighter-rouge">invalid</code>一词为前缀。这种情况应该避免发生，例如使用加密值作为密码。</p>
+
+<p><strong>TIP:</strong>: 在设置包含 <code class="language-plaintext highlighter-rouge">YAML</code> 文件的存储库时，您必须用单引号将加密和前缀值括起来！对于<code class="language-plaintext highlighter-rouge">Properties</code>，情况并非如此。</p>
+
+<h2 id="csrf">CSRF</h2>
+
+<p>默认情况下，<code class="language-plaintext highlighter-rouge">Spring Security</code> 为发送到我们应用程序的所有请求启用 <code class="language-plaintext highlighter-rouge">CSRF</code> 保护。 因此，为了能够使用 <code class="language-plaintext highlighter-rouge">/encrypt</code> 和 <code class="language-plaintext highlighter-rouge">/decrypt</code> 端点，让我们为它们禁用 CSRF：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfiguration</span> <span class="kd">extends</span> <span class="nc">WebSecurityConfigurerAdapter</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">HttpSecurity</span> <span class="n">http</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="n">http</span><span class="o">.</span><span class="na">csrf</span><span class="o">()</span>
+          <span class="o">.</span><span class="na">ignoringAntMatchers</span><span class="o">(</span><span class="s">"/encrypt/**"</span><span class="o">)</span>
+          <span class="o">.</span><span class="na">ignoringAntMatchers</span><span class="o">(</span><span class="s">"/decrypt/**"</span><span class="o">);</span>
+
+        <span class="kd">super</span><span class="o">.</span><span class="na">configure</span><span class="o">(</span><span class="n">http</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="key管理">key管理</h2>
+
+<p>配置服务器默认启用以对称或非对称方式加密属性值。</p>
+
+<ul>
+  <li>
+    <p><strong>对称加密</strong>，您只需将 <code class="language-plaintext highlighter-rouge">application.properties</code> 中的属性 <code class="language-plaintext highlighter-rouge">encrypt.key</code> 设置为您选择的机密。或者，您可以传入环境变量 <code class="language-plaintext highlighter-rouge">ENCRYPT_KEY</code>。</p>
+  </li>
+  <li>
+    <p><strong>非对称加密</strong>， 您可以将 <code class="language-plaintext highlighter-rouge">encrypt.key</code> 设置为 PEM编码 的字符串值或 配置使用<code class="language-plaintext highlighter-rouge">keystore</code>。</p>
+  </li>
+</ul>
+
+<p>因为我们的演示服务器需要一个高度安全的环境，所以我们选择了后一个选项并生成一个新的密钥库，包括一个 <code class="language-plaintext highlighter-rouge">RSA</code> 密钥对.</p>
+
+<ol>
+  <li>使用 Java 密钥工具：</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$&gt;</span> keytool <span class="nt">-genkeypair</span> <span class="nt">-alias</span> config-server-key <span class="se">\</span>
+       <span class="nt">-keyalg</span> RSA <span class="nt">-keysize</span> 4096 <span class="nt">-sigalg</span> SHA512withRSA <span class="se">\</span>
+       <span class="nt">-dname</span> <span class="s1">'CN=Config Server,OU=Spring Cloud,O=Baeldung'</span> <span class="se">\</span>
+       <span class="nt">-keypass</span> my-k34-s3cr3t <span class="nt">-keystore</span> config-server.jks <span class="se">\</span>
+       <span class="nt">-storepass</span> my-s70r3-s3cr3t
+</code></pre></div></div>
+
+<ol>
+  <li>我们将创建的密钥库添加到我们服务器的 bootstrap.properties 并重新运行它：</li>
+</ol>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">encrypt.keyStore.location</span><span class="p">=</span><span class="s">classpath:/config-server.jks</span>
+<span class="py">encrypt.keyStore.password</span><span class="p">=</span><span class="s">my-s70r3-s3cr3t</span>
+<span class="py">encrypt.keyStore.alias</span><span class="p">=</span><span class="s">config-server-key</span>
+<span class="py">encrypt.keyStore.secret</span><span class="p">=</span><span class="s">my-k34-s3cr3t</span>
+</code></pre></div></div>
+
+<ol>
+  <li>我们可以查询加密端点并将响应作为值添加到我们存储库中的配置中：</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$&gt;</span> <span class="nb">export </span><span class="nv">PASSWORD</span><span class="o">=</span><span class="si">$(</span>curl <span class="nt">-X</span> POST <span class="nt">--data-urlencode</span> d3v3L <span class="se">\</span>
+       http://root:s3cr3t@localhost:8888/encrypt<span class="si">)</span>
+<span class="nv">$&gt;</span> <span class="nb">echo</span> <span class="s2">"user.password={cipher}</span><span class="nv">$PASSWORD</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> config-client-development.properties
+<span class="nv">$&gt;</span> git commit <span class="nt">-am</span> <span class="s1">'Added encrypted password'</span>
+<span class="nv">$&gt;</span> curl <span class="nt">-X</span> POST http://root:s3cr3t@localhost:8888/refresh
+</code></pre></div></div>
+
+<ol>
+  <li>验证。 如果我们的设置工作正常，修改 <code class="language-plaintext highlighter-rouge">ConfigClient</code> 相关类并重新启动我们的客户端：</li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@SpringBootApplication</span>
+<span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConfigClient</span> <span class="o">{</span>
+
+    <span class="o">...</span>
+    
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${user.password}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">password</span><span class="o">;</span>
+
+    <span class="o">...</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">whoami</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">"username"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">username</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"Hello! 
+          You're %s and you'll become a(n) %s, "</span> <span class="o">+</span>
+          <span class="s">"but only if your password is '%s'!\n"</span><span class="o">,</span> 
+          <span class="n">username</span><span class="o">,</span> <span class="n">role</span><span class="o">,</span> <span class="n">password</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li>结果. 如果我们的配置值被正确解密，对我们的客户端的最终查询为:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$&gt;</span> curl http://localhost:8080/whoami/Mr_Pink
+Hello! You<span class="s1">'re Mr_Pink and you'</span>ll become a<span class="o">(</span>n<span class="o">)</span> Developer, <span class="se">\</span>
+  but only <span class="k">if </span>your password is <span class="s1">'d3v3L'</span><span class="o">!</span>
+
+</code></pre></div></div>
+
+<h2 id="使用多个keys">使用多个keys</h2>
+
+<p>如果您想使用多个密钥进行加密和解密，例如：为每个服务的应用程序使用一个专用密钥，您可以在 <code class="language-plaintext highlighter-rouge">{cipher}</code> 前缀和 <code class="language-plaintext highlighter-rouge">BASE64</code> 编码的属性值之间以 <code class="language-plaintext highlighter-rouge">{name:value}</code> 的形式添加另一个前缀.</p>
+
+<p>配置服务器理解如<code class="language-plaintext highlighter-rouge">{secret:my-crypto-secret}</code> 或 <code class="language-plaintext highlighter-rouge">{key:my-key-alias}</code>的前缀，, 几乎是开箱即用的。非对称加密 需要在 <code class="language-plaintext highlighter-rouge">application.properties</code> 中配置<code class="language-plaintext highlighter-rouge">keystore</code>。密钥库以所匹配密钥别名来搜索出来。例如：</p>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">user.password</span><span class="p">=</span><span class="s">{cipher}{secret:my-499-s3cr3t}AgAMirj1DkQC0WjRv...</span>
+<span class="py">user.password</span><span class="p">=</span><span class="s">{cipher}{key:config-client-key}AgAMirj1DkQC0WjRv...</span>
+</code></pre></div></div>
+
+<p><strong>TIP</strong>: 对于没有密钥库的场景，您必须实现一个 <code class="language-plaintext highlighter-rouge">TextEncryptorLocator</code> 类型的 <code class="language-plaintext highlighter-rouge">@Bean</code>，它处理查找并为每个密钥返回一个 <code class="language-plaintext highlighter-rouge">TextEncryptor-Object</code>。</p>
+
+<h2 id="加密配置">加密配置</h2>
+
+<p>如果要禁用服务器端加密并在本地处理属性值的解密，可以将以下内容放入服务器的 <code class="language-plaintext highlighter-rouge">application.properties</code>：</p>
+
+<pre><code class="language-properites">spring.cloud.config.server.encrypt.enabled=false
+</code></pre>
+
+<h2 id="总结">总结</h2>
+
+<p>现在我们能够创建一个配置服务器来从 <code class="language-plaintext highlighter-rouge">Git</code> 存储库向客户端应用程序提供一组配置文件。您还可以使用此类服务​​器执行其他一些操作。 例如：</p>
+
+<ul>
+  <li>以 <code class="language-plaintext highlighter-rouge">YAML</code> 或 <code class="language-plaintext highlighter-rouge">Properties</code> 格式而不是 <code class="language-plaintext highlighter-rouge">JSON </code>提供配置——也解决了占位符问题。 在非 Spring 环境中使用它时，这可能很有用，其中配置不直接映射到 <code class="language-plaintext highlighter-rouge">PropertySource</code>。</li>
+  <li>提供纯文本配置文件。 依次可选地使用已解析的占位符。例如，这对于提供依赖于环境的日志记录配置很有用。</li>
+  <li>将配置服务器嵌入到应用程序中，它从 <code class="language-plaintext highlighter-rouge">Git</code> 存储库配置自身，而不是作为独立的应用程序运行，为客户端提供服务。因此，必须设置一些引导程序属性和/或必须删除 <code class="language-plaintext highlighter-rouge">@EnableConfigServer</code> 注释，这取决于用例。</li>
+  <li>使配置服务器可用于 <code class="language-plaintext highlighter-rouge">Spring Netflix Eureka</code>服务发现并启用 配置客户端中的自动服务器发现。 如果服务器没有固定位置或在其位置移动，这将变得很重要。</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/jekyll-blog/tags/#spring-cloud-config" class="page__taxonomy-item" rel="tag">Spring Cloud Config</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/jekyll-blog/categories/#spring-cloud" class="page__taxonomy-item" rel="tag">Spring Cloud</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新时间:</strong> <time datetime="2021-07-30T00:00:00+08:00">2021-07-30</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">分享</h4>
+  
+
+  <div>
+    <wb:share-button appkey="956824685" addition="text" type="button" default_text="快来看鸭，我发现一篇“碉堡了”的博客" ralateUid="2816811374" pic="https%3A%2F%2Fwx3.sinaimg.cn%2Flarge%2Fa6a681ebgy1gp2009jj3kj20k00k0ta9.jpg"></wb:share-button>
+  </div>
+  <a href="https://twitter.com/intent/tweet?via=lwpk110&text=spring+cloud+config%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%20http%3A%2F%2Fblog.lwpk110.top%2Fjekyll-blog%2Fspring%2520cloud%2Fspring-cloud-config%25E5%25BF%25AB%25E9%2580%259F%25E5%2585%25A5%25E9%2597%25A8%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.lwpk110.top%2Fjekyll-blog%2Fspring%2520cloud%2Fspring-cloud-config%25E5%25BF%25AB%25E9%2580%259F%25E5%2585%25A5%25E9%2597%25A8%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fblog.lwpk110.top%2Fjekyll-blog%2Fspring%2520cloud%2Fspring-cloud-config%25E5%25BF%25AB%25E9%2580%259F%25E5%2585%25A5%25E9%2597%25A8%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/jekyll-blog/mq/RabbitMQ%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="pagination--pager" title="RabbitMQ最佳实践
+">上一页</a>
+    
+    
+      <a href="/jekyll-blog/spring%20cloud/Alibaba-Sentinel%E4%BB%8B%E7%BB%8D/" class="pagination--pager" title="Alibaba Sentinel介绍
+">下一页</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">留下评论</h4>
+      <section id="utterances-comments"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">猜您还喜欢</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/uml/plantUML-for-C4-model%E6%B1%89%E5%8C%96/" rel="permalink">plantUML for C4 model汉化(todo)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-10-11T00:00:00+08:00">2021-10-11</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          14 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">C4-PlantUML 结合了 PlantUML 和 C4 模型的优点，通过使用开源和平台独立工具的直观语言，提供了一种描述和交流软件架构的简单方法——尤其是在前期设计会议期间。 
+C4-PlantUML 包括用于使用 PlantUML 创建 C4 图的宏、构造型和其他好东西（如 VSCode 片段）。
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/uml/C4-Model/" rel="permalink">C4 Model 介绍
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-10-11T00:00:00+08:00">2021-10-11</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/java/OSGI/" rel="permalink">OSGI
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-27T00:00:00+08:00">2021-09-27</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">OSGi（开放服务网关计划）是一个用于开发和部署模块化软件程序和库的Java框架。
+OSGi 有两个部分。第一部分是称为 bundles 的模块化组件的规范，它们通常被称为插件。该规范为 bundle 的生命周期定义了基础设施，并确定了 bundle 将如何交互。OSGi 的第二部分是 Java 虚拟机 ( JV...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/linux/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="permalink">vim 常用命令
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-08-30T00:00:00+08:00">2021-08-30</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">作为开发者，我们将经常处理文本——词表、配置文件等。我们将在本地机器上进行很多工作，我们可以使用我们喜欢的任何文本编辑器。在远程机器上，
+编辑工具将受到限制。如果安装了 nano ，一个易于使用的终端文本编辑器，但它不是很强大。
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      输入您要搜索的关键词...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="输入您要搜索的关键词..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/jekyll-blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+    <li><wb:follow-button uid="2816811374" type="red_1" width="67" height="24" ></wb:follow-button> </li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Steven's Blog. 技术来自于 <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. 备案号: 鄂ICP备2021011613号</div>
+
+<div align="center">
+    
+            <!-- https://www.websiteout.net/counter.php?C=24&D=7&N=10000&M=0 -->
+
+
+<script type="text/javascript" src="//counter.websiteout.net/js/24/7/1000/0"></script>
+        
+</div>
+
+
+<!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+      </footer>
+    </div>
+
+    
+  <script src="/jekyll-blog/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/jekyll-blog/assets/js/lunr/lunr.min.js"></script>
+<script src="/jekyll-blog/assets/js/lunr/lunr-store.js"></script>
+<script src="/jekyll-blog/assets/js/lunr/lunr-en.js"></script>
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ff6582f8dd1d23d56f977e28f7ec3fc3";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JF1M2LW00G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JF1M2LW00G', { 'anonymize_ip': true});
+</script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'lwpk110/jekyll-blog');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+<script src="https://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+
+
+  </body>
+</html>

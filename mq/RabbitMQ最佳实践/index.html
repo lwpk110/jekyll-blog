@@ -1,0 +1,1107 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html xmlns:wb="http://open.weibo.com/wb" lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>RabbitMQ最佳实践 | SweetDumpling</title>
+<meta name="description" content="有些应用程序需要非常高的吞吐量，而其他一些应用程序却正在发布批处理作业，这些作业可能会延迟一段时间。在设计系统时，目标应该是最大限度地将性能和可用性结合起来，这对您的特定应用程序是有意义的。错误的体系结构设计决策或客户端错误，可能会损坏中间件或影响吞吐量。">
+
+
+  <meta name="author" content="steven lu">
+  
+  <meta property="article:author" content="steven lu">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="SweetDumpling">
+<meta property="og:title" content="RabbitMQ最佳实践">
+<meta property="og:url" content="http://blog.lwpk110.top/jekyll-blog/mq/RabbitMQ%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">
+
+
+  <meta property="og:description" content="有些应用程序需要非常高的吞吐量，而其他一些应用程序却正在发布批处理作业，这些作业可能会延迟一段时间。在设计系统时，目标应该是最大限度地将性能和可用性结合起来，这对您的特定应用程序是有意义的。错误的体系结构设计决策或客户端错误，可能会损坏中间件或影响吞吐量。">
+
+
+
+  <meta property="og:image" content="http://blog.lwpk110.top/jekyll-blog/assets/images/rabbitmq/rabbitmq.jpg">
+
+
+
+  <meta name="twitter:site" content="@lwpk110">
+  <meta name="twitter:title" content="RabbitMQ最佳实践">
+  <meta name="twitter:description" content="有些应用程序需要非常高的吞吐量，而其他一些应用程序却正在发布批处理作业，这些作业可能会延迟一段时间。在设计系统时，目标应该是最大限度地将性能和可用性结合起来，这对您的特定应用程序是有意义的。错误的体系结构设计决策或客户端错误，可能会损坏中间件或影响吞吐量。">
+  <meta name="twitter:url" content="http://blog.lwpk110.top/jekyll-blog/mq/RabbitMQ%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="http://blog.lwpk110.top/jekyll-blog/assets/images/rabbitmq/rabbitmq.jpg">
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2021-07-30T00:00:00+08:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://blog.lwpk110.top/jekyll-blog/mq/RabbitMQ%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Steven's Blog",
+      "url": "http://blog.lwpk110.top/jekyll-blog/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="code-5agakm6Ce9">
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/jekyll-blog/feed.xml" type="application/atom+xml" rel="alternate" title="SweetDumpling Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/jekyll-blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/svg"  href="/favicon.svg">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/jekyll-blog/">
+          Sweet-Dumpling
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/jekyll-blog/">首页</a>
+            </li><li class="masthead__menu-item">
+              <a href="/jekyll-blog/years/">博客</a>
+            </li><li class="masthead__menu-item">
+              <a href="/jekyll-blog/tags/">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/jekyll-blog/comming-soon/">画廊</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">切换搜索</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style=" background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/jekyll-blog/assets/images/rabbitmq/rabbitmq.jpg');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          RabbitMQ最佳实践
+
+        
+      </h1>
+      
+        <p class="page__lead">有些应用程序需要非常高的吞吐量，而其他一些应用程序却正在发布批处理作业，这些作业可能会延迟一段时间。在设计系统时，目标应该是最大限度地将性能和可用性结合起来，这对您的特定应用程序是有意义的。错误的体系结构设计决策或客户端错误，可能会损坏中间件或影响吞吐量。
+
+</p>
+      
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-07-30T00:00:00+08:00">2021-07-30</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+      
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://blog.lwpk110.top/jekyll-blog/" itemprop="item"><span itemprop="name">首页</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/jekyll-blog/categories/#mq" itemprop="item"><span itemprop="name">Mq</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">RabbitMQ最佳实践</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/jekyll-blog/assets/images/avatar.png" alt="steven lu" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">steven lu</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am an <strong>amazing</strong> person.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">关注</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">ShangHai China</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://weibo.com/u/2816811374" rel="nofollow noopener noreferrer"><i class="fab fa-weibo" aria-hidden="true"></i><span class="label">微博</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.lwpk110.top" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/profile.php?id=100070358688174" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:lwpk110@163.com">
+            <meta itemprop="email" content="lwpk110@163.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">电子邮箱</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="RabbitMQ最佳实践">
+    <meta itemprop="description" content="有些应用程序需要非常高的吞吐量，而其他一些应用程序却正在发布批处理作业，这些作业可能会延迟一段时间。在设计系统时，目标应该是最大限度地将性能和可用性结合起来，这对您的特定应用程序是有意义的。错误的体系结构设计决策或客户端错误，可能会损坏中间件或影响吞吐量。">
+    <meta itemprop="datePublished" content="2021-07-30T00:00:00+08:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>有些应用程序需要非常高的吞吐量，而其他一些应用程序却正在发布批处理作业，这些作业可能会延迟一段时间。在设计系统时，目标应该是最大限度地将性能和可用性结合起来，这对您的特定应用程序是有意义的。错误的体系结构设计决策或客户端错误，可能会损坏中间件或影响吞吐量。</p>
+
+<p>您的发布服务器可能会停止运行，或者由于内存使用过多而导致服务器崩溃。本系列文章重点关注rabbitmq的最佳实践。应做和不应做两种不同使用类别的最佳实践相混合;高可用性和高性能（高吞吐量）。我们将讨论队列大小、常见错误、延迟队列、预取值、连接和通道、HIPE和集群中的节点数。这些通常都是最佳实践规则，基于我们在使用rabbitmq时获得的经验。</p>
+
+<blockquote>
+  <p>AMQP 0-9-1模型： https://blog.csdn.net/gaoyang8320/article/details/78312587 <br />
+ 原文:  https://www.cloudamqp.com/blog/2017-12-29-part1-rabbitmq-best-practice.html</p>
+</blockquote>
+
+<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 目录</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#rabbitmq最佳实践" id="markdown-toc-rabbitmq最佳实践">RabbitMQ最佳实践</a>    <ul>
+      <li><a href="#queues" id="markdown-toc-queues">Queues</a>        <ul>
+          <li><a href="#尽可能少排队" id="markdown-toc-尽可能少排队">尽可能少排队</a></li>
+          <li><a href="#启用延迟队列以获得可预测的性能" id="markdown-toc-启用延迟队列以获得可预测的性能">启用延迟队列以获得可预测的性能</a></li>
+          <li><a href="#限制队列大小ttl或最大长度" id="markdown-toc-限制队列大小ttl或最大长度">限制队列大小（TTL或最大长度）</a></li>
+          <li><a href="#队列数量" id="markdown-toc-队列数量">队列数量</a></li>
+          <li><a href="#将你的对列拆分到不同的核心上" id="markdown-toc-将你的对列拆分到不同的核心上">将你的对列拆分到不同的核心上</a></li>
+          <li><a href="#不要在临时队列上设置自己的名称" id="markdown-toc-不要在临时队列上设置自己的名称">不要在临时队列上设置自己的名称</a></li>
+          <li><a href="#自动删除不再使用的队列" id="markdown-toc-自动删除不再使用的队列">自动删除不再使用的队列</a></li>
+          <li><a href="#为优先级队列设置使用限制" id="markdown-toc-为优先级队列设置使用限制">为优先级队列设置使用限制</a></li>
+        </ul>
+      </li>
+      <li><a href="#payload---rabbitmq-message-的大小和类型" id="markdown-toc-payload---rabbitmq-message-的大小和类型">Payload - RabbitMQ message 的大小和类型</a></li>
+      <li><a href="#连接和通道connections-and-channels" id="markdown-toc-连接和通道connections-and-channels">连接和通道（Connections and channels）</a>        <ul>
+          <li><a href="#不要在线程之间共享通道channels" id="markdown-toc-不要在线程之间共享通道channels">不要在线程之间共享通道（channels）</a></li>
+          <li><a href="#不要频繁打开和关闭连接或通道" id="markdown-toc-不要频繁打开和关闭连接或通道">不要频繁打开和关闭连接或通道</a></li>
+          <li><a href="#为发布者和消费者区分连接connections-" id="markdown-toc-为发布者和消费者区分连接connections-">为发布者和消费者区分连接（connections ）</a></li>
+          <li><a href="#大量的连接和通道可能会影响rabbitmq管理接口的性能" id="markdown-toc-大量的连接和通道可能会影响rabbitmq管理接口的性能">大量的连接和通道可能会影响rabbitmq管理接口的性能</a></li>
+        </ul>
+      </li>
+      <li><a href="#acknowledgements-和confirms" id="markdown-toc-acknowledgements-和confirms">Acknowledgements 和Confirms</a>        <ul>
+          <li><a href="#未确认的消息" id="markdown-toc-未确认的消息">未确认的消息</a></li>
+        </ul>
+      </li>
+      <li><a href="#持久消息和持久队列" id="markdown-toc-持久消息和持久队列">持久消息和持久队列</a></li>
+      <li><a href="#tls-and-amqps" id="markdown-toc-tls-and-amqps">TLS and AMQPS</a></li>
+      <li><a href="#预取prefetch" id="markdown-toc-预取prefetch">预取（Prefetch）</a>        <ul>
+          <li><a href="#如何设置合适的预取值" id="markdown-toc-如何设置合适的预取值">如何设置合适的预取值？</a></li>
+        </ul>
+      </li>
+      <li><a href="#hipe" id="markdown-toc-hipe">HiPE</a></li>
+      <li><a href="#群集中的节点数群集和高可用性" id="markdown-toc-群集中的节点数群集和高可用性">群集中的节点数（群集和高可用性）</a>        <ul>
+          <li><a href="#记住在新vhosts上启用ha" id="markdown-toc-记住在新vhosts上启用ha">记住在新vhosts上启用HA</a></li>
+        </ul>
+      </li>
+      <li><a href="#routing-exchanges-设置" id="markdown-toc-routing-exchanges-设置">Routing (exchanges 设置)</a></li>
+      <li><a href="#disable-无用的-plugins" id="markdown-toc-disable-无用的-plugins">Disable 无用的 plugins</a></li>
+      <li><a href="#不要在生产环境将rabbitmq管理统计速率模式设置为生产中的详细信息" id="markdown-toc-不要在生产环境将rabbitmq管理统计速率模式设置为生产中的详细信息">不要在生产环境将rabbitmq管理统计速率模式设置为生产中的“详细信息”</a></li>
+      <li><a href="#使用更新的rabbitmq客户端库" id="markdown-toc-使用更新的rabbitmq客户端库">使用更新的<code class="language-plaintext highlighter-rouge">rabbitmq</code>客户端库</a></li>
+      <li><a href="#使用最新稳定的rabbitmq和erlang版本" id="markdown-toc-使用最新稳定的rabbitmq和erlang版本">使用最新稳定的rabbitmq和erlang版本</a></li>
+      <li><a href="#小心使用ttl" id="markdown-toc-小心使用ttl">小心使用TTL</a>        <ul>
+          <li><a href="#dead-lettering" id="markdown-toc-dead-lettering">Dead lettering</a></li>
+          <li><a href="#ttl" id="markdown-toc-ttl">TTL</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+  </nav>
+</aside>
+
+<h1 id="rabbitmq最佳实践">RabbitMQ最佳实践</h1>
+
+<h2 id="queues">Queues</h2>
+
+<h3 id="尽可能少排队">尽可能少排队</h3>
+<p>队列中的许多消息会对RAM的使用造成很大的负担。为了释放RAM，rabbitmq将（页面输出）消息刷新到磁盘。此过程会降低排队速度。当有许多消息需要分页取出时，分页过程通常会花费时间并阻止队列处理消息。许多消息可能会对中间件的性能产生负面影响。</p>
+
+<p>当有许多消息重启集群时，也是费时的，因为必须重建索引。重新启动后，在群集中的节点之间同步消息也需要时间。</p>
+
+<h3 id="启用延迟队列以获得可预测的性能">启用延迟队列以获得可预测的性能</h3>
+
+<p>在rabbitmq 3.6中添加了一个名为lazy queues的功能。懒惰队列是消息自动存储到磁盘上的队列。只有在需要时才将消息加载到内存中。对于懒惰的队列，消息直接进入磁盘，因此RAM的使用被最小化，但是吞吐时间将花费更长的时间。</p>
+
+<p>我们已经看到，懒惰的队列以更好的可预测性的方式，创建了一个更稳定的集群。要让您的消息不出现警告，请刷新到磁盘。你不会突然被一个性能冲击问题所困扰。如果您一次发送大量消息（例如处理批处理作业），或者如果您认为您的消费者一直无法跟上发布者的速度，我们建议您启用延迟队列。</p>
+
+<p class="notice--warning"><strong>Warning Notice:</strong> 请注意，如果需要非常高的性能，您应该禁用延迟队列-如果队列时间总是很短，或者设置最大长度策略。.</p>
+
+<h3 id="限制队列大小ttl或最大长度">限制队列大小（TTL或最大长度）</h3>
+
+<p>对于经常受到消息峰值冲击的应用程序，以及要求吞吐量比其他任何东西都重要的应用程序，可以推荐的另一做法是设置队列的最大长度。这样可以通过丢弃来自队列头部的消息来保持队列的简短性，从而使队列永远不会超过max-length设置。</p>
+
+<h3 id="队列数量">队列数量</h3>
+
+<p>队列在rabbitmq中是单线程的，一个队列可以处理大约50k条消息/秒。如果您有多个队列和消费者，您可以在多核系统上获得更好的吞吐量。如果在底层节点上拥有与核心一样多的队列，那么您将获得最佳吞吐量。</p>
+
+<p>rabbitmq管理接口为集群中的每个队列收集和计算度量。如果您有数千个活动队列和使用者，这可能会减慢服务器的运行速度。如果队列太多，CPU和RAM的使用也可能受到负面影响。</p>
+
+<h3 id="将你的对列拆分到不同的核心上">将你的对列拆分到不同的核心上</h3>
+
+<p>队列性能受限于一个CPU核心。因此，如果将队列拆分到不同的核心，您将获得更好的性能；如果您拥有rabbitmq集群，您也可以将他们拆分到不同的节点。</p>
+
+<p>rabbitmq队列绑定到最初声明它们的节点。即使您创建了一个rabbitmq中间件集群，所有路由到特定队列的消息都将转到该队列所在的节点。您可以在节点之间平均地手动拆分队列，但缺点是您需要记住队列的位置。</p>
+
+<p>如果您有多个节点或具有多个核心的单节点集群，我们建议使用两个插件来帮助您:</p>
+
+<ol>
+  <li>
+    <p><strong>Consistent hash exchange plugin</strong>
+一致的哈希交换插件允许您使用exchange 在队列之间加载平衡消息。通过消息的路由密钥，发送到exchange 的消息在多个队列中均匀一致地分布。该插件创建路由密钥的散列，并在绑定到该exchange 的队列之间传播消息。如果不向发布服务器中添加充足的有关队列数量及其bindings 的信息，手动执行此操作可能很快就会出现问题。
+如果需要最大限度地使用集群中的多个核心，可以使用一致的哈希交换插件。请注意，从所有队列中消耗是很重要的。阅读<a href="https://github.com/rabbitmq/rabbitmq-consistent-hash-exchange">此处</a>有关一致哈希交换插件的更多信息。</p>
+  </li>
+  <li>
+    <p><strong>RabbitMQ sharding</strong>
+rabbitmq sharding插件为您自动对队列进行分区，也就是说，一旦您将一个exchange 定义为sharded，那么在每个集群节点上自动创建支持队列，并在它们之间共享消息。rabbitmq sharding向使用者显示了一个队列，但它可能是后台运行在它后面的多个队列。rabbitmq sharding插件为您提供了一个集中的位置，通过向集群中的其他节点添加队列，您可以将消息以及跨多个节点的负载平衡发送到该位置。在这里阅读更多关于<a href="https://github.com/rabbitmq/rabbitmq-sharding">RabbitMQ sharding</a>的信息。</p>
+  </li>
+</ol>
+
+<h3 id="不要在临时队列上设置自己的名称">不要在临时队列上设置自己的名称</h3>
+
+<p>当您想要在生产者和消费者之间共享队列时，为队列命名是很重要的，但是如果您使用临时队列，则不重要。相反，您应该让服务器使用一个随机的队列名称，而不是你自己命名一个——或者修改rabbitmq策略。</p>
+
+<h3 id="自动删除不再使用的队列">自动删除不再使用的队列</h3>
+
+<p>客户机连接可能会失败，并可能留下未使用的资源（队列），留下许多队列可能会影响性能。自动删除队列有三种方法:</p>
+<ul>
+  <li>您可以在队列上设置TTL策略。例如，28天的TTL策略将删除28天内未使用的队列。</li>
+  <li>当自动删除队列的最后一个使用者已取消或通道/连接已关闭时（或当它与服务器失去TCP连接时），自动删除队列将被删除;</li>
+  <li>专用队列只能通过声明连接被使用（从哪里使用、清除、删除等）。专用队列在其声明连接关闭或消失时被删除（例如，由于底层TCP连接丢失）。</li>
+</ul>
+
+<h3 id="为优先级队列设置使用限制">为优先级队列设置使用限制</h3>
+
+<p>在 Erlang VM 的内部队列每个队列均使用用了一个优先级别，他们耗费了一些资源。在大多数情况下，不超过5个优先级就足够了。</p>
+
+<h2 id="payload---rabbitmq-message-的大小和类型">Payload - RabbitMQ message 的大小和类型</h2>
+
+<p>一个常见的问题是如何处理发送到rabbitmq的消息的palyload（消息大小）。当然，您不应该在消息中发送非常大的文件信息，但是每秒的消息数是一个比它本身的消息大小更大的瓶颈。发送多个小消息可能是一个坏的选择。一个更好的办法是将它们捆绑成一个更大的消息，让消费者将其拆分。但是，如果捆绑多条消息，则需要记住这可能会影响处理时间。如果其中一条捆绑消息失败，是否需要重新处理所有这些消息？如何设置这个取决于带宽和体系结构。</p>
+
+<h2 id="连接和通道connections-and-channels">连接和通道（Connections and channels）</h2>
+
+<p>每个连接使用大约100kb的RAM（如果使用TLS，甚至更多）。数千个连接可能是rabbitmq服务器的沉重负担。在最坏的情况下，服务器可能由于内存不足而崩溃。AMQP协议有一种称为“多路复用”的机制，它“复用”单个TCP连接。它建议每个进程只创建一个TCP连接，并在这个唯一一个连接的基础上为不同的线程使用多个通道。连接也应该是长连接的。AMQP连接的握手过程非常复杂，至少需要7个TCP数据包（如果使用了TLS，则需要更多）。</p>
+
+<p>相反，如果需要，可以更频繁地打开和关闭通道。如果可能的话，甚至通道也应该是长寿命的，例如，在每个发布信息线程中复用相同的通道。每次发布信息时不用打开频道。最佳实践是复用连接，使用各通道在一个连接的基础上实现多路复用。理想情况下，每个进程只能有一个连接，然后在应用程序中为每个线程使用一个通道，而每个channel 复用同一个连接即可。</p>
+
+<h3 id="不要在线程之间共享通道channels">不要在线程之间共享通道（channels）</h3>
+
+<p>您还应该确保不在线程之间共享通道，因为大多数客户机不保证通道是线程安全的（因为这样会对性能产生严重的负面影响）。</p>
+
+<h3 id="不要频繁打开和关闭连接或通道">不要频繁打开和关闭连接或通道</h3>
+
+<p>确保不要在线程之间共享通道，因为大多数客户机不会使通道线程安全（因为这样会对性能产生严重的负面影响）。</p>
+
+<h3 id="为发布者和消费者区分连接connections-">为发布者和消费者区分连接（connections ）</h3>
+
+<p>为发布者和消费者区分连接以获得高吞吐量。当发布服务器向服务器发送太多要处理的消息时，rabbitmq可以对TCP连接施加反向压力。如果消费者使用相同的TCP连接，服务器可能不会从客户机接收消息确认。因此，消费性能也会受到影响。而随着消费速度的降低，服务器将不堪重负。</p>
+
+<h3 id="大量的连接和通道可能会影响rabbitmq管理接口的性能">大量的连接和通道可能会影响rabbitmq管理接口的性能</h3>
+
+<p>具有大量连接和通道的另一个影响为rabbitmq管理接口的性能。对于每个连接和通道性能，指标必须收集、分析和显示度量。</p>
+
+<h2 id="acknowledgements-和confirms">Acknowledgements 和Confirms</h2>
+
+<p>在连接失败的情况下，传输中的消息可能会丢失，并且可能需要重新传输此类消息。Acknowledgements 让服务器和客户机知道何时重新传输消息。客户机可以在收到消息时对其进行确认，也可以在客户机完全处理完消息后对其进行确认。Acknowledgement 具有性能影响，因此为了实现最快的吞吐量，应该禁用手动确认。</p>
+
+<p>接收重要消息的消费应用程序在完成需要对其进行的任何操作之前不应确认消息，这样未处理的消息（工作进程崩溃、异常等）就不会丢失。</p>
+
+<p>发布确认，是相同的事情，但用于发布。服务器收到来自发布服务器的消息时会进行确认。发布确认也会影响性能。但是，应该记住，如果发布者至少需要处理一次消息，就需要这样做。</p>
+
+<h3 id="未确认的消息">未确认的消息</h3>
+
+<p>所有未确认的消息必须驻留在服务器上的RAM中。如果您有太多未确认的消息，您将耗尽内存。限制未确认消息的一个有效方法是客户端预取的消息数做出相关设置。在预取部分了解有关预取的更多信息。</p>
+
+<h2 id="持久消息和持久队列">持久消息和持久队列</h2>
+
+<p>如果您不能承受丢失任何消息的代价，请确保您的队列声明为“持久”，并且您的消息以传递模式“持久”发送。</p>
+
+<p>为了避免在中间件中丢失消息，需要为中间件重新启动、中间件硬件故障或中间件崩溃时做好准备。为了确保消息和中间件定义在重新启动后仍然存在，我们需要确保它们在磁盘上。在中间件重新启动期间，不持久的消息、交换和队列将会被丢失。</p>
+
+<p>持久性消息更重，因为它们必须写入磁盘。请记住，即使您发送的是临时消息，懒惰的队列也会对性能产生相同的影响。对于高性能-请使用瞬态消息。</p>
+
+<h2 id="tls-and-amqps">TLS and AMQPS</h2>
+
+<p>您可以通过amqps连接到rabbitmq，这是用tls包装的amqp协议。由于所有流量都必须加密和解密，因此TLS会影响性能。为了获得最大的性能，我们建议使用vpc对等，那么流量是私有的，并且是独立的，不涉及AMQP客户机/服务器。</p>
+
+<p>在cloudamqp中，我们将rabbitmq服务器配置为只接受快速但安全的加密密码并确定其优先级。</p>
+
+<h2 id="预取prefetch">预取（Prefetch）</h2>
+
+<p>预取值用于指定多少条消息将同时被发送给消费者。它被用来从你的消费者那里得到尽可能多的东西(饱和工作)。</p>
+
+<p><em>来自rabbitmq.com：“我们的目标是让消费者饱和工作，但要最大限度地减小客户机的缓冲区大小，因此更多的消息被留在Rabbit的队列中，从而对新的消费者可用，或者发送给那些变得空闲的消者。”</em></p>
+
+<p>rabbitmq的默认预取设置为客户端提供了一个不受限制的缓冲区，这意味着rabbitmq在默认情况下会将尽可能多的消息发送给任何看起来准备接受它们的客户机。发送的消息由rabbitmq客户端库（在使用者中）缓存，直到对其进行处理。预取限制了在确认消息之前客户端可以接收的消息数。所有预取的消息都将从队列中删除，并且对其他使用者不可见。</p>
+
+<p>预取数太小可能会影响性能，因为rabbitmq大多数时间都在等待获得发送更多消息的许可。下图显示的是长时间的空转时间。在本例中，QoS预取设置为1。这意味着rabbitmq在往返完成（传递、处理、确认）之前不会发送下一条消息。图片中的整个周期时间总共为125ms，处理时间仅为5ms。</p>
+
+<p>另一方面，大量的预取数可以接收队列中的大量消息并将其传递给同一个消费者，但是其他使用者却处于空闲状态。</p>
+
+<h3 id="如何设置合适的预取值">如何设置合适的预取值？</h3>
+
+<p>如果您有一个或几个消费者快速处理消息，我们建议您一次预取多个消息。尽量让你的客户端繁忙。如果您一直有大约相同的处理时间，并且网络行为保持不变-您只需在客户机上为每个消息计算总的往返时间/处理时间，即可获得估计的预取值。</p>
+
+<p>如果您有许多消费者，并且处理时间很短，我们建议预取值设置的应该比单个或少数使用者要低一些。太低的值会让消费者空转很多，因为他们需要等待消息到达。过高的值可能会使一个消费者忙碌，而其他消费者则处于空闲状态。</p>
+
+<p>如果您有许多使用者和/或处理时间较长，我们建议您将预取计数设置为1，以便消息在所有消费者中均匀分布。</p>
+
+<p>请注意，如果客户端自动确认消息，则预取值将不起作用。</p>
+
+<p>一个典型的错误是有一个无限的预取，其中一个客户机接收所有的消息，耗尽内存并崩溃，然后所有的消息都被重新传递。</p>
+
+<p>有关rabbitmq预取的信息，请参阅推荐的rabbitmq文档。</p>
+
+<h2 id="hipe">HiPE</h2>
+
+<p>HIPE将以增加启动时间为代价增加服务器吞吐量。启用HIPE时，将在启动时编译rabbitmq。根据我们的基准测试，吞吐量增加了20-80%。HIPE的缺点是启动时间也增加了很多，大约1-3分钟。在rabbitmq的文档中，hipe仍然被标记为实验性的。</p>
+
+<p>如果您需要高可用性，请不要启用HIPE。</p>
+
+<h2 id="群集中的节点数群集和高可用性">群集中的节点数（群集和高可用性）</h2>
+
+<p>当您用一个节点创建一个cloudamqp实例时，您将得到一个具有高性能的单个节点。一个节点将为您提供<strong>最高的性能</strong>，因为消息不需要在多个节点之间进行镜像。</p>
+
+<p>当您使用两个节点创建一个CloudAMQP实例时，与单个节点的相比，您将获得一半的性能。节点位于不同的可用性区域，队列在可用性区域之间自动镜像。两个节点将为您提供<strong>高可用性</strong>，因为一个节点可能崩溃或被标记为受损，但另一个节点仍将启动并运行，准备接收消息。</p>
+
+<p>当您使用三个节点创建一个CloudAMQP实例时，与单个节点的相同计划大小相比，您将获得1/4的性能。节点位于不同的可用性区域，队列在可用性区域之间自动镜像。您也可以暂停少数组件-与允许每个节点响应相比，通过关闭少数组件，您减少了重复传递。暂停少数组件是三节点集群中的一种分区处理策略，它可以防止由于网络拆分而导致数据不一致。</p>
+
+<h3 id="记住在新vhosts上启用ha">记住在新vhosts上启用HA</h3>
+
+<p>我们在cloudamqp集群中注意到的一个常见错误是，用户创建了一个新的vhost，但忘记为新的vhost启用一个ha策略。如果没有HA策略，则不会在节点之间同步消息。</p>
+
+<h2 id="routing-exchanges-设置">Routing (exchanges 设置)</h2>
+
+<p>直接交换是最快速。如果有许多<code class="language-plaintext highlighter-rouge">bindings</code> ，<code class="language-plaintext highlighter-rouge">rabbitmq</code>必须计算将消息发送到何处。</p>
+
+<h2 id="disable-无用的-plugins">Disable 无用的 plugins</h2>
+
+<p>有些插件可能非常好用，但它们可能会消耗大量的CPU或RAM。因此，不建议将它们用于生产服务器。确保禁用不使用的插件。您可以通过CloudAmqp中的控制面板启用许多不同的插件。</p>
+<h2 id="不要在生产环境将rabbitmq管理统计速率模式设置为生产中的详细信息">不要在生产环境将rabbitmq管理统计速率模式设置为生产中的“详细信息”</h2>
+
+<p>将<code class="language-plaintext highlighter-rouge">rabbitmq</code>管理统计速率模式设置为<code class="language-plaintext highlighter-rouge">detailed</code>会严重影响性能，不应在生产中使用。</p>
+
+<h2 id="使用更新的rabbitmq客户端库">使用更新的<code class="language-plaintext highlighter-rouge">rabbitmq</code>客户端库</h2>
+
+<p>确保您使用的是最新推荐的客户端库版本</p>
+<h2 id="使用最新稳定的rabbitmq和erlang版本">使用最新稳定的rabbitmq和erlang版本</h2>
+
+<p>保持最新稳定版本的rabbitmq和erlang。在为客户发布新的主要版本之前，我们通常会在很大程度上对其进行测试。请注意，在为新集群选择版本的下拉列表中，我们始终使用最推荐的版本作为所选选项（默认）。</p>
+
+<h2 id="小心使用ttl">小心使用TTL</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Dead lettering</code>和TTL是<code class="language-plaintext highlighter-rouge">rabbitmq</code>中的两个流行功能，应该谨慎使用。<code class="language-plaintext highlighter-rouge">TTL</code>和<code class="language-plaintext highlighter-rouge">Dead lettering</code>可以产生您没有预料到的性能影响。</p>
+
+<h3 id="dead-lettering">Dead lettering</h3>
+
+<p>使用<code class="language-plaintext highlighter-rouge">x-dead-letter-exchange</code>属性声明的队列将向指定的dead-letter-exchange 发送被拒绝、非确认或过期（带有ttl）的消息。如果您指定了<code class="language-plaintext highlighter-rouge">x-dead-letter-routing-key</code>，则消息的路由键将在dead lettered时更改。</p>
+
+<h3 id="ttl">TTL</h3>
+<p>通过使用<code class="language-plaintext highlighter-rouge">x-message-ttl</code>属性声明队列，如果消息在指定的时间内未被使用，则将从队列中丢弃消息。</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/jekyll-blog/tags/#rabbit-mq" class="page__taxonomy-item" rel="tag">Rabbit Mq</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/jekyll-blog/categories/#mq" class="page__taxonomy-item" rel="tag">MQ</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新时间:</strong> <time datetime="2021-07-30T00:00:00+08:00">2021-07-30</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">分享</h4>
+  
+
+  <div>
+    <wb:share-button appkey="956824685" addition="text" type="button" default_text="快来看鸭，我发现一篇“碉堡了”的博客" ralateUid="2816811374" pic="https%3A%2F%2Fwx3.sinaimg.cn%2Flarge%2Fa6a681ebgy1gp2009jj3kj20k00k0ta9.jpg"></wb:share-button>
+  </div>
+  <a href="https://twitter.com/intent/tweet?via=lwpk110&text=RabbitMQ%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%20http%3A%2F%2Fblog.lwpk110.top%2Fjekyll-blog%2Fmq%2FRabbitMQ%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.lwpk110.top%2Fjekyll-blog%2Fmq%2FRabbitMQ%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fblog.lwpk110.top%2Fjekyll-blog%2Fmq%2FRabbitMQ%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/jekyll-blog/interview/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E6%96%87-%E6%AD%A6%E6%B1%89%E5%B0%8F%E7%B1%B3/" class="pagination--pager" title="武汉小米面试八股文
+">上一页</a>
+    
+    
+      <a href="/jekyll-blog/spring%20cloud/spring-cloud-config%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" class="pagination--pager" title="spring cloud config快速入门
+">下一页</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">留下评论</h4>
+      <section id="utterances-comments"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">猜您还喜欢</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/uml/plantUML-for-C4-model%E6%B1%89%E5%8C%96/" rel="permalink">plantUML for C4 model汉化(todo)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-10-11T00:00:00+08:00">2021-10-11</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          14 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">C4-PlantUML 结合了 PlantUML 和 C4 模型的优点，通过使用开源和平台独立工具的直观语言，提供了一种描述和交流软件架构的简单方法——尤其是在前期设计会议期间。 
+C4-PlantUML 包括用于使用 PlantUML 创建 C4 图的宏、构造型和其他好东西（如 VSCode 片段）。
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/uml/C4-Model/" rel="permalink">C4 Model 介绍
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-10-11T00:00:00+08:00">2021-10-11</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/java/OSGI/" rel="permalink">OSGI
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-27T00:00:00+08:00">2021-09-27</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">OSGi（开放服务网关计划）是一个用于开发和部署模块化软件程序和库的Java框架。
+OSGi 有两个部分。第一部分是称为 bundles 的模块化组件的规范，它们通常被称为插件。该规范为 bundle 的生命周期定义了基础设施，并确定了 bundle 将如何交互。OSGi 的第二部分是 Java 虚拟机 ( JV...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/linux/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="permalink">vim 常用命令
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-08-30T00:00:00+08:00">2021-08-30</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">作为开发者，我们将经常处理文本——词表、配置文件等。我们将在本地机器上进行很多工作，我们可以使用我们喜欢的任何文本编辑器。在远程机器上，
+编辑工具将受到限制。如果安装了 nano ，一个易于使用的终端文本编辑器，但它不是很强大。
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      输入您要搜索的关键词...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="输入您要搜索的关键词..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/jekyll-blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+    <li><wb:follow-button uid="2816811374" type="red_1" width="67" height="24" ></wb:follow-button> </li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Steven's Blog. 技术来自于 <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. 备案号: 鄂ICP备2021011613号</div>
+
+<div align="center">
+    
+            <!-- https://www.websiteout.net/counter.php?C=24&D=7&N=10000&M=0 -->
+
+
+<script type="text/javascript" src="//counter.websiteout.net/js/24/7/1000/0"></script>
+        
+</div>
+
+
+<!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+      </footer>
+    </div>
+
+    
+  <script src="/jekyll-blog/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/jekyll-blog/assets/js/lunr/lunr.min.js"></script>
+<script src="/jekyll-blog/assets/js/lunr/lunr-store.js"></script>
+<script src="/jekyll-blog/assets/js/lunr/lunr-en.js"></script>
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ff6582f8dd1d23d56f977e28f7ec3fc3";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JF1M2LW00G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JF1M2LW00G', { 'anonymize_ip': true});
+</script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'lwpk110/jekyll-blog');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+<script src="https://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+
+
+  </body>
+</html>

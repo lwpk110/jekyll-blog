@@ -1,0 +1,1674 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html xmlns:wb="http://open.weibo.com/wb" lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>plantUML for C4 model汉化(todo) | SweetDumpling</title>
+<meta name="description" content="C4-PlantUML 结合了 PlantUML 和 C4 模型的优点，通过使用开源和平台独立工具的直观语言，提供了一种描述和交流软件架构的简单方法——尤其是在前期设计会议期间。  C4-PlantUML 包括用于使用 PlantUML 创建 C4 图的宏、构造型和其他好东西（如 VSCode 片段）。">
+
+
+  <meta name="author" content="steven lu">
+  
+  <meta property="article:author" content="steven lu">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="SweetDumpling">
+<meta property="og:title" content="plantUML for C4 model汉化(todo)">
+<meta property="og:url" content="http://blog.lwpk110.top/jekyll-blog/uml/plantUML-for-C4-model%E6%B1%89%E5%8C%96/">
+
+
+  <meta property="og:description" content="C4-PlantUML 结合了 PlantUML 和 C4 模型的优点，通过使用开源和平台独立工具的直观语言，提供了一种描述和交流软件架构的简单方法——尤其是在前期设计会议期间。  C4-PlantUML 包括用于使用 PlantUML 创建 C4 图的宏、构造型和其他好东西（如 VSCode 片段）。">
+
+
+
+  <meta property="og:image" content="https://c4model.com/img/abstractions.png">
+
+
+
+  <meta name="twitter:site" content="@lwpk110">
+  <meta name="twitter:title" content="plantUML for C4 model汉化(todo)">
+  <meta name="twitter:description" content="C4-PlantUML 结合了 PlantUML 和 C4 模型的优点，通过使用开源和平台独立工具的直观语言，提供了一种描述和交流软件架构的简单方法——尤其是在前期设计会议期间。  C4-PlantUML 包括用于使用 PlantUML 创建 C4 图的宏、构造型和其他好东西（如 VSCode 片段）。">
+  <meta name="twitter:url" content="http://blog.lwpk110.top/jekyll-blog/uml/plantUML-for-C4-model%E6%B1%89%E5%8C%96/">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://c4model.com/img/abstractions.png">
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2021-10-11T00:00:00+08:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://blog.lwpk110.top/jekyll-blog/uml/plantUML-for-C4-model%E6%B1%89%E5%8C%96/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Steven's Blog",
+      "url": "http://blog.lwpk110.top/jekyll-blog/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="code-5agakm6Ce9">
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/jekyll-blog/feed.xml" type="application/atom+xml" rel="alternate" title="SweetDumpling Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/jekyll-blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/svg"  href="/favicon.svg">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/jekyll-blog/">
+          Sweet-Dumpling
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/jekyll-blog/">首页</a>
+            </li><li class="masthead__menu-item">
+              <a href="/jekyll-blog/years/">博客</a>
+            </li><li class="masthead__menu-item">
+              <a href="/jekyll-blog/tags/">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/jekyll-blog/comming-soon/">画廊</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">切换搜索</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style=" background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://c4model.com/img/abstractions.png');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          plantUML for C4 model汉化(todo)
+
+        
+      </h1>
+      
+        <p class="page__lead">C4-PlantUML 结合了 PlantUML 和 C4 模型的优点，通过使用开源和平台独立工具的直观语言，提供了一种描述和交流软件架构的简单方法——尤其是在前期设计会议期间。 
+C4-PlantUML 包括用于使用 PlantUML 创建 C4 图的宏、构造型和其他好东西（如 VSCode 片段）。
+
+</p>
+      
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-10-11T00:00:00+08:00">2021-10-11</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          13 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+      
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://blog.lwpk110.top/jekyll-blog/" itemprop="item"><span itemprop="name">首页</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/jekyll-blog/categories/#uml" itemprop="item"><span itemprop="name">Uml</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">plantUML for C4 model汉化(todo)</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/jekyll-blog/assets/images/avatar.png" alt="steven lu" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">steven lu</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am an <strong>amazing</strong> person.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">关注</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">ShangHai China</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://weibo.com/u/2816811374" rel="nofollow noopener noreferrer"><i class="fab fa-weibo" aria-hidden="true"></i><span class="label">微博</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.lwpk110.top" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/profile.php?id=100070358688174" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:lwpk110@163.com">
+            <meta itemprop="email" content="lwpk110@163.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">电子邮箱</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="plantUML for C4 model汉化(todo)">
+    <meta itemprop="description" content="C4-PlantUML 结合了 PlantUML 和 C4 模型的优点，通过使用开源和平台独立工具的直观语言，提供了一种描述和交流软件架构的简单方法——尤其是在前期设计会议期间。 C4-PlantUML 包括用于使用 PlantUML 创建 C4 图的宏、构造型和其他好东西（如 VSCode 片段）。">
+    <meta itemprop="datePublished" content="2021-10-11T00:00:00+08:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>C4-PlantUML 结合了 PlantUML 和 C4 模型的优点，通过使用开源和平台独立工具的直观语言，提供了一种描述和交流软件架构的简单方法——尤其是在前期设计会议期间。 
+C4-PlantUML 包括用于使用 PlantUML 创建 C4 图的宏、构造型和其他好东西（如 VSCode 片段）。</p>
+
+<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 目录</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#入门" id="markdown-toc-入门">入门</a></li>
+  <li><a href="#支持的图表类型" id="markdown-toc-支持的图表类型">支持的图表类型</a>    <ul>
+      <li><a href="#import-include-httpsrawgithubusercontentcomplantuml-stdlibc4-plantumlmasterc4_deploymentpuml" id="markdown-toc-import-include-httpsrawgithubusercontentcomplantuml-stdlibc4-plantumlmasterc4_deploymentpuml">Import: <code class="language-plaintext highlighter-rouge">!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/**C4_Deployment.puml**</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#关系类型" id="markdown-toc-关系类型">关系类型</a></li>
+  <li><a href="#布局选项" id="markdown-toc-布局选项">布局选项</a></li>
+  <li><a href="#custom-tagsstereotypes-支持和皮肤参数更新" id="markdown-toc-custom-tagsstereotypes-支持和皮肤参数更新">Custom tags/stereotypes 支持和皮肤参数更新</a></li>
+  <li><a href="#element-properties" id="markdown-toc-element-properties">Element properties</a></li>
+  <li><a href="#version-information" id="markdown-toc-version-information">Version information</a></li>
+  <li><a href="#snippets-for-visual-studio-code" id="markdown-toc-snippets-for-visual-studio-code">Snippets for Visual Studio Code</a></li>
+  <li><a href="#live-templates-for-intellij" id="markdown-toc-live-templates-for-intellij">Live Templates for IntelliJ</a>    <ul>
+      <li><a href="#prerequisites" id="markdown-toc-prerequisites">Prerequisites</a></li>
+      <li><a href="#install" id="markdown-toc-install">Install</a></li>
+      <li><a href="#usage" id="markdown-toc-usage">Usage</a></li>
+    </ul>
+  </li>
+  <li><a href="#layout-options" id="markdown-toc-layout-options">Layout Options</a></li>
+  <li><a href="#advanced-samples" id="markdown-toc-advanced-samples">Advanced Samples</a>    <ul>
+      <li><a href="#techtribesjs" id="markdown-toc-techtribesjs">techtribes.js</a></li>
+      <li><a href="#message-bus-and-microservices" id="markdown-toc-message-bus-and-microservices">Message Bus and Microservices</a></li>
+    </ul>
+  </li>
+  <li><a href="#background" id="markdown-toc-background">Background</a></li>
+  <li><a href="#license" id="markdown-toc-license">License</a></li>
+</ul>
+
+  </nav>
+</aside>
+
+<blockquote>
+  <p>原文地址: <a href="https://github.com/plantuml-stdlib/C4-PlantUML/edit/master/README.md">plantuml-stdlib/C4-PlantUML</a></p>
+</blockquote>
+
+<p><img src="https://www.plantuml.com/plantuml/png/hLPRZ-964ttthwXXT_M1n4MVDliIQQHbmCdEYWl1p6pUKDakJ6lRtLPt6mP5-U-fDXW3Cz56IbuGNPTpZgkholvi7HfNvZBu7oHQxSWu40xsmcq1qrGueHLATkKvgXIaK0HeiZ8dvQ0tNeQJuUhnELm_paQJft5ut-gtm6aeBO7K2Kfv2Ex41Zxiq0YC9QtfHLXdswtRp5Od0BWJAf5bIj0VzFk3qK_haLOEcTFq2w_nZgIboxYjSuNzUJ0mkEzdhBcCcTaadCNw-gnwK4XK_lbwrgLIn0pQMtZJqtGooD4wCc_og5HiWY3wCl-sNeJBQ3vRpvzMayTPsEu4mpGD9VaAh31hjs9CldCy93L6gmllDtmOQQdD_Vjm4ax3sMhzovn_HlF9VCd-E3jwM-y-Vlmq7dxoENQB1Ts78jkwIAIKHlxSxbI4Iv8L6Tg3IdomevUQOBXSiimQsL_HtpeYTv1qFqQxfNGYr2sw1n_yDnJQkOOYSC99WdEL8HMO6SnXemqyAaT6aOC7LD-5oY0wM4Tv42p8MAtQIMcTpibqONJ-rnf2RGQz0RSbY3cxUspSeaf4MTa0aqINojaMwpX2hn_OaA8vj9F_CzQjW5O7_WW0eD7RtbEyngBWu6yKmx0ef4ZGpqQBJLznXrs82kF5Jvz7tZOcANYOR2NDEevDuDIMm8DKcS-ySVtWYo6Bl6Qs1J9Sn6v9lGLcvDbhrYWned1T6Agib6YyUM7qJgHa0QLycsLJgkGuri8T_B0cPLL82pk1FaKOuEU5sEYz9VDAKQvZ8UbKZga_d3MDtdNXTyoHAt6j1QJ8XQCKR1bRSdnd_rYRVINkA01Isec4RkMDutQA3cEqvA_XzDUhYNwRmDNPQSFQ_C80GvcmpbHN2a9nM-RL_ovigra1BBcl4aCfAITGsgvlAx8MfCxuG2xflohKQJ5mfOJlsCNZsuqprXncchpBolseGhue35nDAsRs_lKoObL_dli-V75job78jQqCp1Jsfdm-pPodNl6zY8eL9Kn5OhJL6mVXIx95bH7OOsJd4lCaha5bJBNX0QUReMxgxlkpReE43VK3NbOVCDQbQtgWUvxbBZY3oc9LYgR-mPBanRveflR9alNSNrQhHSI1rt4yOp-CgRk-WJlIhMV42plMpOweu9eDS4AgZ9STqH1M2xSBN_ajCwZ8c-kiN2U4Hi6_0re_S78ZkvcMQz0bOMfXOtHUBQoz4OuiEEs9JZpZXn53dZ4lgdNJP173Mg2UjrOOZP2RVhpMS9rNMkwFXZwQhXOCT7K7L-atNTdKgNdDyRgQJcvhrRWP_lWDC0b_3MTZVlTlj7Pa83MuLyUNJVqr0Ri-VF0NpXtPxbGryzyQZPUFpxKx-Cmgorp-1G00" alt="Container diagram for Internet Banking System" title="Container diagram for Internet Banking System" /></p>
+
+<h2 id="入门">入门</h2>
+
+<p>在你的 C4 PlantUML <code class="language-plaintext highlighter-rouge">.puml</code> 文件的顶部，你需要在这个 repo 的 <code class="language-plaintext highlighter-rouge">root</code>目录中找到的 <code class="language-plaintext highlighter-rouge">C4_Context.puml</code>、<code class="language-plaintext highlighter-rouge">C4_Container.puml</code> 或 <code class="language-plaintext highlighter-rouge">C4_Component.puml</code> 文件。
+要独立于任何 Internet 连接，您还可以将它下载下来,在 <code class="language-plaintext highlighter-rouge">root</code>目录中找到的文件，并使用附加命令行参数 <code class="language-plaintext highlighter-rouge">-DRELATIVE_INCLUDE="."</code>（包括本地文件）激活本地转换</p>
+
+<pre><code class="language-plantuml">java -jar plantuml.jar -DRELATIVE_INCLUDE="."  ...
+</code></pre>
+
+<p>如果要在此 repo 中使用始终最新的版本，请使用以下命令：</p>
+
+<pre><code class="language-plantuml">!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+</code></pre>
+
+<p>现在让我们创建一个 C4 容器图：</p>
+
+<p>(如果您不想在本地运行 PlantUML，您可以使用 e.g. the <a href="https://www.plantuml.com/plantuml/uml/ZOxDIWGn48JlUOeufn5qSjcJfvNHsugBFsV99iqcsEc4T0VTjpSCE2AYUAeAgVwgjYosIakevytBBK824bPdaHms3pg85BuofjgtwHWbj4DZg2wJzDpaSZAliRh04ioykToZ9Nc-snbux_yUlEdGkOTj9AXJwJLAxQ5ofh4iSetHyeKUTlO0E7HpNoHcigXlW5sDosiuLojaT9_kn-aJk40Py_7q1-Znn09fv4N-swuU0ByFNbVyZlYQqmbR8DyIVW00">PlantUML Web Server</a>.)</p>
+
+<p>包含 C4_Container.puml 后，您可以使用 C4 元素定义的宏定义：“Person”、“Person_Ext”、“System”、“System_Ext”、“Container”、“Relationship”、“Boundary”和<code class="language-plaintext highlighter-rouge">系统_边界</code></p>
+
+<pre><code class="language-plantuml">@startuml C4_Elements
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(personAlias, "Label", "Optional Description")
+Container(containerAlias, "Label", "Technology", "Optional Description")
+System(systemAlias, "Label", "Optional Description")
+
+Rel(personAlias, containerAlias, "Label", "Optional Technology")
+@enduml
+</code></pre>
+
+<p><img src="https://www.plantuml.com/plantuml/png/ZOz1Yy9038NlyojgJnNSpiNJdbpqwAAuUfOu3NOWpGoJZEA_trfGLaJPqti9oPUNcIWapHsPaMT7kS6YLOtoQMs2SttqskP35amki29hxK9deKaU-4GvPZkVVgm9M7VVIqkWADgtzlD-6ZnZgkELRTQO970L1_aY3p8foYKSaChUhABwm4350iKbFrJbsDmXbRkvfzKjkfO3XUFb3UZd8efT9OFyzxhP83q6VftYZlWJPsnco4t__Iy0" alt="test" title="test" /></p>
+
+<p>除此之外，还可以定义系统或组件边界。</p>
+
+<p>查看以下 C4 容器图示例：</p>
+
+<pre><code class="language-plantuml">@startuml Basic Sample
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(admin, "Administrator")
+System_Boundary(c1, "Sample System") {
+    Container(web_app, "Web Application", "C#, ASP.NET Core 2.1 MVC", "Allows users to compare multiple Twitter timelines")
+}
+System(twitter, "Twitter")
+
+Rel(admin, web_app, "Uses", "HTTPS")
+Rel(web_app, twitter, "Gets tweets from", "HTTPS")
+@enduml
+</code></pre>
+
+<p><img src="https://www.plantuml.com/plantuml/png/JP1FIyD04CNl-HHZlAHG4ogUF3KDeWShmQHwBDDaj0lxZzs9eOZVtGcjhNiPcFURUMzs6Ha33qR32gFge47ZDILNodPww0dsp3xU5qN0CVzKl1zsGwJGESjaEU-SAR0F2ksN7lnGL7StjKRBc_LpeP4fihIsbT2eB8NSYr6Ir1IYindsHjavfELKLUI0x48wIvf3P3BRbHjiZ-6GTGk1ZhdWgAKp-4v0tdbpDj9kYzuB-KuxABtNgaDMpgRIggxdK3Pr_lBGoaWWkCqNi7wh9gtKseqHfgiYi0CvoQCWPj2i9ijsLCmKW9KXBLvH8lwSGcPy56NF2HCnUINzTzmbrYRAfDIdjgqReIReh5xMF19BZ96cyX6S-J-o9DlB1_u2" alt="Basic Sample" title="Basic Sample" /></p>
+
+<p>Entities 也可以使用 图标/sprites 装饰  使用 <code class="language-plaintext highlighter-rouge">$sprite</code> 参数, for example:</p>
+
+<pre><code class="language-plantuml">@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include DEVICONS/angular.puml
+!include DEVICONS/java.puml
+!include DEVICONS/msql_server.puml
+!include FONTAWESOME/users.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Customer", "People that need products", $sprite="users")
+Container(spa, "SPA", "angular", "The main interface that the customer interacts with", $sprite="angular")
+Container(api, "API", "java", "Handles all business logic", $sprite="java")
+ContainerDb(db, "Database", "Microsoft SQL", "Holds product, order and invoice information", $sprite="msql_server")
+
+Rel(user, spa, "Uses", "https")
+Rel(spa, api, "Uses", "https")
+Rel_R(api, db, "Reads/Writes")
+@enduml
+</code></pre>
+
+<p><img src="https://www.plantuml.com/plantuml/png/hP9BZzem4CVl-HHUr0ChBPj3sqkbIek0Tf5uK1v5FQ59F05NZfrw9l3rEmvXD-f3wg4dE_EV-VyyCtaYXi1rQPCxut9RQrGdvee-f6c0o-FHyAdEQiAGUyVe-37tPLfPSB5cGAojoTBHky4gXdRpMLe2CGO97KPI0SPXUAoYVtAdiP1FDPvydOwMYyq_WBYkG8Uthq0Zwg2GZ05LmJ3IZQVn73LweNnQBhR3_MIpd4_-AwY9mGN9bpXu_pgrMrSfk6DjeMtwT_axdE5lMaa_x84mdF7NyautQNmxjJET3RyjTzl3VhfzFimcdoUBSVy-ILQIu5q_9ZwetgWczYM6djnNw2kBYa_0oY5gLGMlwvn9n3VNJZ_s6a3lFdbPO9ygaEBDQXWzsWRZTNj2LKgACeun592trYpnlCLUDH26kiZikw2RKnS5bH7ZuMeQ_UEmulaCJbia1TOgsPqa4YdhZoRlsiNihjSuw-jCgiV0a05XT9gRF7Zo1QlDbrbZxQscsnWUb0yQWnASFFliJOvo5ZwKmCQxBgopAs4cQxJjlA-psX5Ij6z-FKc8UgD8Vt-M3-jhxysJrmYQqdr4HVa9dPPz_mG0" alt="Sprites/Icons" title="Sprites/Icons" /></p>
+
+<p>和 <code class="language-plaintext highlighter-rouge">icons/sprites</code> 设置相似，我们也可以对所有元素和关系添加链接:</p>
+
+<pre><code class="language-plantuml">@startuml Basic Sample
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(admin, "Administrator", $sprite="person2", $link="https://github.com/plantuml-stdlib/C4-PlantUML/blob/master/LayoutOptions.md#hide_person_sprite-or-show_person_spritesprite")
+System_Boundary(c1, "Sample System", $link="https://github.com/plantuml-stdlib/C4-PlantUML") {
+    Container(web_app, "Web Application", "C#, ASP.NET Core 2.1 MVC", $descr="Allows users to compare multiple Twitter timelines", $link="https://github.com/plantuml-stdlib/C4-PlantUML/blob/master/LayoutOptions.md")
+}
+System(twitter, "Twitter", $link="https://github.com/plantuml-stdlib/C4-PlantUML")
+
+Rel(admin, web_app, "Uses", "HTTPS", $link="https://plantuml.com/link")
+Rel(web_app, twitter, "Gets tweets from", "HTTPS", $link="https://plantuml.com/link")
+@enduml
+</code></pre>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">png</code> 本身不支持链接，因此下图生成为 <code class="language-plaintext highlighter-rouge">svg</code> 图像。
+Github 不支持 README.md 中的 <code class="language-plaintext highlighter-rouge">svg</code> 链接。
+如果您单击图像，则会打开一个新窗口，您可以在那里使用链接。</p>
+</blockquote>
+
+<p><img src="https://www.plantuml.com/plantuml/svg/jP9FYzH04CNl-HHjhuTPc4dOnPCmiECWUjZLOB9w39rqQHhxJrDL8GpYTxTxizb5F8W3vf0chrBl_NZ93R52dfmjNXW_s4c369aZlQugL7FvpV0uzHC13i4pU2w7uAfebSyxEs9jJLyTN-tgBDtVtLPE4GCcgJkc3MKyO1cpVr43Kl0RfPtnMo4F-JJ4g3YWt8gN5D4mx6LyUEywIzRuxtkv0YqmVoNeRUXNZ5jr2XD_Z6o2fzBfYz5ew9Q4RWdS1TpH6ERVrUKkBulcb8nSzoPCNYiyROQhnDue5os8PNOkgBmKFmgHhgUYDZFqdOen9No1NXnYj6PGcLqcwNYn5OUcBZ-yRTCAWhWkhyJTvsFErq03xkN1sZ2JoD-B10UH2A9246woR39nEnjcGC76GM86-Yyjfzf-FXQtuIKnyJzcdrzNKNm2k_u_prNT4r3kvttRrisVxglbWtyU9QFiysJmJFWEcD8ZvECh1lUFhZVWTP9-0G00" alt="Click on the image that the links are working" title="Click on the image that the links are working" /></p>
+
+<p>元素和关系可以用标签装饰，并通过计算出的图例进行解释，例如：</p>
+
+<pre><code class="language-plantuml">@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+AddElementTag("v1.0", $borderColor="#d73027")
+AddElementTag("v1.1", $fontColor="#d73027")
+AddElementTag("backup", $fontColor="orange")
+
+AddRelTag("backup", $textColor="orange", $lineColor="orange", $lineStyle = DashedLine())
+
+Person(user, "Customer", "People that need products")
+Person(admin, "Administrator", "People that administrates the products via the new v1.1 components", $tags="v1.1")
+Container(spa, "SPA", "angular", "The main interface that the customer interacts with via v1.0", $tags="v1.0")
+Container(spaAdmin, "Admin SPA", "angular", "The administrator interface that the customer interacts with via new v1.1", $tags="v1.1")
+Container(api, "API", "java", "Handles all business logic (incl. new v1.1 extensions)", $tags="v1.0+v1.1")
+ContainerDb(db, "Database", "Microsoft SQL", "Holds product, order and invoice information")
+Container(archive, "Archive", "Audit logging", "Stores 5 years", $tags="backup")
+
+Rel(user, spa, "Uses", "https")
+Rel(spa, api, "Uses", "https")
+Rel_R(api, db, "Reads/Writes")
+Rel(admin, spaAdmin, "Uses", "https")
+Rel(spaAdmin, api, "Uses", "https")
+Rel_L(api, archive, "Writes", "messages", $tags="backup")
+
+SHOW_LEGEND()
+@enduml
+</code></pre>
+
+<p><img src="https://www.plantuml.com/plantuml/png/bLJTRjfC4BtFK-pdhnT6JN3I7qMgX1G4gAb4MWg9Sed6ti5ikzwrTjRGl7rdrn08jLBrQj7CcJbppeov8G_EDvK--q-PGZSInThxcZvbcODjlrH-tUGDeIkiyMXylx1LLcimeUQ2lDGgpqOVBcOXz70tpIeWZuv3on5NW3Be-dNeVpQKSgAnuYRtKAR9vgf_cPoBDxbr4jt8Qki6oV_o-ltbk-karu6-2kWLD_qRDeVYPrEVeAq3KoA30tgE-WJfyTS9aeEQf-yCBloJHZ4GOw0roYb7qXvtdg4ZQz9Wrxb8HWrvMw7ZecI6jkOAlmOl3A8KjREoAJmblNqLo4ePXWx3gyWxyFQFMZWaaJY4put4Ha4C6DoAu9RWJTNMi2aK1K99WsWZKpwl9gKQc68n6mOcbjXeYAJttAbYY536erj1qGuG6OgTi3O7WNpBTn8dY5izfhiyfHiUwnJTp73imR-Ei3VW5TLGgp31x4iW_04R2Eyj6AcH16Wj-EGPI2IqBLKXql1jz0_Myh6W8MKDzLwAVNjADSvJcNFpCNZ8WJ0GtQd2MR8hBnRVfv7PQadxJPwB-448deRLRQmgaD-LTHLuPdofmnLhjS6WfVsLX9-DL3uCNYfJXi22JMHT7yKJWZiSm_xw-N3dg7TNszx30o65olXNm82GZnashZkzdBUcHh5p14dPerCUT-dzTH_jlvkZJRz6D6s93j9RdW2ha0XAx9IukFtsk9nEFa--ZjFUsGqQsLJwDm00" alt="tags" title="tags" /></p>
+
+<h2 id="支持的图表类型">支持的图表类型</h2>
+
+<blockquote>
+  <ul>
+    <li><code class="language-plaintext highlighter-rouge">arg</code>.. 参数为必需的 (e.g. <code class="language-plaintext highlighter-rouge">alias</code>)</li>
+    <li><code class="language-plaintext highlighter-rouge">?arg</code>.. 参数为可选的  (e.g. <code class="language-plaintext highlighter-rouge">?descr</code>)</li>
+    <li><code class="language-plaintext highlighter-rouge">*techn</code> .. 技术参数是必需的, 但是如果技术参数通过 <code class="language-plaintext highlighter-rouge">$tag</code> 来定义，那么不需要<code class="language-plaintext highlighter-rouge">techn</code>参数</li>
+  </ul>
+</blockquote>
+
+<ul>
+  <li>系统 Context &amp; 系统景观图
+    <ul>
+      <li>Import: <code class="language-plaintext highlighter-rouge">!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/**C4_Context.puml**</code></li>
+      <li>宏:
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">Person(alias, label, ?descr, ?sprite, ?tags, $link)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">Person_Ext</code></li>
+          <li><code class="language-plaintext highlighter-rouge">System(alias, label, ?descr, ?sprite, ?tags, $link)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">SystemDb</code></li>
+          <li><code class="language-plaintext highlighter-rouge">SystemQueue</code></li>
+          <li><code class="language-plaintext highlighter-rouge">System_Ext</code></li>
+          <li><code class="language-plaintext highlighter-rouge">SystemDb_Ext</code></li>
+          <li><code class="language-plaintext highlighter-rouge">SystemQueue_Ext</code></li>
+          <li><code class="language-plaintext highlighter-rouge">Boundary(alias, label, ?type, ?tags, $link)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">Enterprise_Boundary(alias, label, ?tags, $link)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">System_Boundary</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Container图
+    <ul>
+      <li>Import: <code class="language-plaintext highlighter-rouge">!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/**C4_Container.puml</code>**</li>
+      <li>Additional Macros:
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">Container(alias, label, *techn, ?descr, ?sprite, ?tags, $link)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">ContainerDb</code></li>
+          <li><code class="language-plaintext highlighter-rouge">ContainerQueue</code></li>
+          <li><code class="language-plaintext highlighter-rouge">Container_Ext</code></li>
+          <li><code class="language-plaintext highlighter-rouge">ContainerDb_Ext</code></li>
+          <li><code class="language-plaintext highlighter-rouge">ContainerQueue_Ext</code></li>
+          <li><code class="language-plaintext highlighter-rouge">Container_Boundary(alias, label, ?tags, $link)</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Component图
+    <ul>
+      <li>Import: <code class="language-plaintext highlighter-rouge">!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/**C4_Component.puml**</code></li>
+      <li>附加宏:
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">Component(alias, label, *techn, ?descr, ?sprite, ?tags, $link)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">ComponentDb</code></li>
+          <li><code class="language-plaintext highlighter-rouge">ComponentQueue</code></li>
+          <li><code class="language-plaintext highlighter-rouge">Component_Ext</code></li>
+          <li><code class="language-plaintext highlighter-rouge">ComponentDb_Ext</code></li>
+          <li><code class="language-plaintext highlighter-rouge">ComponentQueue_Ext</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>动态图
+    <ul>
+      <li>Import: <code class="language-plaintext highlighter-rouge">!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/**C4_Dynamic.puml**</code></li>
+      <li>附加宏:
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">RelIndex(index, from, to, label, ?tags, $link)</code></li>
+          <li>(lowercase) <code class="language-plaintext highlighter-rouge">increment($offset=1)</code>: 增加当前索引（没有直接输出的程序）</li>
+          <li>(lowercase) <code class="language-plaintext highlighter-rouge">setIndex($new_index)</code>: 设置新索引（没有直接输出的过程）</li>
+          <li><code class="language-plaintext highlighter-rouge">LastIndex()</code>: 返回最后使用的索引（可以用作参数的函数）</li>
+        </ul>
+
+        <p>以下 2 个宏需要 V1.2020.24Beta4（已经可以使用 https:www.plantuml.complantuml 进行测试）</p>
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">Index($offset=1)</code>: 返回当前索引并计算下一个索引（可用作参数的函数）</li>
+          <li><code class="language-plaintext highlighter-rouge">SetIndex($new_index)</code>: 返回新的集合索引并计算下一个索引（可用作参数的函数）</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>部署图
+    <ul>
+      <li>
+        <h6 id="import-include-httpsrawgithubusercontentcomplantuml-stdlibc4-plantumlmasterc4_deploymentpuml">Import: <code class="language-plaintext highlighter-rouge">!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/**C4_Deployment.puml**</code></h6>
+      </li>
+      <li>附加宏:
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">Deployment_Node(alias, label, ?type, ?descr, ?sprite, ?tags, $link)</code></li>
+          <li><code class="language-plaintext highlighter-rouge">Node(alias, label, ?type, ?descr, ?sprite, ?tags, $link)</code>: Deployment_Node() 的简称</li>
+          <li><code class="language-plaintext highlighter-rouge">Node_L(alias, label, ?type, ?descr, ?sprite, ?tags, $link)</code>: Node()-左对齐</li>
+          <li><code class="language-plaintext highlighter-rouge">Node_R(alias, label, ?type, ?descr, ?sprite, ?tags, $link)</code>: Node()-右对齐</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>查看每个 <a href="samplesC4CoreDiagrams.md">C4 模型图示例</a>。</p>
+
+<h2 id="关系类型">关系类型</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Rel(from, to, label, ?techn, ?descr, ?sprite, ?tags, $link)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">BiRel</code> (双向关系)</li>
+</ul>
+
+<p>您可以使用以下方法强制关系的方向：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Rel_U</code>, <code class="language-plaintext highlighter-rouge">Rel_Up</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Rel_D</code>, <code class="language-plaintext highlighter-rouge">Rel_Down</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Rel_L</code>, <code class="language-plaintext highlighter-rouge">Rel_Left</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Rel_R</code>, <code class="language-plaintext highlighter-rouge">Rel_Right</code></li>
+</ul>
+
+<p>关系对应的 sprites 通常较小，因此以下设置可选:</p>
+<ul>
+  <li>使用较小的图标（如以下示例中的三角形）</li>
+  <li>使用额外的比例因子（直接作为参数的一部分，或通过变量）</li>
+  <li>如果 sprite 参数以 <code class="language-plaintext highlighter-rouge">&amp;</code> 开头，也可以使用 OpenIconic 名称（详情参见 https:useiconic.comopen）</li>
+</ul>
+
+<pre><code class="language-plantuml">@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(user, "User")
+Person(user1, "User 1")
+Person(user2, "User 2")
+Person(user3, "User 3")
+
+System(system, "System")
+
+' normal sprites are too big 
+Rel_L(user, user2, "informs", "courier", "normal sprites are too big", $sprite="person2")
+
+' scaled sprites are ok
+Rel_R(user, user3, "informs", "courier", "scaled sprites are OK", $sprite="person2,scale=0.5")
+
+' combine sprite and scale to a new sprite
+!$combinedSprite="person2,scale=0.5"
+Rel_R(user, user3, "informs", "courier", "combined sprites are OK", $sprite=$combinedSprite)
+
+
+' special smaller sprites can be used
+sprite $triangle {
+    00000000000
+    00000F00000
+    0000FBF0000
+    0000FBF0000
+    000F999F000
+    000F999F000
+    00F66666F00
+    00F66666F00
+    0F3333333F0
+    0F3333333F0
+    0FFFFFFFFF0
+    00000000000
+}
+Rel_R(user1, system, "orders", "http", "small sprites, like the small triangle", $sprite="triangle")
+
+' if sprite starts with &amp;, sprite defines a OpenIconic, details see https://useiconic.com/open/
+Rel_D(user, user1, "requests", "async message", "if sprite starts with &amp;, it defines a OpenIconic like &amp;envelope-closed", $sprite = "&amp;envelope-closed")
+@enduml
+</code></pre>
+
+<p><img src="https://www.plantuml.com/plantuml/png/bLJVQnin37w_lq8DeMiXoQN9DiWWKDPnCDRHqjBdujXAOkgpRvPlMHdxt-SVSPEikK7rujCdIzyd8TybEMPTMwlYH6gkMe6mTgwXJsLfsMQqacxTBbf2oursgDs8cxfi5DCXPqXEABaehzuFRmFqyFswh1avj1vwl0ePlzoe2TMBMxHaz5aeDO3UWpzwv_lWnHQ5YqDyal798JxD-DJZnVspPwtFA1u-almGUGVQs9efeCPAXmJC8ZXZO25NKDoXUhpUYifiKYzz1lNy9pUjbMZ3PtSL7-qdUDvhei198YRE58g35FCKAU_sAAUTb4VoRxuTOHl4Y_Fnw4FYvQPUI8tRH61Q92bUC33GkDb6YfF-zgguxwpu1hsvMBVYV_YysZ2c1haCe_NpLMXViZdJiC30AOg4GTzPoVHA8VmkmDjuPpk_ElIhpzN__6escrNTVlKnMDNbLzDaLPUVRVnAxvyysRJyBwjhh40RHniUOZZZOF9O1g3a4u9R8oGyZsH_CJAMza4kyoh4nqwmaMuDfuEC2bnAZGGCRXhKNxdHaWyywfXK18IxNuBNAcCu_WQClrt6BhxizYC-P8i_MYGNks3qh3dKICHM681EET8TbP8QFaNz4vMd779b2CMkNPX3xrNqlBX4BTfQ_GK0" alt="Relation with sprite or OpenIconic" title="Relation with sprite or OpenIconic" /></p>
+
+<p>在极少数情况下，您可以使用以下方法强制没有关系的对象的布局：</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Lay_U(from, to)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Lay_D(from, to)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Lay_L(from, to)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Lay_R(from, to)</code></li>
+</ul>
+
+<p>在以下示例中，一个人使用不同的系统，以及没有关系的一组人</p>
+
+<pre><code class="language-plantuml">@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+HIDE_STEREOTYPE()
+
+Person(a, "A")
+Person(b, "B")
+Person(c, "C")
+Person(d, "D")
+Person(e, "E")
+
+Lay_U(a, b)
+Lay_R(a, c)
+Lay_D(a, d)
+Lay_L(a, e)
+
+Person(x, "X")
+System(s1, "S1")
+System(s2, "S2")
+System(s3, "S3")
+System(s4, "S4")
+
+Rel_U(x, s1, "uses")
+Rel_R(x, s2, "uses")
+Rel_D(x, s3, "uses")
+Rel_L(x, s4, "uses")
+@enduml
+</code></pre>
+
+<p><img src="https://www.plantuml.com/plantuml/png/LSt1QeD04CRnkq-HvgJGA55FFQLLeGLBHIEq9rbrQ8HrbTrPshnzPmn5Svl_3_RRaq6XqOxIUHXK9sqFkmlYR9w2G8iV_tl0Yssj0TrD2a6XtqrZC4kX-Ct1O2-7DaZYGy5Kl-V1A0o29ceIUY461TgVUV_rBSsQwfoLsSVvgyXSpt4Aq6PIhdZSxP_ttd-sb2zhTfJ9cZrbkYPGPfHEBgvDpLEjjzmbtztjJldkRtVEDwoV_zB09mrKLuCmkkP8NHqt43A46uWOeWt43361Ku9iQfvSPgm1GyfOBXZUOxfWT8_vWl6A9r2z7UKV" alt="Relation versus Layout" title="Relation versus Layout" /></p>
+
+<p>（结合 <a href="LayoutOptions.md#show_floating_legend">SHOW_FLOATING_LEGEND()</a>）元素和例如可能需要所有的浮动图例，例如可以到达绘图区域的角落。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Lay_Distance(from, to, ?distance)</code>: 使用向下对齐设置 <code class="language-plaintext highlighter-rouge">from</code> 和 <code class="language-plaintext highlighter-rouge">to</code> 之间的距离（Lay_Distance(from,to,0) 等于 Lay_D(from, to)）。浮动图例的默认别名是 LEGEND()。</li>
+</ul>
+
+<p>在以下示例中，浮动图例应位于图形的左下角。
+（正常的 SHOW_LEGEND() 调用不需要额外的 Lay_Distance() 调用，图例会自动绘制在右侧图表下方）</p>
+
+<pre><code class="language-plantuml">@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include DEVICONS/angular.puml
+!include DEVICONS/java.puml
+!include DEVICONS/msql_server.puml
+!include FONTAWESOME/users.puml
+
+Person(user, "Customer", "People that need products", $sprite="users")
+Container(spa, "SPA", "angular", "The main interface that the customer interacts with", $sprite="angular")
+Container(api, "API", "java", "Handles all business logic", $sprite="java")
+ContainerDb(db, "Database", "Microsoft SQL", "Holds product, order and invoice information", $sprite="msql_server")
+
+Rel(user, spa, "Uses")
+Rel(spa, api, "Uses")
+Rel_R(api, db, "Reads/Writes")
+
+SHOW_FLOATING_LEGEND()
+Lay_Distance(LEGEND(), db, 1)
+@enduml
+</code></pre>
+
+<p><img src="https://www.plantuml.com/plantuml/png/hL5DZzem4BtdLtXH3o0jH5NRIwLAYu3THUA30bkEqH0FuCgnKyy4r7_VCIIxKQjAFVGKvptFUtvl7eWXS5NOvCwut5OQrOcvfCzf6k0oE1e-LVkACEJUCJeUvBv8ImikplI9jJNxTFInluhGotoM5a2CGQ1i91DW78P16VMJEuq7-LNZoRVfQBdO_8CHLoNeyE7Dq0ZRFyYDFfN1C5BZf_4SENfrULmkjiFTPBESJ_whqHM32v8liF-fQUqjLGhkM5ceG_z9VuSp_8qhw8VD2CCPVnjlfqdZswdkT2L7xxeHkbUTKKNi2mmTEQ_GbnOLdu2LGzIg35vNEPEGxswPldIkKfrUyhggBfKWmvlLC6hKKU9nUq9Lo1Lb76CuG5vBi-1vRNlZG3pKHLfk6pLARIieZGWFLzEe7sk9tsTmsY8fi5R9bkGYaRB-QFAsNBpTrXhlktelqsDWs0DXL9gRF7Zo1rQRhxEhjBUQcXhkbGyQWn8xUVRPcnpbU_2X03RUjSrQMn7FP8ssxllMrGiX2HxXAn1ZjT5iVKjwVU0QGLEwYyAHJZRFortsE5iEjzF5KpQRF4qMusulcS7FR6o8mUNORT2RnFjUye1Eo_P_0G00" alt="db below legend, 1 unit distance" title="db below legend, 1 unit distance" /></p>
+
+<h2 id="布局选项">布局选项</h2>
+
+<p>C4-PlantUML 还带有一些布局选项，使创建漂亮有用的图表变得容易和可重用：</p>
+
+<ul>
+  <li><a href="LayoutOptions.md#layout_top_down-or-layout_left_right-or-layout_landscape">LAYOUT_TOP_DOWN() or LAYOUT_LEFT_RIGHT() or LAYOUT_LANDSCAPE()</a></li>
+  <li><a href="LayoutOptions.md#layout_with_legend-or-show_legend">LAYOUT_WITH_LEGEND() or SHOW_LEGEND(?hideStereotype)</a></li>
+  <li><a href="LayoutOptions.md#show_floating_legendalias-hidestereotype-and-legend">SHOW_FLOATING_LEGEND(?alias, ?hideStereotype) and LEGEND()</a></li>
+  <li><a href="LayoutOptions.md#layout_as_sketch">LAYOUT_AS_SKETCH()</a></li>
+  <li><a href="LayoutOptions.md#hide_stereotype">HIDE_STEREOTYPE()</a></li>
+</ul>
+
+<p>C4-PlantUML 还带有一些 person sprite/portrait 选项:</p>
+
+<ul>
+  <li><a href="LayoutOptions.md#hide_person_sprite">HIDE_PERSON_SPRITE()</a></li>
+  <li><a href="LayoutOptions.md#show_person_sprite">SHOW_PERSON_SPRITE(?sprite)</a></li>
+  <li><a href="LayoutOptions.md#show_person_portrait">SHOW_PERSON_PORTRAIT()</a></li>
+  <li><a href="LayoutOptions.md#show_person_outline">SHOW_PERSON_OUTLINE()</a> (requires PlantUML version &gt;= 1.2021.4)</li>
+</ul>
+
+<h2 id="custom-tagsstereotypes-支持和皮肤参数更新">Custom tags/stereotypes 支持和皮肤参数更新</h2>
+
+<p>可以将附加标签构造型添加到现有元素构造型（组件、…）和突出显示、…特定方面：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">AddElementTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?techn, ?legendText, ?legendSprite)</code>:
+Introduces a new element tag. The styles of the tagged elements are updated and the tag is displayed in the calculated legend.</li>
+  <li><code class="language-plaintext highlighter-rouge">AddRelTag(tagStereo, ?textColor, ?lineColor, ?lineStyle, ?sprite, ?techn, ?legendText, ?legendSprite)</code>:
+Introduces a new relation tag. The styles of the tagged relations are updated and the tag is displayed in the calculated legend.</li>
+  <li><code class="language-plaintext highlighter-rouge">UpdateElementStyle(elementName, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?techn, ?legendText, ?legendSprite)</code>:
+This call updates the default style of the elements (component, …) and creates no additional legend entry.</li>
+  <li><code class="language-plaintext highlighter-rouge">UpdateRelStyle(textColor, lineColor)</code>:
+This call updates the default relationship colors and creates no additional legend entry.</li>
+  <li><code class="language-plaintext highlighter-rouge">RoundedBoxShape()</code>: This call returns the name of the rounded box shape and can be used as ?shape argument.</li>
+  <li><code class="language-plaintext highlighter-rouge">EightSidedShape()</code>: This call returns the name of the eight sided shape and can be used as ?shape argument.</li>
+  <li><code class="language-plaintext highlighter-rouge">DashedLine()</code>: This call returns the name of the dashed line and can be used as ?lineStyle argument.</li>
+  <li><code class="language-plaintext highlighter-rouge">DottedLine()</code>: This call returns the name of the dotted line and can be used as ?lineStyle argument.</li>
+  <li><code class="language-plaintext highlighter-rouge">BoldLine()</code>: This call returns the name of the bold line and can be used as ?lineStyle argument.</li>
+</ul>
+
+<p>Each element can be extended with one or multiple custom tags via the keyword argument <code class="language-plaintext highlighter-rouge">$tags="..."</code>, like <code class="language-plaintext highlighter-rouge">Container(spaAdmin, "Admin SPA", $tags="v1.1")</code>.
+Multiple tags can be combined with <code class="language-plaintext highlighter-rouge">+</code>, like <code class="language-plaintext highlighter-rouge">Container(api, "API", $tags="v1.0+v1.1")</code>.</p>
+
+<p><strong>Element specific tag definitions</strong></p>
+
+<p>Sometimes an added element tag is element specific and all element specific colors should be used, e.g. a specific user role should be defined as element tag with the specific colors <code class="language-plaintext highlighter-rouge">...PERSON_...</code> like</p>
+<pre><code class="language-plantuml">AddElementTag("admin", $fontColor=$ELEMENT_FONT_COLOR, $bgColor=$PERSON_BG_COLOR, $borderColor=$PERSON_BORDER_COLOR, $sprite="osa_user_audit", $legendText="administration user")
+</code></pre>
+<p>Therefore element Add…Tag() shortcuts are added which use the specific colors as default values and the call can be simplified like</p>
+<pre><code class="language-plantuml">AddPersonTag("admin", $sprite="osa_user_audit", $legendText="administration user")
+</code></pre>
+
+<p>Following calls introduces new element tags with element specific default colors:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">AddPersonTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?legendText, ?legendSprite)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">AddExternalPersonTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?legendText, ?legendSprite)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">AddSystemTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?legendText, ?legendSprite)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">AddExternalSystemTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?legendText, ?legendSprite)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">AddComponentTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?techn, ?legendText, ?legendSprite)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">AddExternalComponentTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?techn, ?legendText, ?legendSprite)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">AddContainerTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?techn, ?legendText, ?legendSprite)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">AddExternalContainerTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?techn, ?sprite, ?legendText, ?legendSprite)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">AddNodeTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?techn, ?legendText, ?legendSprite)</code>
+(node specific: $type reuses $techn definition of $tags)</li>
+</ul>
+
+<p><strong>Comments</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">SHOW_LEGEND()</code> supports the customized stereotypes
+    (<code class="language-plaintext highlighter-rouge">LAYOUT_WITH_LEGEND()</code> cannot be used, if the custom tags/stereotypes should be displayed in the legend).</li>
+  <li><code class="language-plaintext highlighter-rouge">SHOW_LEGEND()</code> has to be last line in diagram.</li>
+  <li>Don’t use space between <code class="language-plaintext highlighter-rouge">$tags</code> and <code class="language-plaintext highlighter-rouge">=</code> (PlantUML does not support it).</li>
+  <li>Don’t use <code class="language-plaintext highlighter-rouge">,</code> as part of the tag names (PlantUML does not support it in combination with keyword arguments).</li>
+  <li>If 2 tags defines the same skinparam, the first definition is used.</li>
+  <li>
+    <p>If specific skinparams have to be merged (e.g. 2 tags change the font color) an additional combined tag has to be defined. Use <code class="language-plaintext highlighter-rouge">&amp;</code> as part of combined tag names.</p>
+  </li>
+  <li>Colors of relationship tags cannot be automatically merged (PlantUML does not support it).
+If one tag modifies the line color and the other the text color, an additional combined tag has to be defined and used.</li>
+</ul>
+
+<p><strong>Sample with different tag combinations</strong></p>
+
+<pre><code class="language-plantuml">@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+UpdateElementStyle(person, $fontColor="green")
+AddElementTag("v1.0", $fontColor="#d73027", $borderColor="#d73027")
+AddElementTag("v1.1", $fontColor="#ffffbf", $borderColor="#ffffbf")
+AddElementTag("v1.0&amp;v1.1", $fontColor="#fdae61", $borderColor="#fdae61")
+AddElementTag("fallback", $bgColor="#444444")
+
+AddElementTag("micro service", $shape=EightSidedShape())
+AddElementTag("storage", $shape=RoundedBoxShape())
+
+UpdateRelStyle(black, black)
+AddRelTag("service1", $textColor="red")
+AddRelTag("service2", $lineColor="red")
+AddRelTag("service1&amp;service2", $textColor="red", $lineColor="red")
+
+Container(spa, "SPA", "angular", "The main interface that the customer interacts with via v1.0", $tags="v1.0")
+Container(spaAdmin, "Admin SPA", "angular", "The administrator interface that the customer interacts with via new v1.1", $tags="v1.1")
+Container(api, "API", "java", "Handles all business logic (incl. new v1.1 extensions)", $tags="v1.0&amp;v1.1+v1.0+v1.1")
+Container(spa2, "SPA2", "angular", "The main interface that the customer interacts with via v1.0", $tags="v1.0+fallback")
+Container(spaAdmin2, "Admin SPA2", "angular", "The administrator interface that the customer interacts with via new v1.1", $tags="fallback+v1.1")
+
+Container(services, "Services", "techn", $tags="micro service")
+Container(fileStorage, "File storage", "techn", $tags="storage")
+
+Rel(spa, api, "Uses", "https")
+Rel(spaAdmin, api, "Uses", "https")
+Rel_L(spa, spa2, "Updates", "https")
+Rel_R(spaAdmin, spaAdmin2, "Updates", "https")
+
+Rel_D(api, services, "uses service1 via this call", $tags="service1")
+Rel_D(api, services, "uses service2 via this call", $tags="service2")
+Rel_D(services, fileStorage, "both services stores via this call", $tags="service1&amp;service2+service1+service2")
+
+SHOW_LEGEND(false)
+@enduml
+</code></pre>
+
+<p><img src="https://www.plantuml.com/plantuml/png/jLLHRzCm47xlhp01JQswjMkOc8GqQMCh36d0r6xYSRh4byJWs97jTEFVOyTrI9l0nCFwOllkk-_Ed-_ISsr0cRhaerTCfBocI0fZAlr-FbVmECkPAUgargXIAGmACqjbEQyu21Tpf0tbB9bVdXpTEjFzbvjv2TgWigQ7Ini1JA2QLOv_T5zHCBZaM5gUjVd5SLoXqb8SaZUPnLvABjLPb2j44Kr65vHkiNUGZwFDOdOSxI9VqzEtn_6fioPIKLIxza6EnJv7Pdz9rkVmzk4w3WQ9AE2xHP_8s_j46N2UGFgpYSW3-gJvMVG-l6IfaaIZsh0KNOmkeCAp9SiBisOKwTgTnvDU7csaWhmJifAriFWFyYc4XBTP8VVlad1Rs25fbeRGUZoPpzzSq-1JkBn26WtXOeVZJE0pkCL12EWJ3rACskOQwmeEIRI-lOZi0YAlEIYtlIkGb1P2c32eCaYHc08CCTQUrbQL4fNtGMeqUMIc81i693IQWLoV-RQRxAQxe2KJDaEpak7Cu7nC6mLM_lyjGU0Z2ItMbh7OAGCgvYgu_UmI_e0DkFKQ1EMe2N1ExD1QeDQ4ovobPEocUzOo4oin2isaq9DEbj3RKxURkjt-tMElTVnYOa_3N0og7dTbZrzUzr1CqA9RakzOxGJPRbqH1jD2j0HxOzkzKiOuhlrish2FzaJ2gFPfWiTMi4BkUzwtmBtsUPkljlLxjrVh7vY76q-oVL8__ptGgaCLTd-1D_WhtvSTQMgREfmNZSYcO9gam7ddTbk_fNcU9Nw69MvP_X3iQfr8KxJiZUXs6IRjVw2cmJBjv1kjhxzzVxXPVbf-lHfdm3LEHkSegFlV-mq0" alt="merged tags" title="merged tags" /></p>
+
+<p><strong>Sample with tag dependent sprites and custom legend text</strong></p>
+
+<pre><code class="language-plantuml">@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define osaPuml https://raw.githubusercontent.com/Crashedmind/PlantUML-opensecurityarchitecture2-icons/master
+!include osaPuml/Common.puml
+!include osaPuml/User/all.puml
+
+!include &lt;office/Servers/database_server&gt;
+!include &lt;office/Servers/file_server&gt;
+!include &lt;office/Servers/application_server&gt;
+!include &lt;office/Concepts/service_application&gt;
+!include &lt;office/Concepts/firewall&gt;
+
+AddExternalPersonTag("anonymous_ext", $sprite="osa_user_black_hat", $legendText="anonymous user")
+AddPersonTag("customer", $sprite="osa_user_large_group", $legendText="aggregated user")
+AddPersonTag("admin", $sprite="osa_user_audit,color=red", $legendSprite="osa_user_audit,scale=0.25,color=red", $legendText="administration user")
+
+AddContainerTag("webApp", $sprite="application_server", $legendText="web app container")
+AddContainerTag("db", $sprite="database_server", $legendText="database container")
+AddContainerTag("files", $sprite="file_server", $legendText="file server container")
+AddContainerTag("conApp", $sprite="service_application", $legendText="console app container")
+
+AddRelTag("firewall", $textColor="$ARROW_COLOR", $lineColor="$ARROW_COLOR", $sprite="firewall,scale=0.3,color=red", $legendText="firewall")
+
+Person_Ext(anonymous_user, "Bob", $tags="anonymous_ext")
+Person(aggregated_user, "Sam, Ivone", $tags="customer")
+Person(administration_user, "Bernd", $tags="admin")
+
+System_Boundary(c1, "techtribes.js"){
+    Container(web_app, "Web Application", "Java, Spring MVC, Tomcat 7.x", $tags="webApp")
+    ContainerDb(rel_db, "Relational Database", "MySQL 5.5.x", $tags="db")
+    Container(filesystem, "File System", "FAT32", $tags="files")
+    ContainerDb(nosql, "NoSQL Data Store", "MongoDB 2.2.x", $tags="db")
+    Container(updater, "Updater", "Java 7 Console App", $tags="conApp")
+}
+
+Rel(anonymous_user, web_app, "Uses", "HTTPS", $tags="firewall")
+Rel(aggregated_user, web_app, "Uses", "HTTPS", $tags="firewall")
+Rel(administration_user, web_app, "Uses", "HTTPS", $tags="firewall")
+
+Rel(web_app, rel_db, "Reads from and writes to", "SQL/JDBC, port 3306")
+Rel(web_app, filesystem, "Reads from")
+Rel(web_app, nosql, "Reads from", "MongoDB wire protocol, port 27017")
+
+Rel_U(updater, rel_db, "Reads from and writes data to", "SQL/JDBC, port 3306")
+Rel_U(updater, filesystem, "Writes to")
+Rel_U(updater, nosql, "Reads from and writes to", "MongoDB wire protocol, port 27017")
+
+Lay_R(rel_db, filesystem)
+
+SHOW_LEGEND()
+@enduml
+</code></pre>
+
+<p><img src="https://www.plantuml.com/plantuml/png/dLJTRkCs4xttKt2DlN00nyewNxu0HRDOnqwxNJYRr3_DfJ0Inx9QYbH9AevHzDqxf6tHiPMVDbSHvvmpXpE7_c8iQ5iLelKXbwceEBAbjQNv8Oeqh7fPRfTLKXdKgP8MfUsbgeXA0T9nJetb8a-YuVzExztH_7OS5M0iQZgAXyI0NABkbKw_zO7ZWZwPCd1F1-_eCzHWbiYBNF9er-1KbIWDffNExHfqkimjfhRIs3_DYMks1i9rjksYeIeA9RsNu-BSa6SGObCEzH_LOf6d64rHFw8s4GSB2HYCZJ_u_39oaOjteA0iHPw2pPLy6Ko3JB6q9d88EeZtMA_15xd65GZnkTKQS7xpP55B4FVKLyaPP9qsI2NNXQfCZ4-stMKVJKbJnQksCX2xPSI9WFIFU0c-AZ13oMU4lGfKvd3j4zTXJpcjZ5K5waPH0Jh3EDEgAezaiqnZ1XPviowuC3IAGiLpsqsLKFfA8m_2qsQaIK7WrLclVn58HsvSjznOxKUzS-GirTdshbQO3CfotzRnNW-rYSC8nTAT4YaV2VDaNpI4hq4nb5-NTBaq-whke5dHbzYczBee5Gy6q13LGtKY6INmQ0fEVeB22-yYxBYMM4E_glR7mMHozn0FxyPt4ozBrAPIC5GhrOi_Vsdl0UlCRC8Nq-lfr9dtEUgozhLAl378pDN1OphP4ZiXqJlM58ek--LHIGpa-hq4thFirHrHInve7kHSJjV6OX5VgqfoqEjE-ed05jEbrNc2flUxQP_yrMBqLo-kGmbqwo7W0sLny6nHxM_m25tctexCsErlmowRgOBAxBBt5FflWt_oN7cKT3IAc2UaGulqcY3OQ9jF9t-xdluwPXUzYtqrdXmgTNnQ_Ts8z9EBu-QcRVSvc9tt0zj36wn8PVuK1F-kN4jdWasjqXiRIcPgTCtwlVuRHggIW_Khc6_-sms9NJgK3x8RHTYeaflH_DrgqH2EmXEcFpTedDhNsUn-6WH223q_vEY_2Xm6wj-AU9MQiBTXu8Ojj2eOICvMxhaPPfKJeub7tqRNb9vIQSlEpy_-lt4JTCA6dsaTmdPR38Zz_Qt89IkriYfLOjkiVtdswN9hEvw71RvXd53mbliWT-3_eRxy4IvSe7bSxxxE6DRnf7vWeJsLfb_fbszyy_FDzr7dfFK59QyAyGy0" alt="tags with sprites and custom legend" title="tags with sprites and custom legend" /></p>
+
+<p><strong>Custom schema definition</strong></p>
+
+<p>If the custom (color) schema is defined via <code class="language-plaintext highlighter-rouge">UpdateElementStyle()</code> then the legend of existing elements is updated too.</p>
+
+<pre><code class="language-plantuml">@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+!$COLOR_A_5 = "#7f3b08"
+!$COLOR_A_4 = "#b35806"
+!$COLOR_A_3 = "#e08214"
+!$COLOR_A_2 = "#fdb863"
+!$COLOR_A_1 = "#fee0b6"
+!$COLOR_NEUTRAL = "#f7f7f7"
+!$COLOR_B_1 = "#d8daeb"
+!$COLOR_B_2 = "#b2abd2"
+!$COLOR_B_3 = "#8073ac"
+!$COLOR_B_4 = "#542788"
+!$COLOR_B_5 = "#2d004b"
+!$COLOR_REL_LINE = "#8073ac"
+!$COLOR_REL_TEXT = "#8073ac"
+
+UpdateElementStyle("person", $bgColor=$COLOR_A_5, $fontColor=$COLOR_NEUTRAL, $borderColor=$COLOR_A_1, $shadowing="true")
+UpdateElementStyle("external_person", $bgColor=$COLOR_B_5, $fontColor=$COLOR_NEUTRAL, $borderColor=$COLOR_B_1)
+UpdateElementStyle("system", $bgColor=$COLOR_A_4, $fontColor=$COLOR_NEUTRAL, $borderColor=$COLOR_A_2)
+UpdateElementStyle("external_system", $bgColor=$COLOR_B_4, $fontColor=$COLOR_NEUTRAL, $borderColor=$COLOR_B_2)
+UpdateRelStyle($lineColor=$COLOR_REL_LINE, $textColor=$COLOR_REL_TEXT)
+
+Person(customer, "Personal Banking Customer")
+System(banking_system, "Internet Banking System")
+
+System_Ext(mail_system, "E-mail system")
+System_Ext(mainframe, "Mainframe Banking System")
+
+Rel(customer, banking_system, "Uses")
+Rel_Back(customer, mail_system, "Sends e-mails to")
+Rel_Neighbor(banking_system, mail_system, "Sends e-mails")
+Rel(banking_system, mainframe, "Uses")
+
+SHOW_LEGEND()
+@enduml
+</code></pre>
+
+<p><img src="https://www.plantuml.com/plantuml/png/dPHVRzem5CNVyodI34qWyIU4KA99I6rOj5LAeUAFjhV8YIyGrN6GxQZqsy-9iyMqwIeXNk1tpxdt7jlYZWl4H94HuoQb2Iamc4SXJlpRQCJGo_2GYcCH5nnOabC1L0oJF1kT2AAbPy059cayMhY3fnBj7iDHXhW09b6qA1rdCJoLtOsRpc8LhjRHVJGrvwRrPRQVnBPdQTojU3oPUlQjpYSL1zjpngxEdOhlSUpTJdG-LXp0ZhK-os2tNT-7gZOhFqtDhptOmmXYdQiPiODYxEXSxUJPimbATAuoJ5rdvdawLvaTRDkkrdyTX57ui0nQcgdYDlYzlIWQknD60W826L2n4Qy4kjO96C-frJSxyM6HavpDcxEMS9zJeV3bKPJwd65WRpnZMU17XFENb1xcbc05MBtMmN0Mm2WYqOSR-5Ti86-ZVHn_vGAorfpk5JcTJq9zECw_OfpVZ5i3KQCw9AMWgPe7qJU_2ZXhxRNtq3ECf-gukqd1HPu1wvkM8eYOFgBFyjhCHLsJDxUfSdHZLQbZISy3BOE2-ETHGkceBL5m5jqCfQJn18FojybhvHiXtJEKWPGz_ltUqbl6rpP_jzME0vSogOfyb3nhqijDDa0nDw7QXviYhprBI0z7UVxlulx7hQnj3XMYsShO_5pzYiBWHx3ytkqPTx9B-UVs1m00" alt="custom schema" title="custom schema" /></p>
+
+<h2 id="element-properties">Element properties</h2>
+
+<p>A model can be extended with (a table of) properties that concrete deployments or more detailed concepts can be documented:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">SetPropertyHeader(col1Name, col2Name, ?col3Name, ?col4Name)</code>
+The properties table can have up to 4 columns. The default header uses the column names “Name”, “Description”.</li>
+  <li><code class="language-plaintext highlighter-rouge">WithoutPropertyHeader()</code>
+If no header is used, then the second column is bold.</li>
+  <li><code class="language-plaintext highlighter-rouge">AddProperty(col1, col2, ?col3, ?col4)</code>
+(All columns of) a property which will be added to the next element.</li>
+</ul>
+
+<p>Following sample uses all 3 different property definitions (and the aligned deployment node).</p>
+
+<pre><code class="language-plantuml">@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+
+' default header Property, Value
+AddProperty("Name", "Flash")
+AddProperty("Organization", "Zootopia")
+AddProperty("Tool", "Internet Explorer 7.0")
+Person(personAlias, "Label", "Optional Description (with default property header)")
+
+SetPropertyHeader("Property","Value", "Description")
+AddProperty("Prop1", "Value1", "Details1")
+AddProperty("Prop2", "Value2", "Details2")
+Deployment_Node_L(nodeAlias, "Label", "Optional Type", "Optional Description (with custom property header)") {
+
+  WithoutPropertyHeader()
+  AddProperty("PropC1", "ValueC1")
+  AddProperty("PropC2", "ValueC2")
+  Container(containerAlias, "Label", "Technology", "Optional Description (without property header)")
+}
+
+System(systemAlias, "Label", "Optional Description (without properties)")
+
+Rel(personAlias, containerAlias, "Label", "Optional Technology")
+@enduml
+</code></pre>
+
+<p><img src="https://www.plantuml.com/plantuml/png/ZP9HRzCm4CVVyobCNaYbhc4L4X9FcpeGI6Mhe834ItLDZiQIuxFiiqP0V7VEqRfiQO0z-NB--P_xnRa839vZQx9dsbOcrgWQPXTUbwM7syL1SnFtCQ2lo39QNbJKbiw0JMVE0jT6xylLoxDDQdt-i2vR28nUMhihT8QwDXrowGNPSrNZTuY6LODGerSRJmuzTtFr1Kp4xBAkZwqYluOMyxdAtne8JJvxl7dZ3s3rJs1DDa7VY9YSXZ6t9J9f_xrbz1PPlVaXGtdqwjNYXS0Rz85iuVhbqcW80gzXZ_sf6vVomQWh39NN_PCgRZKtzoRkxbLtIZF9p3uX7oTurtUB_FYSp_Easeiz21sFdQhpnFImL8bcq2QSJw7BUtJv05qAEjp1xffgtAqBAylVHRUTm_-OLp4mjHFYwbUMAVLL68hZ3p2JdPEnLuEYbDF8e2PbGbPanSvAPdMiJdIsM3MM31swVxjGdBp0ttA5NM1iYz0lu_od9MeC_T_m4StZ_sjgxb7k82095sZhs9e_" alt="properties sample" title="properties sample" /></p>
+
+<h2 id="version-information">Version information</h2>
+
+<p>C4-PlantUML offers version information like PlantUML with its <code class="language-plaintext highlighter-rouge">%version()</code> call.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">C4Version()</code>: Current C4-PlantUML version (e.g. <code class="language-plaintext highlighter-rouge">2.4.0beta1</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">C4VersionDetails()</code>: (Floating) version details with the current PlantUML and C4-PlantUML version. (It can be referenced via the alias <code class="language-plaintext highlighter-rouge">C4VersionDetailsArea</code>.)</li>
+</ul>
+
+<pre><code class="language-plantuml">@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+' existing plantuml version as text
+%version()
+
+' new C4-Plantuml version as text 
+C4Version()
+
+' new C4-Plantuml version details (incl. PlantUML version) as table
+C4VersionDetails()
+
+' version functions used in e.g. footer
+footer drawn with PlantUML v. %version() and C4-PlantUML v. C4Version()
+@enduml
+</code></pre>
+
+<p><img src="https://www.plantuml.com/plantuml/png/ZOynJyCm48Nt_8fZGBH3dQKJKwKmWiG2Axh4r-GavnBvpgG_dvXWjGjIfqJltllytaaDewKnL0yiNKYUO32RzRck8owkPnjIcvHYDucHcEkciPu3IiuSr7pWjcwEX_SiVRozrYEgKLobhsPD80j5DsT-zGHqOJMM7We0lYagJmAeO7Inwl5FsEspNsY1pFx73LLp_Bp7xycGWy8kJtHGkfRx_XU8RQ0hy6MBRDp2EIVfRFrHI4eUM81Sx-0yJKQnsZxW8ou22zjmyv23wp90yQLckTuEEP7ujVqF" alt="version sample" title="version sample" /></p>
+
+<h2 id="snippets-for-visual-studio-code">Snippets for Visual Studio Code</h2>
+
+<p>Because the PlantUML support inside of Visual Studio Code is excellent with the <a href="https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml">PlantUML extension</a>, you can also find VS Code snippets for C4-PlantUML at <a href=".vscode/C4.code-snippets">.vscode/C4.code-snippets</a>.</p>
+
+<p>Project level snippets are now supported in <a href="https://code.visualstudio.com/updates/v1_28#_project-level-snippets">VSCode 1.28</a>.
+Just include the <code class="language-plaintext highlighter-rouge">C4.code-snippets</code> file in the <code class="language-plaintext highlighter-rouge">.vscode</code> folder of your project.</p>
+
+<p>It is possible to save them directly inside VS Code: <a href="https://code.visualstudio.com/docs/editor/userdefinedsnippets#_creating-your-own-snippets">Creating your own snippets</a>.</p>
+
+<p><img src="images/vscode_c4plantuml_snippets.gif" alt="C4-PlantUML Snippets Video" /></p>
+
+<h2 id="live-templates-for-intellij">Live Templates for IntelliJ</h2>
+
+<h3 id="prerequisites">Prerequisites</h3>
+<p><a href="https://graphviz.gitlab.io/download/">Graphviz download</a><br />
+<a href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration">PlantUML Integration</a></p>
+
+<h3 id="install">Install</h3>
+
+<ol>
+  <li>Download <a href="intellij/c4_live_template.zip">IntelliJ live template</a>.</li>
+  <li>Select <code class="language-plaintext highlighter-rouge">File | Manage IDE Settings | Import Settings</code> from the IntelliJ IDEA menu.</li>
+  <li>Specify the path to the downloaded ZIP file: <code class="language-plaintext highlighter-rouge">c4_live_template.zip</code>.</li>
+  <li>In the Import Settings dialog, select the Live templates checkbox and click OK.</li>
+  <li>Restart IntelliJ.</li>
+</ol>
+
+<h3 id="usage">Usage</h3>
+
+<ul>
+  <li>Create new PlantUML file (.puml).</li>
+  <li>Type <code class="language-plaintext highlighter-rouge">c4_</code> for displaying artifacts templates for C4-PlantUML</li>
+  <li>Live template create correct C4 model artifact with stubbed arguments.
+    <ul>
+      <li>E.g. alias, label, type, technology, description</li>
+    </ul>
+  </li>
+  <li>Replace stubbed arguments with desired values.</li>
+</ul>
+
+<p><img src="images/intellij_c4plantum_live_template1.gif" alt="C4-PlantUML Snippets Video" />
+<img src="images/intellij_c4plantum_live_template2.gif" alt="C4-PlantUML Snippets Video" /></p>
+
+<h2 id="layout-options">Layout Options</h2>
+
+<p>C4-PlantUML also comes with some layout options to make it easy and reuseable to create nice and useful diagrams:</p>
+
+<ul>
+  <li><a href="LayoutOptions.md#layout_top_down-or-layout_left_right">LAYOUT_TOP_DOWN or LAYOUT_LEFT_RIGHT</a></li>
+  <li><a href="LayoutOptions.md#layout_with_legend">LAYOUT_WITH_LEGEND</a></li>
+  <li><a href="LayoutOptions.md#layout_as_sketch">LAYOUT_AS_SKETCH</a></li>
+</ul>
+
+<h2 id="advanced-samples">Advanced Samples</h2>
+
+<p>The following advanced samples are reproductions with C4-PlantUML from official <a href="https://c4model.com/#examples">C4 model samples</a> created by <a href="https://simonbrown.je/">Simon Brown</a>.</p>
+
+<p>The core diagram samples from <a href="https://c4model.com/#coreDiagrams">c4model.com</a> are available <a href="samples/C4CoreDiagrams.md">here</a>.</p>
+
+<h3 id="techtribesjs">techtribes.js</h3>
+
+<p>Source: <a href="samples/C4_Container%20Diagram%20Sample%20-%20techtribesjs.puml">C4_Container Diagram Sample - techtribesjs.puml</a></p>
+
+<p><img src="https://www.plantuml.com/plantuml/png/ZLHDR-Cs4BthLqnzMGVGshj9jm5wMYTEazqw7uta1Zq9b3YMcLAaIb9nZAB_lKDAaQsuWEk39G_V3D-RUUElrZ7Zcah2o66nTaRaQ9_jAFf1g48s767jN6r_dauDsqnAuTPDtbWqXLOEbPiKkfhMaYbVugDrN8fyUldZnmSVMjukfXMp3Ws5ialAO4AXcTI4ZJv0eoYveYBWrWWhBQNU25M2910mnM5mB8obDmrqEKXTC2ctLADdUNX1j9ZzSRzCi_J-8PlVFzsDJw8FNMYMPCclL-db3SMwqDEtz2PRN5rVtSqf64KFQAnMsTMh6pEbrRRIZSsyy1X6ixS0B2amEkd0OrQM1alcaFV8Fl8UoYkXX7M6EQ5L3nz4trAYP6iTLjc5RXHdPZikFiVxqvhGk4x-Ze0-uQllmtY3USRgcj1FcCEihgKeGkaHXRwp5nP3KXlVyzlVBsD8TKN7S3vvzUSpFmyBdfhrZNyHk84QTIqnXlRc63eRn80lzA30iyxf6rqnWPNH5Ssk6nTumZ5mGHvYCiptMmeM2wUzo27pUJusA3EU4uz7b84p9SsPOpcpwEdTRfFV5l1bygLbcr0Pj0VymXCgh79IiHOrHPZyqxxdcpDUUlYrS3TD3WPhtQaue3PU2OasJ8Ik_OL-G3kVaVyvIyzEz-XOPAPOWr0SNz7-bqobxL-I4kuqoGa28UG6YLgLUdu1fvFJWSZGsCSacSuSlQmGkOLnBdK9HDlPaz1Sjq5qzf1-KtFcWjkMxTkR5-3SewoMw9qowW4MQgE3wBWhEknJkAtp0MW536onHjv8v4334fx3Fxs9_KAvZN0jXRHz8yJUSVidGwVjBSD3BzFIsGKzWxg8_76meZlZqmvPh-KcJHyImXDwkAV7uSDTFPeISlhZFHiptetEDsnZX6-jqpwLHZ_zFh-W5QorSN1szkadAZIeitFTeDPxMB3J4B5df8qmwAVfTA5bTzdf-QVFvntjRDdRunXnGh4Zx0Vb1loVUl47k23WIBl-hvnTrPtZhj7rXWQXLjfKOQoxdUdRrazqK6hdJe8EA-IwSL0tkHG559fZkn_2QIFmIDNErg5elqoD5QhqYnx8zSi-BEMrBjWsU-p_CNUjfgElg7XJoNy1" alt="techtribesjs" title="techtribesjs" /></p>
+
+<h3 id="message-bus-and-microservices">Message Bus and Microservices</h3>
+
+<p>Source: <a href="samples/C4_Container%20Diagram%20Sample%20-%20message%20bus.puml">C4_Container Diagram Sample - message bus.puml</a></p>
+
+<p><img src="https://www.plantuml.com/plantuml/png/bLLDZzis4BtxLqpL7ho0TuqKFHLO8FumcWJUNSUoaQCmeiOI4OeaICgkM_I_bvHiXN7LJRA7jJYSUU_D38TyQnqQrzG2afginPBonYQZdxXaeYa8AkUq_NqwDNXwABch6hzDXYdfIBe7fkgf5YW3mBrrXU3vTF7R_IQOza_hQOtMaV6cRE4Za4io3zhxZaQpebW9gZt83ijnKdDc57Za8sUKJE0NMw6cnnKlAvVoWeeqhCTtVYSl5qeeyvWib947eKvavg9fWmwUvB9vghYZvEwMnpfbi8mOjggH7dwk_XnW42tzv_Ch-AFqtSkdRBFQfY_FsSj-jtx_l1fxyuQCLNBC6izOavd0elzAPd0rjm1dwwZEva48clEOlV4kLszuBm_ArEYuaiaT_3q2_zVNSenQnyuphGLddREtVy0ZMcQuTXEOoR8HQ89v9dpHRA_1WbDGeyIIm5N43MYZ3bpux6xOhX7PfKynTTgPhhGJIBNXieIvKYuOTnM1LbmwK0T0niXQy9drAe17YVfIEomjFCBDmRXLT3coMTvOp_7KhM3Us42vnJpdxkbZIszGMgsCQqczEvT10Hr9EliVM4F1rSkFCjrURN6gsoO_Xz-58NHaGOOK1BTKG84EMx8U37HZjB9alpy_R0hk8X6pi8u5B7wUFZolTk5pOzIH5sH1cH8bjsqfxq_U12rCK710neN__04Do_nBtuiyRlaI7UPeMnql1faWUFCh2wlKAKFscxtjXd60CMg0funh7tC-dTEFwuWEh-N_Ymeuah6UhZrjGlGT_z8MBA1IxBNkn0g7--9teww4LP2pEfBibxswg0Q0kMhSvV21gz11XKVo_xGcISMmWdz6eos9R1dTATtuxplHoRlTRfDwnywhtHkOsBqkqFrFSo1KgGnOQC-IJU23lzMcCUv-u1BeLAGa2zldf0B89yfJnJwJUoKuck0Uf9VMj5eZq1Pd02KweNt5krRpxYPSpXUNuAy81mRzEpN4CDry_J3407bl6aoa2xiXYuzY7z5HTJ6ZDPwpxH3RLqZNfsoz-cFrlFHFs5kVH7Yg_mK0" alt="messagebus" title="messagebus" /></p>
+
+<h2 id="background">Background</h2>
+
+<p><a href="https://plantuml.com/">PlantUML</a> is an open source project that allows you to create UML diagrams.
+Diagrams are defined using a simple and intuitive language.
+Images can be generated in PNG, in SVG or in LaTeX format.</p>
+
+<p>PlantUML was created to allow the drawing of UML diagrams, using a simple and human readable text description.
+Because it does not prevent you from drawing inconsistent diagrams, it is a drawing tool and not a modeling tool.
+It is the most used text-based diagram drawing tool with <a href="https://plantuml.com/running">extensive support into wikis and forums, text editors and IDEs, use by different programming languages and documentation generators</a>.</p>
+
+<p>The <a href="https://c4model.com/">C4 model</a> for software architecture is an “abstraction-first” approach to diagramming, based upon abstractions that reflect how software architects and developers think about and build software.
+The small set of abstractions and diagram types makes the C4 model easy to learn and use.
+C4 stands for context, containers, components, and code — a set of hierarchical diagrams that you can use to describe your software architecture at different zoom levels, each useful for different audiences.</p>
+
+<p>The C4 model was created as a way to help software development teams describe and communicate software architecture, both during up-front design sessions and when retrospectively documenting an existing codebase.</p>
+
+<p>More information can be found here:</p>
+
+<ul>
+  <li><a href="https://c4model.com/">The C4 model for software architecture</a></li>
+  <li><a href="https://real-world-plantuml.com/">REAL WORLD PlantUML - Sample Gallery</a></li>
+  <li><a href="https://www.codingthearchitecture.com/2017/04/27/visualising_and_documenting_software_architecture_cheat_sheets.html">Visualising and documenting software architecture cheat sheets</a></li>
+  <li><a href="https://www.codingthearchitecture.com/2016/12/08/plantuml_and_structurizr.html">PlantUML and Structurizr - Create models not diagrams</a></li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/jekyll-blog/tags/#c4" class="page__taxonomy-item" rel="tag">C4</a><span class="sep">, </span>
+    
+      <a href="/jekyll-blog/tags/#uml" class="page__taxonomy-item" rel="tag">UML</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/jekyll-blog/categories/#uml" class="page__taxonomy-item" rel="tag">UML</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新时间:</strong> <time datetime="2021-10-11T00:00:00+08:00">2021-10-11</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">分享</h4>
+  
+
+  <div>
+    <wb:share-button appkey="956824685" addition="text" type="button" default_text="快来看鸭，我发现一篇“碉堡了”的博客" ralateUid="2816811374" pic="https%3A%2F%2Fwx3.sinaimg.cn%2Flarge%2Fa6a681ebgy1gp2009jj3kj20k00k0ta9.jpg"></wb:share-button>
+  </div>
+  <a href="https://twitter.com/intent/tweet?via=lwpk110&text=plantUML+for+C4+model%E6%B1%89%E5%8C%96%28todo%29%20http%3A%2F%2Fblog.lwpk110.top%2Fjekyll-blog%2Fuml%2FplantUML-for-C4-model%25E6%25B1%2589%25E5%258C%2596%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.lwpk110.top%2Fjekyll-blog%2Fuml%2FplantUML-for-C4-model%25E6%25B1%2589%25E5%258C%2596%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fblog.lwpk110.top%2Fjekyll-blog%2Fuml%2FplantUML-for-C4-model%25E6%25B1%2589%25E5%258C%2596%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/jekyll-blog/uml/C4-Model/" class="pagination--pager" title="C4 Model 介绍
+">上一页</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">下一页</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">留下评论</h4>
+      <section id="utterances-comments"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">猜您还喜欢</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/uml/C4-Model/" rel="permalink">C4 Model 介绍
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-10-11T00:00:00+08:00">2021-10-11</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/java/OSGI/" rel="permalink">OSGI
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-27T00:00:00+08:00">2021-09-27</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">OSGi（开放服务网关计划）是一个用于开发和部署模块化软件程序和库的Java框架。
+OSGi 有两个部分。第一部分是称为 bundles 的模块化组件的规范，它们通常被称为插件。该规范为 bundle 的生命周期定义了基础设施，并确定了 bundle 将如何交互。OSGi 的第二部分是 Java 虚拟机 ( JV...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/linux/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="permalink">vim 常用命令
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-08-30T00:00:00+08:00">2021-08-30</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">作为开发者，我们将经常处理文本——词表、配置文件等。我们将在本地机器上进行很多工作，我们可以使用我们喜欢的任何文本编辑器。在远程机器上，
+编辑工具将受到限制。如果安装了 nano ，一个易于使用的终端文本编辑器，但它不是很强大。
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/microservice/%E5%BA%94%E7%94%A8%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84/" rel="permalink">使用微服务架构语言
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-08-03T00:00:00+08:00">2021-08-03</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">微服务架构模式语言由多个模式组构成。模式语言的价值超过了其各个模式的总和，因为它定义了模式之间的这些关系：
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      输入您要搜索的关键词...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="输入您要搜索的关键词..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/jekyll-blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+    <li><wb:follow-button uid="2816811374" type="red_1" width="67" height="24" ></wb:follow-button> </li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Steven's Blog. 技术来自于 <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. 备案号: 鄂ICP备2021011613号</div>
+
+<div align="center">
+    
+            <!-- https://www.websiteout.net/counter.php?C=24&D=7&N=10000&M=0 -->
+
+
+<script type="text/javascript" src="//counter.websiteout.net/js/24/7/1000/0"></script>
+        
+</div>
+
+
+<!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+      </footer>
+    </div>
+
+    
+  <script src="/jekyll-blog/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/jekyll-blog/assets/js/lunr/lunr.min.js"></script>
+<script src="/jekyll-blog/assets/js/lunr/lunr-store.js"></script>
+<script src="/jekyll-blog/assets/js/lunr/lunr-en.js"></script>
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ff6582f8dd1d23d56f977e28f7ec3fc3";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JF1M2LW00G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JF1M2LW00G', { 'anonymize_ip': true});
+</script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'lwpk110/jekyll-blog');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+<script src="https://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+
+
+  </body>
+</html>

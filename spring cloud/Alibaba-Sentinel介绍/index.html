@@ -1,0 +1,1088 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html xmlns:wb="http://open.weibo.com/wb" lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Alibaba Sentinel介绍 | SweetDumpling</title>
+<meta name="description" content="顾名思义，Sentinel 是微服务的强大守护者。它提供流量控制、并发限制、断路和自适应系统保护等功能，以保证其可靠性。它是阿里巴巴集团积极维护的开源组件。此外，它正式成为 Spring Cloud Circuit Breaker. 的一部分。">
+
+
+  <meta name="author" content="steven lu">
+  
+  <meta property="article:author" content="steven lu">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="SweetDumpling">
+<meta property="og:title" content="Alibaba Sentinel介绍">
+<meta property="og:url" content="http://blog.lwpk110.top/jekyll-blog/spring%20cloud/Alibaba-Sentinel%E4%BB%8B%E7%BB%8D/">
+
+
+  <meta property="og:description" content="顾名思义，Sentinel 是微服务的强大守护者。它提供流量控制、并发限制、断路和自适应系统保护等功能，以保证其可靠性。它是阿里巴巴集团积极维护的开源组件。此外，它正式成为 Spring Cloud Circuit Breaker. 的一部分。">
+
+
+
+
+
+  <meta name="twitter:site" content="@lwpk110">
+  <meta name="twitter:title" content="Alibaba Sentinel介绍">
+  <meta name="twitter:description" content="顾名思义，Sentinel 是微服务的强大守护者。它提供流量控制、并发限制、断路和自适应系统保护等功能，以保证其可靠性。它是阿里巴巴集团积极维护的开源组件。此外，它正式成为 Spring Cloud Circuit Breaker. 的一部分。">
+  <meta name="twitter:url" content="http://blog.lwpk110.top/jekyll-blog/spring%20cloud/Alibaba-Sentinel%E4%BB%8B%E7%BB%8D/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2021-08-02T00:00:00+08:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://blog.lwpk110.top/jekyll-blog/spring%20cloud/Alibaba-Sentinel%E4%BB%8B%E7%BB%8D/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Steven's Blog",
+      "url": "http://blog.lwpk110.top/jekyll-blog/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="code-5agakm6Ce9">
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/jekyll-blog/feed.xml" type="application/atom+xml" rel="alternate" title="SweetDumpling Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/jekyll-blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/svg"  href="/favicon.svg">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/jekyll-blog/">
+          Sweet-Dumpling
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/jekyll-blog/">首页</a>
+            </li><li class="masthead__menu-item">
+              <a href="/jekyll-blog/years/">博客</a>
+            </li><li class="masthead__menu-item">
+              <a href="/jekyll-blog/tags/">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/jekyll-blog/comming-soon/">画廊</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">切换搜索</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #333; background-image: url('');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Alibaba Sentinel介绍
+
+        
+      </h1>
+      
+        <p class="page__lead">顾名思义，<code class="language-plaintext highlighter-rouge">Sentinel</code> 是微服务的强大守护者。它提供<strong>流量控制</strong>、<strong>并发限制</strong>、<strong>断路</strong>和<strong>自适应系统保护</strong>等功能，以保证其可靠性。它是阿里巴巴集团积极维护的开源组件。此外，它正式成为 <code class="language-plaintext highlighter-rouge">Spring Cloud Circuit Breaker.</code> 的一部分。
+
+</p>
+      
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-08-02T00:00:00+08:00">2021-08-02</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+      
+      
+    </div>
+  
+  
+    <span class="page__hero-caption">官网: <a href="https://sentinelguard.io/zh-cn/"><strong>alibaba-Sentinel</strong></a>
+</span>
+  
+</div>
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://blog.lwpk110.top/jekyll-blog/" itemprop="item"><span itemprop="name">首页</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/jekyll-blog/categories/#spring-cloud" itemprop="item"><span itemprop="name">Spring cloud</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Alibaba Sentinel介绍</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/jekyll-blog/assets/images/avatar.png" alt="steven lu" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">steven lu</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am an <strong>amazing</strong> person.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">关注</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">ShangHai China</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://weibo.com/u/2816811374" rel="nofollow noopener noreferrer"><i class="fab fa-weibo" aria-hidden="true"></i><span class="label">微博</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.lwpk110.top" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://www.facebook.com/profile.php?id=100070358688174" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:lwpk110@163.com">
+            <meta itemprop="email" content="lwpk110@163.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">电子邮箱</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Alibaba Sentinel介绍">
+    <meta itemprop="description" content="顾名思义，Sentinel 是微服务的强大守护者。它提供流量控制、并发限制、断路和自适应系统保护等功能，以保证其可靠性。它是阿里巴巴集团积极维护的开源组件。此外，它正式成为 Spring Cloud Circuit Breaker. 的一部分。">
+    <meta itemprop="datePublished" content="2021-08-02T00:00:00+08:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>顾名思义，<code class="language-plaintext highlighter-rouge">Sentinel</code> 是微服务的强大守护者。它提供<strong>流量控制</strong>、<strong>并发限制</strong>、<strong>断路</strong>和<strong>自适应系统保护</strong>等功能，以保证其可靠性。它是阿里巴巴集团积极维护的开源组件。此外，它正式成为 <code class="language-plaintext highlighter-rouge">Spring Cloud Circuit Breaker.</code> 的一部分。</p>
+
+<p>在本文中，我们将了解 <code class="language-plaintext highlighter-rouge">Sentinel</code> 的一些主要功能。此外，我们将看到如何使用它的示例、它的注释支持和它的监控仪表板</p>
+
+<figure style="width: 700px">
+  <img src="http://blog.lwpk110.top/jekyll-blog/assets/images/spring-cloud/sentinel.png" alt="" />
+  <figcaption>Sentinel 角色</figcaption>
+</figure>
+
+<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 目录</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#特性" id="markdown-toc-特性">特性</a>    <ul>
+      <li><a href="#流量控制" id="markdown-toc-流量控制">流量控制</a></li>
+      <li><a href="#熔断和降级" id="markdown-toc-熔断和降级">熔断和降级</a></li>
+      <li><a href="#自适应系统保护" id="markdown-toc-自适应系统保护">自适应系统保护</a></li>
+    </ul>
+  </li>
+  <li><a href="#使用" id="markdown-toc-使用">使用</a>    <ul>
+      <li><a href="#1-依赖" id="markdown-toc-1-依赖">1. 依赖</a></li>
+      <li><a href="#2-定义资源" id="markdown-toc-2-定义资源">2. 定义资源</a></li>
+      <li><a href="#3-定义流量控制规则" id="markdown-toc-3-定义流量控制规则">3. 定义流量控制规则</a></li>
+      <li><a href="#4-定义降级规则" id="markdown-toc-4-定义降级规则">4. 定义降级规则</a></li>
+      <li><a href="#5-定义系统保护规则" id="markdown-toc-5-定义系统保护规则">5. 定义系统保护规则</a></li>
+    </ul>
+  </li>
+  <li><a href="#注解支持" id="markdown-toc-注解支持">注解支持</a></li>
+  <li><a href="#监控仪表盘" id="markdown-toc-监控仪表盘">监控仪表盘</a>    <ul>
+      <li><a href="#1-启动仪表盘服务" id="markdown-toc-1-启动仪表盘服务">1. 启动仪表盘服务</a></li>
+      <li><a href="#2-添加依赖" id="markdown-toc-2-添加依赖">2. 添加依赖</a></li>
+      <li><a href="#链接服务到仪表盘" id="markdown-toc-链接服务到仪表盘">链接服务到仪表盘</a></li>
+    </ul>
+  </li>
+</ul>
+
+  </nav>
+</aside>
+
+<h2 id="特性">特性</h2>
+
+<h3 id="流量控制">流量控制</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Sentinel</code> 控制随机请求传入的速度，以避免微服务过载。这可确保我们的服务不会因流量激增而中断。它支持多种流量整形策略。当每秒查询数 (QPS) 过高时，这些策略会自动将流量调整为适当的策略。</p>
+
+<p>其中一些流量整形策略是：</p>
+
+<ul>
+  <li>直接拒绝模式–当每秒请求数超过设定的阈值时，它会自动拒绝进一步的请求；</li>
+  <li>慢启动预热模式–如果流量突然激增，此模式可确保请求计数逐渐增加，直到达到上限;</li>
+</ul>
+
+<h3 id="熔断和降级">熔断和降级</h3>
+
+<p>当一个服务同步调用另一个服务时，另一个服务可能会因某种原因关闭。在这种情况下，线程会被阻塞，因为它们一直在等待其他服务响应。这可能会导致资源耗尽，并且调用方服务也将无法处理进一步的请求。<strong>这称为级联效应，可以摧毁我们的整个微服务架构</strong>。</p>
+
+<p>为了防止这种情况，断路器出现在架构中。它将立即阻止对其他服务的所有后续调用。超时时间过后，会传递一些请求。如果它们成功，则断路器恢复正常流程。否则，超时时间将重新开始。</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Sentinel</code> 使用最大并发限制原理来实现熔断</strong>。它通过限制并发线程数来减少不稳定资源的影响。</p>
+
+<p><code class="language-plaintext highlighter-rouge">Sentinel</code> 还会降级不稳定的资源。当资源的响应时间太长时，对资源的所有调用都会在指定的时间窗口内被拒绝。这可以防止调用变得非常缓慢，从而导致级联效应的情况。</p>
+
+<h3 id="自适应系统保护">自适应系统保护</h3>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Sentinel</code> 会在系统负载过高时保护我们的服务器</strong> 。它使用 <code class="language-plaintext highlighter-rouge">load1</code>（系统负载）作为指标来启动流量控制。请求将在以下情况下被阻止：</p>
+
+<ul>
+  <li>当前系统负载（<code class="language-plaintext highlighter-rouge">load1</code>）&gt; 阈值（<code class="language-plaintext highlighter-rouge">highestSystemLoad</code>）；</li>
+  <li>当前并发请求（线程数）&gt; 估算容量（最小响应时间 * 最大 QPS）</li>
+</ul>
+
+<h2 id="使用">使用</h2>
+
+<h3 id="1-依赖">1. 依赖</h3>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.alibaba.csp<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>sentinel-core<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.8.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2-定义资源">2. 定义资源</h3>
+
+<p>使用 <code class="language-plaintext highlighter-rouge">Sentinel API</code> 在 <code class="language-plaintext highlighter-rouge">try-catch</code> 块中定义具有相应业务逻辑的资源：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="o">(</span><span class="nc">Entry</span> <span class="n">entry</span> <span class="o">=</span> <span class="nc">SphU</span><span class="o">.</span><span class="na">entry</span><span class="o">(</span><span class="s">"HelloWorld"</span><span class="o">))</span> <span class="o">{</span>
+    <span class="c1">// Our business logic here.</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"hello world"</span><span class="o">);</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">BlockException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// Handle rejected request.</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<h3 id="3-定义流量控制规则">3. 定义流量控制规则</h3>
+
+<p>这些规则控制流向我们的资源，例如阈值计数或控制行为——例如，直接拒绝或缓慢启动。我们使用 <code class="language-plaintext highlighter-rouge">FlowRuleManager.loadRules()</code> 来配置流规则：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">FlowRule</span><span class="o">&gt;</span> <span class="n">flowRules</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+<span class="nc">FlowRule</span> <span class="n">flowRule</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FlowRule</span><span class="o">();</span>
+<span class="n">flowRule</span><span class="o">.</span><span class="na">setResource</span><span class="o">(</span><span class="no">RESOURCE_NAME</span><span class="o">);</span>
+<span class="n">flowRule</span><span class="o">.</span><span class="na">setGrade</span><span class="o">(</span><span class="nc">RuleConstant</span><span class="o">.</span><span class="na">FLOW_GRADE_QPS</span><span class="o">);</span>
+<span class="n">flowRule</span><span class="o">.</span><span class="na">setCount</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+<span class="n">flowRules</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">flowRule</span><span class="o">);</span>
+<span class="nc">FlowRuleManager</span><span class="o">.</span><span class="na">loadRules</span><span class="o">(</span><span class="n">flowRules</span><span class="o">);</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>此规则定义了我们的资源<code class="language-plaintext highlighter-rouge">RESOURCE_NAME</code>每秒最多可以响应一个请求。</p>
+</blockquote>
+
+<h3 id="4-定义降级规则">4. 定义降级规则</h3>
+
+<p>使用降级规则，我们可以配置断路器的阈值 <code class="language-plaintext highlighter-rouge">请求计数</code>、<code class="language-plaintext highlighter-rouge">恢复超时</code>和其他设置。 我们使用 <code class="language-plaintext highlighter-rouge">DegradeRuleManager.loadRules(</code>) 配置降级规则：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">DegradeRule</span><span class="o">&gt;</span> <span class="n">rules</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">DegradeRule</span><span class="o">&gt;();</span>
+<span class="nc">DegradeRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DegradeRule</span><span class="o">();</span>
+<span class="n">rule</span><span class="o">.</span><span class="na">setResource</span><span class="o">(</span><span class="no">RESOURCE_NAME</span><span class="o">);</span>
+<span class="n">rule</span><span class="o">.</span><span class="na">setCount</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+<span class="n">rule</span><span class="o">.</span><span class="na">setTimeWindow</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+<span class="n">rules</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rule</span><span class="o">);</span>
+<span class="nc">DegradeRuleManager</span><span class="o">.</span><span class="na">loadRules</span><span class="o">(</span><span class="n">rules</span><span class="o">);</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>此规则指定，当我们的资源 <code class="language-plaintext highlighter-rouge">RESOURCE_NAME</code> 无法满足 10 个请求（阈值计数）时，请求链路将中断。对资源的所有后续请求都将被 <code class="language-plaintext highlighter-rouge">Sentinel</code> 阻止 10 秒（时间窗口）。</p>
+</blockquote>
+
+<h3 id="5-定义系统保护规则">5. 定义系统保护规则</h3>
+
+<p>使用系统保护规则，我们可以配置和确保自适应系统保护（<code class="language-plaintext highlighter-rouge">load1 阈值</code>、<code class="language-plaintext highlighter-rouge">平均响应时间</code>、<code class="language-plaintext highlighter-rouge">并发线程数</code>）。我们使用 <code class="language-plaintext highlighter-rouge">SystemRuleManager.loadRules()</code> 方法配置系统规则：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">SystemRule</span><span class="o">&gt;</span> <span class="n">rules</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+<span class="nc">SystemRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SystemRule</span><span class="o">();</span>
+<span class="n">rule</span><span class="o">.</span><span class="na">setHighestSystemLoad</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+<span class="n">rules</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rule</span><span class="o">);</span>
+<span class="nc">SystemRuleManager</span><span class="o">.</span><span class="na">loadRules</span><span class="o">(</span><span class="n">rules</span><span class="o">);</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>此规则指定，对于我们的系统，最高系统负载为每秒 10 个请求。如果当前负载超过此阈值，则所有进一步的请求都将被阻止。</p>
+</blockquote>
+
+<h2 id="注解支持">注解支持</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Sentinel</code> 还为定义资源提供了面向方面的注释支持。</p>
+
+<ol>
+  <li>添加依赖</li>
+</ol>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.alibaba.csp<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>sentinel-annotation-aspectj<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.8.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<ol>
+  <li>将 <code class="language-plaintext highlighter-rouge">sentinel aspect </code> 注入为bean;</li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SentinelAspectConfiguration</span> <span class="o">{</span>
+
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">SentinelResourceAspect</span> <span class="nf">sentinelResourceAspect</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">SentinelResourceAspect</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">@SentinelResource</code> 表示资源定义。它有 <code class="language-plaintext highlighter-rouge">value</code> 之类的属性，它定义了资源名称。属性<code class="language-plaintext highlighter-rouge">fallback</code>是回退方法名称。当断路器断开时，这种回退方法定义了我们程序的替代流程。让我们使用 <code class="language-plaintext highlighter-rouge">@SentinelResource</code> 注释定义资源：</li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@SentinelResource</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"resource_name"</span><span class="o">,</span> <span class="n">fallback</span> <span class="o">=</span> <span class="s">"doFallback"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">doSomething</span><span class="o">(</span><span class="kt">long</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="s">"Hello "</span> <span class="o">+</span> <span class="n">i</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">doFallback</span><span class="o">(</span><span class="kt">long</span> <span class="n">i</span><span class="o">,</span> <span class="nc">Throwable</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// Return fallback value.</span>
+    <span class="k">return</span> <span class="s">"fallback"</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>这定义了名为 <code class="language-plaintext highlighter-rouge">resource_name</code> 的资源以及回退方法。</p>
+</blockquote>
+
+<h2 id="监控仪表盘">监控仪表盘</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Sentinel</code> 还提供了一个监控仪表板。有了这个，我们可以监控客户端并动态配置规则。我们可以实时查看我们定义的资源的传入流量。</p>
+
+<h3 id="1-启动仪表盘服务">1. 启动仪表盘服务</h3>
+
+<p>首先，我们需要下载 <a href="https://github.com/alibaba/Sentinel/releases">Sentinel Dashboard jar</a> 。然后，我们可以使用以下命令启动仪表板：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java <span class="nt">-Dserver</span>.port<span class="o">=</span>8080 <span class="nt">-Dcsp</span>.sentinel.dashboard.server<span class="o">=</span>localhost:8080 <span class="nt">-Dproject</span>.name<span class="o">=</span>sentinel-dashboard <span class="nt">-jar</span> sentinel-dashboard.jar
+</code></pre></div></div>
+
+<p class="notice--info"><strong>TIP</strong>： 一旦仪表板应用程序启动，我们就可以按照下一节中的步骤连接我们的应用程序。</p>
+
+<h3 id="2-添加依赖">2. 添加依赖</h3>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.alibaba.csp<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>sentinel-transport-simple-http<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.8.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<h3 id="链接服务到仪表盘">链接服务到仪表盘</h3>
+
+<p>启动应用程序时，我们需要添加仪表板IP地址：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-Dcsp</span>.sentinel.dashboard.server<span class="o">=</span>consoleIp:port
+</code></pre></div></div>
+
+<blockquote>
+  <p>现在，无论何时调用资源，仪表板都会从我们的应用程序接收心跳：</p>
+</blockquote>
+
+<figure style="width: 700px">
+  <img src="http://blog.lwpk110.top/jekyll-blog/assets/images/spring-cloud/sentinel_dashboard.png" alt="" />
+  <figcaption>sentinel dashboard</figcaption>
+</figure>
+
+<p class="notice--info"><strong>TIP</strong>: 我们还可以使用仪表板动态地操纵流、降级和系统规则。</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/jekyll-blog/tags/#sentinel" class="page__taxonomy-item" rel="tag">Sentinel</a><span class="sep">, </span>
+    
+      <a href="/jekyll-blog/tags/#spring-cloud-config" class="page__taxonomy-item" rel="tag">Spring Cloud Config</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/jekyll-blog/categories/#spring-cloud" class="page__taxonomy-item" rel="tag">Spring Cloud</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新时间:</strong> <time datetime="2021-08-02T00:00:00+08:00">2021-08-02</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">分享</h4>
+  
+
+  <div>
+    <wb:share-button appkey="956824685" addition="text" type="button" default_text="快来看鸭，我发现一篇“碉堡了”的博客" ralateUid="2816811374" pic="https%3A%2F%2Fwx3.sinaimg.cn%2Flarge%2Fa6a681ebgy1gp2009jj3kj20k00k0ta9.jpg"></wb:share-button>
+  </div>
+  <a href="https://twitter.com/intent/tweet?via=lwpk110&text=Alibaba+Sentinel%E4%BB%8B%E7%BB%8D%20http%3A%2F%2Fblog.lwpk110.top%2Fjekyll-blog%2Fspring%2520cloud%2FAlibaba-Sentinel%25E4%25BB%258B%25E7%25BB%258D%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.lwpk110.top%2Fjekyll-blog%2Fspring%2520cloud%2FAlibaba-Sentinel%25E4%25BB%258B%25E7%25BB%258D%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fblog.lwpk110.top%2Fjekyll-blog%2Fspring%2520cloud%2FAlibaba-Sentinel%25E4%25BB%258B%25E7%25BB%258D%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/jekyll-blog/spring%20cloud/spring-cloud-config%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" class="pagination--pager" title="spring cloud config快速入门
+">上一页</a>
+    
+    
+      <a href="/jekyll-blog/microservice/%E5%BA%94%E7%94%A8%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84/" class="pagination--pager" title="使用微服务架构语言
+">下一页</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">留下评论</h4>
+      <section id="utterances-comments"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">猜您还喜欢</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/uml/plantUML-for-C4-model%E6%B1%89%E5%8C%96/" rel="permalink">plantUML for C4 model汉化(todo)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-10-11T00:00:00+08:00">2021-10-11</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          14 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">C4-PlantUML 结合了 PlantUML 和 C4 模型的优点，通过使用开源和平台独立工具的直观语言，提供了一种描述和交流软件架构的简单方法——尤其是在前期设计会议期间。 
+C4-PlantUML 包括用于使用 PlantUML 创建 C4 图的宏、构造型和其他好东西（如 VSCode 片段）。
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/uml/C4-Model/" rel="permalink">C4 Model 介绍
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-10-11T00:00:00+08:00">2021-10-11</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/java/OSGI/" rel="permalink">OSGI
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-09-27T00:00:00+08:00">2021-09-27</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">OSGi（开放服务网关计划）是一个用于开发和部署模块化软件程序和库的Java框架。
+OSGi 有两个部分。第一部分是称为 bundles 的模块化组件的规范，它们通常被称为插件。该规范为 bundle 的生命周期定义了基础设施，并确定了 bundle 将如何交互。OSGi 的第二部分是 Java 虚拟机 ( JV...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/jekyll-blog/assets/images/tease.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll-blog/linux/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="permalink">vim 常用命令
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-08-30T00:00:00+08:00">2021-08-30</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟阅读
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">作为开发者，我们将经常处理文本——词表、配置文件等。我们将在本地机器上进行很多工作，我们可以使用我们喜欢的任何文本编辑器。在远程机器上，
+编辑工具将受到限制。如果安装了 nano ，一个易于使用的终端文本编辑器，但它不是很强大。
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      输入您要搜索的关键词...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="输入您要搜索的关键词..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/lwpk110" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/jekyll-blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+    <li><wb:follow-button uid="2816811374" type="red_1" width="67" height="24" ></wb:follow-button> </li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Steven's Blog. 技术来自于 <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. 备案号: 鄂ICP备2021011613号</div>
+
+<div align="center">
+    
+            <!-- https://www.websiteout.net/counter.php?C=24&D=7&N=10000&M=0 -->
+
+
+<script type="text/javascript" src="//counter.websiteout.net/js/24/7/1000/0"></script>
+        
+</div>
+
+
+<!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> -->
+      </footer>
+    </div>
+
+    
+  <script src="/jekyll-blog/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/jekyll-blog/assets/js/lunr/lunr.min.js"></script>
+<script src="/jekyll-blog/assets/js/lunr/lunr-store.js"></script>
+<script src="/jekyll-blog/assets/js/lunr/lunr-en.js"></script>
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ff6582f8dd1d23d56f977e28f7ec3fc3";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JF1M2LW00G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JF1M2LW00G', { 'anonymize_ip': true});
+</script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'lwpk110/jekyll-blog');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+<script src="https://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+
+
+  </body>
+</html>

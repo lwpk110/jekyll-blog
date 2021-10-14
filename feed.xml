@@ -1,0 +1,1894 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://blog.lwpk110.top/jekyll-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://blog.lwpk110.top/jekyll-blog/" rel="alternate" type="text/html" /><updated>2021-10-14T18:27:58+08:00</updated><id>http://blog.lwpk110.top/jekyll-blog/feed.xml</id><title type="html">SweetDumpling</title><subtitle>steve的博客，关注技术,热点资讯，金融</subtitle><author><name>steven lu</name><email>lwpk110@163.com</email></author><entry><title type="html">C4 Model 介绍</title><link href="http://blog.lwpk110.top/jekyll-blog/uml/C4-Model/" rel="alternate" type="text/html" title="C4 Model 介绍" /><published>2021-10-11T00:00:00+08:00</published><updated>2021-10-11T00:00:00+08:00</updated><id>http://blog.lwpk110.top/jekyll-blog/uml/C4%20Model</id><content type="html" xml:base="http://blog.lwpk110.top/jekyll-blog/uml/C4-Model/"></content><author><name>steven lu</name><email>lwpk110@163.com</email></author><category term="UML" /><category term="UML" /><category term="C4" /><summary type="html"></summary></entry><entry><title type="html">plantUML for C4 model汉化(todo)</title><link href="http://blog.lwpk110.top/jekyll-blog/uml/plantUML-for-C4-model%E6%B1%89%E5%8C%96/" rel="alternate" type="text/html" title="plantUML for C4 model汉化(todo)" /><published>2021-10-11T00:00:00+08:00</published><updated>2021-10-11T00:00:00+08:00</updated><id>http://blog.lwpk110.top/jekyll-blog/uml/plantUML%20for%20C4%20model%E6%B1%89%E5%8C%96</id><content type="html" xml:base="http://blog.lwpk110.top/jekyll-blog/uml/plantUML-for-C4-model%E6%B1%89%E5%8C%96/">&lt;p&gt;C4-PlantUML 结合了 PlantUML 和 C4 模型的优点，通过使用开源和平台独立工具的直观语言，提供了一种描述和交流软件架构的简单方法——尤其是在前期设计会议期间。 
+C4-PlantUML 包括用于使用 PlantUML 创建 C4 图的宏、构造型和其他好东西（如 VSCode 片段）。&lt;/p&gt;
+
+&lt;aside class=&quot;sidebar__right&quot;&gt;
+&lt;nav class=&quot;toc&quot;&gt;
+    &lt;header&gt;&lt;h4 class=&quot;nav__title&quot;&gt;&lt;i class=&quot;fas fa-file-alt&quot;&gt;&lt;/i&gt; 目录&lt;/h4&gt;&lt;/header&gt;
+&lt;ul class=&quot;toc__menu&quot; id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#入门&quot; id=&quot;markdown-toc-入门&quot;&gt;入门&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#支持的图表类型&quot; id=&quot;markdown-toc-支持的图表类型&quot;&gt;支持的图表类型&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#import-include-httpsrawgithubusercontentcomplantuml-stdlibc4-plantumlmasterc4_deploymentpuml&quot; id=&quot;markdown-toc-import-include-httpsrawgithubusercontentcomplantuml-stdlibc4-plantumlmasterc4_deploymentpuml&quot;&gt;Import: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/**C4_Deployment.puml**&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#关系类型&quot; id=&quot;markdown-toc-关系类型&quot;&gt;关系类型&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#布局选项&quot; id=&quot;markdown-toc-布局选项&quot;&gt;布局选项&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#custom-tagsstereotypes-支持和皮肤参数更新&quot; id=&quot;markdown-toc-custom-tagsstereotypes-支持和皮肤参数更新&quot;&gt;Custom tags/stereotypes 支持和皮肤参数更新&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#element-properties&quot; id=&quot;markdown-toc-element-properties&quot;&gt;Element properties&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#version-information&quot; id=&quot;markdown-toc-version-information&quot;&gt;Version information&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#snippets-for-visual-studio-code&quot; id=&quot;markdown-toc-snippets-for-visual-studio-code&quot;&gt;Snippets for Visual Studio Code&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#live-templates-for-intellij&quot; id=&quot;markdown-toc-live-templates-for-intellij&quot;&gt;Live Templates for IntelliJ&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#prerequisites&quot; id=&quot;markdown-toc-prerequisites&quot;&gt;Prerequisites&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#install&quot; id=&quot;markdown-toc-install&quot;&gt;Install&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#usage&quot; id=&quot;markdown-toc-usage&quot;&gt;Usage&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#layout-options&quot; id=&quot;markdown-toc-layout-options&quot;&gt;Layout Options&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#advanced-samples&quot; id=&quot;markdown-toc-advanced-samples&quot;&gt;Advanced Samples&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#techtribesjs&quot; id=&quot;markdown-toc-techtribesjs&quot;&gt;techtribes.js&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#message-bus-and-microservices&quot; id=&quot;markdown-toc-message-bus-and-microservices&quot;&gt;Message Bus and Microservices&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#background&quot; id=&quot;markdown-toc-background&quot;&gt;Background&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#license&quot; id=&quot;markdown-toc-license&quot;&gt;License&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/nav&gt;
+&lt;/aside&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;原文地址: &lt;a href=&quot;https://github.com/plantuml-stdlib/C4-PlantUML/edit/master/README.md&quot;&gt;plantuml-stdlib/C4-PlantUML&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/hLPRZ-964ttthwXXT_M1n4MVDliIQQHbmCdEYWl1p6pUKDakJ6lRtLPt6mP5-U-fDXW3Cz56IbuGNPTpZgkholvi7HfNvZBu7oHQxSWu40xsmcq1qrGueHLATkKvgXIaK0HeiZ8dvQ0tNeQJuUhnELm_paQJft5ut-gtm6aeBO7K2Kfv2Ex41Zxiq0YC9QtfHLXdswtRp5Od0BWJAf5bIj0VzFk3qK_haLOEcTFq2w_nZgIboxYjSuNzUJ0mkEzdhBcCcTaadCNw-gnwK4XK_lbwrgLIn0pQMtZJqtGooD4wCc_og5HiWY3wCl-sNeJBQ3vRpvzMayTPsEu4mpGD9VaAh31hjs9CldCy93L6gmllDtmOQQdD_Vjm4ax3sMhzovn_HlF9VCd-E3jwM-y-Vlmq7dxoENQB1Ts78jkwIAIKHlxSxbI4Iv8L6Tg3IdomevUQOBXSiimQsL_HtpeYTv1qFqQxfNGYr2sw1n_yDnJQkOOYSC99WdEL8HMO6SnXemqyAaT6aOC7LD-5oY0wM4Tv42p8MAtQIMcTpibqONJ-rnf2RGQz0RSbY3cxUspSeaf4MTa0aqINojaMwpX2hn_OaA8vj9F_CzQjW5O7_WW0eD7RtbEyngBWu6yKmx0ef4ZGpqQBJLznXrs82kF5Jvz7tZOcANYOR2NDEevDuDIMm8DKcS-ySVtWYo6Bl6Qs1J9Sn6v9lGLcvDbhrYWned1T6Agib6YyUM7qJgHa0QLycsLJgkGuri8T_B0cPLL82pk1FaKOuEU5sEYz9VDAKQvZ8UbKZga_d3MDtdNXTyoHAt6j1QJ8XQCKR1bRSdnd_rYRVINkA01Isec4RkMDutQA3cEqvA_XzDUhYNwRmDNPQSFQ_C80GvcmpbHN2a9nM-RL_ovigra1BBcl4aCfAITGsgvlAx8MfCxuG2xflohKQJ5mfOJlsCNZsuqprXncchpBolseGhue35nDAsRs_lKoObL_dli-V75job78jQqCp1Jsfdm-pPodNl6zY8eL9Kn5OhJL6mVXIx95bH7OOsJd4lCaha5bJBNX0QUReMxgxlkpReE43VK3NbOVCDQbQtgWUvxbBZY3oc9LYgR-mPBanRveflR9alNSNrQhHSI1rt4yOp-CgRk-WJlIhMV42plMpOweu9eDS4AgZ9STqH1M2xSBN_ajCwZ8c-kiN2U4Hi6_0re_S78ZkvcMQz0bOMfXOtHUBQoz4OuiEEs9JZpZXn53dZ4lgdNJP173Mg2UjrOOZP2RVhpMS9rNMkwFXZwQhXOCT7K7L-atNTdKgNdDyRgQJcvhrRWP_lWDC0b_3MTZVlTlj7Pa83MuLyUNJVqr0Ri-VF0NpXtPxbGryzyQZPUFpxKx-Cmgorp-1G00&quot; alt=&quot;Container diagram for Internet Banking System&quot; title=&quot;Container diagram for Internet Banking System&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;入门&quot;&gt;入门&lt;/h2&gt;
+
+&lt;p&gt;在你的 C4 PlantUML &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.puml&lt;/code&gt; 文件的顶部，你需要在这个 repo 的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;root&lt;/code&gt;目录中找到的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C4_Context.puml&lt;/code&gt;、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C4_Container.puml&lt;/code&gt; 或 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C4_Component.puml&lt;/code&gt; 文件。
+要独立于任何 Internet 连接，您还可以将它下载下来,在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;root&lt;/code&gt;目录中找到的文件，并使用附加命令行参数 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-DRELATIVE_INCLUDE=&quot;.&quot;&lt;/code&gt;（包括本地文件）激活本地转换&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;java -jar plantuml.jar -DRELATIVE_INCLUDE=&quot;.&quot;  ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果要在此 repo 中使用始终最新的版本，请使用以下命令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;现在让我们创建一个 C4 容器图：&lt;/p&gt;
+
+&lt;p&gt;(如果您不想在本地运行 PlantUML，您可以使用 e.g. the &lt;a href=&quot;https://www.plantuml.com/plantuml/uml/ZOxDIWGn48JlUOeufn5qSjcJfvNHsugBFsV99iqcsEc4T0VTjpSCE2AYUAeAgVwgjYosIakevytBBK824bPdaHms3pg85BuofjgtwHWbj4DZg2wJzDpaSZAliRh04ioykToZ9Nc-snbux_yUlEdGkOTj9AXJwJLAxQ5ofh4iSetHyeKUTlO0E7HpNoHcigXlW5sDosiuLojaT9_kn-aJk40Py_7q1-Znn09fv4N-swuU0ByFNbVyZlYQqmbR8DyIVW00&quot;&gt;PlantUML Web Server&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;p&gt;包含 C4_Container.puml 后，您可以使用 C4 元素定义的宏定义：“Person”、“Person_Ext”、“System”、“System_Ext”、“Container”、“Relationship”、“Boundary”和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;系统_边界&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;@startuml C4_Elements
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(personAlias, &quot;Label&quot;, &quot;Optional Description&quot;)
+Container(containerAlias, &quot;Label&quot;, &quot;Technology&quot;, &quot;Optional Description&quot;)
+System(systemAlias, &quot;Label&quot;, &quot;Optional Description&quot;)
+
+Rel(personAlias, containerAlias, &quot;Label&quot;, &quot;Optional Technology&quot;)
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/ZOz1Yy9038NlyojgJnNSpiNJdbpqwAAuUfOu3NOWpGoJZEA_trfGLaJPqti9oPUNcIWapHsPaMT7kS6YLOtoQMs2SttqskP35amki29hxK9deKaU-4GvPZkVVgm9M7VVIqkWADgtzlD-6ZnZgkELRTQO970L1_aY3p8foYKSaChUhABwm4350iKbFrJbsDmXbRkvfzKjkfO3XUFb3UZd8efT9OFyzxhP83q6VftYZlWJPsnco4t__Iy0&quot; alt=&quot;test&quot; title=&quot;test&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;除此之外，还可以定义系统或组件边界。&lt;/p&gt;
+
+&lt;p&gt;查看以下 C4 容器图示例：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;@startuml Basic Sample
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(admin, &quot;Administrator&quot;)
+System_Boundary(c1, &quot;Sample System&quot;) {
+    Container(web_app, &quot;Web Application&quot;, &quot;C#, ASP.NET Core 2.1 MVC&quot;, &quot;Allows users to compare multiple Twitter timelines&quot;)
+}
+System(twitter, &quot;Twitter&quot;)
+
+Rel(admin, web_app, &quot;Uses&quot;, &quot;HTTPS&quot;)
+Rel(web_app, twitter, &quot;Gets tweets from&quot;, &quot;HTTPS&quot;)
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/JP1FIyD04CNl-HHZlAHG4ogUF3KDeWShmQHwBDDaj0lxZzs9eOZVtGcjhNiPcFURUMzs6Ha33qR32gFge47ZDILNodPww0dsp3xU5qN0CVzKl1zsGwJGESjaEU-SAR0F2ksN7lnGL7StjKRBc_LpeP4fihIsbT2eB8NSYr6Ir1IYindsHjavfELKLUI0x48wIvf3P3BRbHjiZ-6GTGk1ZhdWgAKp-4v0tdbpDj9kYzuB-KuxABtNgaDMpgRIggxdK3Pr_lBGoaWWkCqNi7wh9gtKseqHfgiYi0CvoQCWPj2i9ijsLCmKW9KXBLvH8lwSGcPy56NF2HCnUINzTzmbrYRAfDIdjgqReIReh5xMF19BZ96cyX6S-J-o9DlB1_u2&quot; alt=&quot;Basic Sample&quot; title=&quot;Basic Sample&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Entities 也可以使用 图标/sprites 装饰  使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$sprite&lt;/code&gt; 参数, for example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include DEVICONS/angular.puml
+!include DEVICONS/java.puml
+!include DEVICONS/msql_server.puml
+!include FONTAWESOME/users.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(user, &quot;Customer&quot;, &quot;People that need products&quot;, $sprite=&quot;users&quot;)
+Container(spa, &quot;SPA&quot;, &quot;angular&quot;, &quot;The main interface that the customer interacts with&quot;, $sprite=&quot;angular&quot;)
+Container(api, &quot;API&quot;, &quot;java&quot;, &quot;Handles all business logic&quot;, $sprite=&quot;java&quot;)
+ContainerDb(db, &quot;Database&quot;, &quot;Microsoft SQL&quot;, &quot;Holds product, order and invoice information&quot;, $sprite=&quot;msql_server&quot;)
+
+Rel(user, spa, &quot;Uses&quot;, &quot;https&quot;)
+Rel(spa, api, &quot;Uses&quot;, &quot;https&quot;)
+Rel_R(api, db, &quot;Reads/Writes&quot;)
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/hP9BZzem4CVl-HHUr0ChBPj3sqkbIek0Tf5uK1v5FQ59F05NZfrw9l3rEmvXD-f3wg4dE_EV-VyyCtaYXi1rQPCxut9RQrGdvee-f6c0o-FHyAdEQiAGUyVe-37tPLfPSB5cGAojoTBHky4gXdRpMLe2CGO97KPI0SPXUAoYVtAdiP1FDPvydOwMYyq_WBYkG8Uthq0Zwg2GZ05LmJ3IZQVn73LweNnQBhR3_MIpd4_-AwY9mGN9bpXu_pgrMrSfk6DjeMtwT_axdE5lMaa_x84mdF7NyautQNmxjJET3RyjTzl3VhfzFimcdoUBSVy-ILQIu5q_9ZwetgWczYM6djnNw2kBYa_0oY5gLGMlwvn9n3VNJZ_s6a3lFdbPO9ygaEBDQXWzsWRZTNj2LKgACeun592trYpnlCLUDH26kiZikw2RKnS5bH7ZuMeQ_UEmulaCJbia1TOgsPqa4YdhZoRlsiNihjSuw-jCgiV0a05XT9gRF7Zo1QlDbrbZxQscsnWUb0yQWnASFFliJOvo5ZwKmCQxBgopAs4cQxJjlA-psX5Ij6z-FKc8UgD8Vt-M3-jhxysJrmYQqdr4HVa9dPPz_mG0&quot; alt=&quot;Sprites/Icons&quot; title=&quot;Sprites/Icons&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;icons/sprites&lt;/code&gt; 设置相似，我们也可以对所有元素和关系添加链接:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;@startuml Basic Sample
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(admin, &quot;Administrator&quot;, $sprite=&quot;person2&quot;, $link=&quot;https://github.com/plantuml-stdlib/C4-PlantUML/blob/master/LayoutOptions.md#hide_person_sprite-or-show_person_spritesprite&quot;)
+System_Boundary(c1, &quot;Sample System&quot;, $link=&quot;https://github.com/plantuml-stdlib/C4-PlantUML&quot;) {
+    Container(web_app, &quot;Web Application&quot;, &quot;C#, ASP.NET Core 2.1 MVC&quot;, $descr=&quot;Allows users to compare multiple Twitter timelines&quot;, $link=&quot;https://github.com/plantuml-stdlib/C4-PlantUML/blob/master/LayoutOptions.md&quot;)
+}
+System(twitter, &quot;Twitter&quot;, $link=&quot;https://github.com/plantuml-stdlib/C4-PlantUML&quot;)
+
+Rel(admin, web_app, &quot;Uses&quot;, &quot;HTTPS&quot;, $link=&quot;https://plantuml.com/link&quot;)
+Rel(web_app, twitter, &quot;Gets tweets from&quot;, &quot;HTTPS&quot;, $link=&quot;https://plantuml.com/link&quot;)
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;png&lt;/code&gt; 本身不支持链接，因此下图生成为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;svg&lt;/code&gt; 图像。
+Github 不支持 README.md 中的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;svg&lt;/code&gt; 链接。
+如果您单击图像，则会打开一个新窗口，您可以在那里使用链接。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/svg/jP9FYzH04CNl-HHjhuTPc4dOnPCmiECWUjZLOB9w39rqQHhxJrDL8GpYTxTxizb5F8W3vf0chrBl_NZ93R52dfmjNXW_s4c369aZlQugL7FvpV0uzHC13i4pU2w7uAfebSyxEs9jJLyTN-tgBDtVtLPE4GCcgJkc3MKyO1cpVr43Kl0RfPtnMo4F-JJ4g3YWt8gN5D4mx6LyUEywIzRuxtkv0YqmVoNeRUXNZ5jr2XD_Z6o2fzBfYz5ew9Q4RWdS1TpH6ERVrUKkBulcb8nSzoPCNYiyROQhnDue5os8PNOkgBmKFmgHhgUYDZFqdOen9No1NXnYj6PGcLqcwNYn5OUcBZ-yRTCAWhWkhyJTvsFErq03xkN1sZ2JoD-B10UH2A9246woR39nEnjcGC76GM86-Yyjfzf-FXQtuIKnyJzcdrzNKNm2k_u_prNT4r3kvttRrisVxglbWtyU9QFiysJmJFWEcD8ZvECh1lUFhZVWTP9-0G00&quot; alt=&quot;Click on the image that the links are working&quot; title=&quot;Click on the image that the links are working&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;元素和关系可以用标签装饰，并通过计算出的图例进行解释，例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+AddElementTag(&quot;v1.0&quot;, $borderColor=&quot;#d73027&quot;)
+AddElementTag(&quot;v1.1&quot;, $fontColor=&quot;#d73027&quot;)
+AddElementTag(&quot;backup&quot;, $fontColor=&quot;orange&quot;)
+
+AddRelTag(&quot;backup&quot;, $textColor=&quot;orange&quot;, $lineColor=&quot;orange&quot;, $lineStyle = DashedLine())
+
+Person(user, &quot;Customer&quot;, &quot;People that need products&quot;)
+Person(admin, &quot;Administrator&quot;, &quot;People that administrates the products via the new v1.1 components&quot;, $tags=&quot;v1.1&quot;)
+Container(spa, &quot;SPA&quot;, &quot;angular&quot;, &quot;The main interface that the customer interacts with via v1.0&quot;, $tags=&quot;v1.0&quot;)
+Container(spaAdmin, &quot;Admin SPA&quot;, &quot;angular&quot;, &quot;The administrator interface that the customer interacts with via new v1.1&quot;, $tags=&quot;v1.1&quot;)
+Container(api, &quot;API&quot;, &quot;java&quot;, &quot;Handles all business logic (incl. new v1.1 extensions)&quot;, $tags=&quot;v1.0+v1.1&quot;)
+ContainerDb(db, &quot;Database&quot;, &quot;Microsoft SQL&quot;, &quot;Holds product, order and invoice information&quot;)
+Container(archive, &quot;Archive&quot;, &quot;Audit logging&quot;, &quot;Stores 5 years&quot;, $tags=&quot;backup&quot;)
+
+Rel(user, spa, &quot;Uses&quot;, &quot;https&quot;)
+Rel(spa, api, &quot;Uses&quot;, &quot;https&quot;)
+Rel_R(api, db, &quot;Reads/Writes&quot;)
+Rel(admin, spaAdmin, &quot;Uses&quot;, &quot;https&quot;)
+Rel(spaAdmin, api, &quot;Uses&quot;, &quot;https&quot;)
+Rel_L(api, archive, &quot;Writes&quot;, &quot;messages&quot;, $tags=&quot;backup&quot;)
+
+SHOW_LEGEND()
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/bLJTRjfC4BtFK-pdhnT6JN3I7qMgX1G4gAb4MWg9Sed6ti5ikzwrTjRGl7rdrn08jLBrQj7CcJbppeov8G_EDvK--q-PGZSInThxcZvbcODjlrH-tUGDeIkiyMXylx1LLcimeUQ2lDGgpqOVBcOXz70tpIeWZuv3on5NW3Be-dNeVpQKSgAnuYRtKAR9vgf_cPoBDxbr4jt8Qki6oV_o-ltbk-karu6-2kWLD_qRDeVYPrEVeAq3KoA30tgE-WJfyTS9aeEQf-yCBloJHZ4GOw0roYb7qXvtdg4ZQz9Wrxb8HWrvMw7ZecI6jkOAlmOl3A8KjREoAJmblNqLo4ePXWx3gyWxyFQFMZWaaJY4put4Ha4C6DoAu9RWJTNMi2aK1K99WsWZKpwl9gKQc68n6mOcbjXeYAJttAbYY536erj1qGuG6OgTi3O7WNpBTn8dY5izfhiyfHiUwnJTp73imR-Ei3VW5TLGgp31x4iW_04R2Eyj6AcH16Wj-EGPI2IqBLKXql1jz0_Myh6W8MKDzLwAVNjADSvJcNFpCNZ8WJ0GtQd2MR8hBnRVfv7PQadxJPwB-448deRLRQmgaD-LTHLuPdofmnLhjS6WfVsLX9-DL3uCNYfJXi22JMHT7yKJWZiSm_xw-N3dg7TNszx30o65olXNm82GZnashZkzdBUcHh5p14dPerCUT-dzTH_jlvkZJRz6D6s93j9RdW2ha0XAx9IukFtsk9nEFa--ZjFUsGqQsLJwDm00&quot; alt=&quot;tags&quot; title=&quot;tags&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;支持的图表类型&quot;&gt;支持的图表类型&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;arg&lt;/code&gt;.. 参数为必需的 (e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;alias&lt;/code&gt;)&lt;/li&gt;
+    &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;?arg&lt;/code&gt;.. 参数为可选的  (e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;?descr&lt;/code&gt;)&lt;/li&gt;
+    &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*techn&lt;/code&gt; .. 技术参数是必需的, 但是如果技术参数通过 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$tag&lt;/code&gt; 来定义，那么不需要&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;techn&lt;/code&gt;参数&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;系统 Context &amp;amp; 系统景观图
+    &lt;ul&gt;
+      &lt;li&gt;Import: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/**C4_Context.puml**&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;宏:
+        &lt;ul&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Person(alias, label, ?descr, ?sprite, ?tags, $link)&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Person_Ext&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System(alias, label, ?descr, ?sprite, ?tags, $link)&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SystemDb&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SystemQueue&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System_Ext&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SystemDb_Ext&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SystemQueue_Ext&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Boundary(alias, label, ?type, ?tags, $link)&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Enterprise_Boundary(alias, label, ?tags, $link)&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System_Boundary&lt;/code&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Container图
+    &lt;ul&gt;
+      &lt;li&gt;Import: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/**C4_Container.puml&lt;/code&gt;**&lt;/li&gt;
+      &lt;li&gt;Additional Macros:
+        &lt;ul&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Container(alias, label, *techn, ?descr, ?sprite, ?tags, $link)&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ContainerDb&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ContainerQueue&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Container_Ext&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ContainerDb_Ext&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ContainerQueue_Ext&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Container_Boundary(alias, label, ?tags, $link)&lt;/code&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Component图
+    &lt;ul&gt;
+      &lt;li&gt;Import: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/**C4_Component.puml**&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;附加宏:
+        &lt;ul&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Component(alias, label, *techn, ?descr, ?sprite, ?tags, $link)&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ComponentDb&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ComponentQueue&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Component_Ext&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ComponentDb_Ext&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ComponentQueue_Ext&lt;/code&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;动态图
+    &lt;ul&gt;
+      &lt;li&gt;Import: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/**C4_Dynamic.puml**&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;附加宏:
+        &lt;ul&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RelIndex(index, from, to, label, ?tags, $link)&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;(lowercase) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;increment($offset=1)&lt;/code&gt;: 增加当前索引（没有直接输出的程序）&lt;/li&gt;
+          &lt;li&gt;(lowercase) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setIndex($new_index)&lt;/code&gt;: 设置新索引（没有直接输出的过程）&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LastIndex()&lt;/code&gt;: 返回最后使用的索引（可以用作参数的函数）&lt;/li&gt;
+        &lt;/ul&gt;
+
+        &lt;p&gt;以下 2 个宏需要 V1.2020.24Beta4（已经可以使用 https:www.plantuml.complantuml 进行测试）&lt;/p&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Index($offset=1)&lt;/code&gt;: 返回当前索引并计算下一个索引（可用作参数的函数）&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SetIndex($new_index)&lt;/code&gt;: 返回新的集合索引并计算下一个索引（可用作参数的函数）&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;部署图
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;h6 id=&quot;import-include-httpsrawgithubusercontentcomplantuml-stdlibc4-plantumlmasterc4_deploymentpuml&quot;&gt;Import: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/**C4_Deployment.puml**&lt;/code&gt;&lt;/h6&gt;
+      &lt;/li&gt;
+      &lt;li&gt;附加宏:
+        &lt;ul&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Deployment_Node(alias, label, ?type, ?descr, ?sprite, ?tags, $link)&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Node(alias, label, ?type, ?descr, ?sprite, ?tags, $link)&lt;/code&gt;: Deployment_Node() 的简称&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Node_L(alias, label, ?type, ?descr, ?sprite, ?tags, $link)&lt;/code&gt;: Node()-左对齐&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Node_R(alias, label, ?type, ?descr, ?sprite, ?tags, $link)&lt;/code&gt;: Node()-右对齐&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;查看每个 &lt;a href=&quot;samplesC4CoreDiagrams.md&quot;&gt;C4 模型图示例&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;关系类型&quot;&gt;关系类型&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rel(from, to, label, ?techn, ?descr, ?sprite, ?tags, $link)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BiRel&lt;/code&gt; (双向关系)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;您可以使用以下方法强制关系的方向：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rel_U&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rel_Up&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rel_D&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rel_Down&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rel_L&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rel_Left&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rel_R&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rel_Right&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;关系对应的 sprites 通常较小，因此以下设置可选:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;使用较小的图标（如以下示例中的三角形）&lt;/li&gt;
+  &lt;li&gt;使用额外的比例因子（直接作为参数的一部分，或通过变量）&lt;/li&gt;
+  &lt;li&gt;如果 sprite 参数以 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;amp;&lt;/code&gt; 开头，也可以使用 OpenIconic 名称（详情参见 https:useiconic.comopen）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(user, &quot;User&quot;)
+Person(user1, &quot;User 1&quot;)
+Person(user2, &quot;User 2&quot;)
+Person(user3, &quot;User 3&quot;)
+
+System(system, &quot;System&quot;)
+
+' normal sprites are too big 
+Rel_L(user, user2, &quot;informs&quot;, &quot;courier&quot;, &quot;normal sprites are too big&quot;, $sprite=&quot;person2&quot;)
+
+' scaled sprites are ok
+Rel_R(user, user3, &quot;informs&quot;, &quot;courier&quot;, &quot;scaled sprites are OK&quot;, $sprite=&quot;person2,scale=0.5&quot;)
+
+' combine sprite and scale to a new sprite
+!$combinedSprite=&quot;person2,scale=0.5&quot;
+Rel_R(user, user3, &quot;informs&quot;, &quot;courier&quot;, &quot;combined sprites are OK&quot;, $sprite=$combinedSprite)
+
+
+' special smaller sprites can be used
+sprite $triangle {
+    00000000000
+    00000F00000
+    0000FBF0000
+    0000FBF0000
+    000F999F000
+    000F999F000
+    00F66666F00
+    00F66666F00
+    0F3333333F0
+    0F3333333F0
+    0FFFFFFFFF0
+    00000000000
+}
+Rel_R(user1, system, &quot;orders&quot;, &quot;http&quot;, &quot;small sprites, like the small triangle&quot;, $sprite=&quot;triangle&quot;)
+
+' if sprite starts with &amp;amp;, sprite defines a OpenIconic, details see https://useiconic.com/open/
+Rel_D(user, user1, &quot;requests&quot;, &quot;async message&quot;, &quot;if sprite starts with &amp;amp;, it defines a OpenIconic like &amp;amp;envelope-closed&quot;, $sprite = &quot;&amp;amp;envelope-closed&quot;)
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/bLJVQnin37w_lq8DeMiXoQN9DiWWKDPnCDRHqjBdujXAOkgpRvPlMHdxt-SVSPEikK7rujCdIzyd8TybEMPTMwlYH6gkMe6mTgwXJsLfsMQqacxTBbf2oursgDs8cxfi5DCXPqXEABaehzuFRmFqyFswh1avj1vwl0ePlzoe2TMBMxHaz5aeDO3UWpzwv_lWnHQ5YqDyal798JxD-DJZnVspPwtFA1u-almGUGVQs9efeCPAXmJC8ZXZO25NKDoXUhpUYifiKYzz1lNy9pUjbMZ3PtSL7-qdUDvhei198YRE58g35FCKAU_sAAUTb4VoRxuTOHl4Y_Fnw4FYvQPUI8tRH61Q92bUC33GkDb6YfF-zgguxwpu1hsvMBVYV_YysZ2c1haCe_NpLMXViZdJiC30AOg4GTzPoVHA8VmkmDjuPpk_ElIhpzN__6escrNTVlKnMDNbLzDaLPUVRVnAxvyysRJyBwjhh40RHniUOZZZOF9O1g3a4u9R8oGyZsH_CJAMza4kyoh4nqwmaMuDfuEC2bnAZGGCRXhKNxdHaWyywfXK18IxNuBNAcCu_WQClrt6BhxizYC-P8i_MYGNks3qh3dKICHM681EET8TbP8QFaNz4vMd779b2CMkNPX3xrNqlBX4BTfQ_GK0&quot; alt=&quot;Relation with sprite or OpenIconic&quot; title=&quot;Relation with sprite or OpenIconic&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;在极少数情况下，您可以使用以下方法强制没有关系的对象的布局：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Lay_U(from, to)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Lay_D(from, to)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Lay_L(from, to)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Lay_R(from, to)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;在以下示例中，一个人使用不同的系统，以及没有关系的一组人&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+HIDE_STEREOTYPE()
+
+Person(a, &quot;A&quot;)
+Person(b, &quot;B&quot;)
+Person(c, &quot;C&quot;)
+Person(d, &quot;D&quot;)
+Person(e, &quot;E&quot;)
+
+Lay_U(a, b)
+Lay_R(a, c)
+Lay_D(a, d)
+Lay_L(a, e)
+
+Person(x, &quot;X&quot;)
+System(s1, &quot;S1&quot;)
+System(s2, &quot;S2&quot;)
+System(s3, &quot;S3&quot;)
+System(s4, &quot;S4&quot;)
+
+Rel_U(x, s1, &quot;uses&quot;)
+Rel_R(x, s2, &quot;uses&quot;)
+Rel_D(x, s3, &quot;uses&quot;)
+Rel_L(x, s4, &quot;uses&quot;)
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/LSt1QeD04CRnkq-HvgJGA55FFQLLeGLBHIEq9rbrQ8HrbTrPshnzPmn5Svl_3_RRaq6XqOxIUHXK9sqFkmlYR9w2G8iV_tl0Yssj0TrD2a6XtqrZC4kX-Ct1O2-7DaZYGy5Kl-V1A0o29ceIUY461TgVUV_rBSsQwfoLsSVvgyXSpt4Aq6PIhdZSxP_ttd-sb2zhTfJ9cZrbkYPGPfHEBgvDpLEjjzmbtztjJldkRtVEDwoV_zB09mrKLuCmkkP8NHqt43A46uWOeWt43361Ku9iQfvSPgm1GyfOBXZUOxfWT8_vWl6A9r2z7UKV&quot; alt=&quot;Relation versus Layout&quot; title=&quot;Relation versus Layout&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;（结合 &lt;a href=&quot;LayoutOptions.md#show_floating_legend&quot;&gt;SHOW_FLOATING_LEGEND()&lt;/a&gt;）元素和例如可能需要所有的浮动图例，例如可以到达绘图区域的角落。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Lay_Distance(from, to, ?distance)&lt;/code&gt;: 使用向下对齐设置 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt; 和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;to&lt;/code&gt; 之间的距离（Lay_Distance(from,to,0) 等于 Lay_D(from, to)）。浮动图例的默认别名是 LEGEND()。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;在以下示例中，浮动图例应位于图形的左下角。
+（正常的 SHOW_LEGEND() 调用不需要额外的 Lay_Distance() 调用，图例会自动绘制在右侧图表下方）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include DEVICONS/angular.puml
+!include DEVICONS/java.puml
+!include DEVICONS/msql_server.puml
+!include FONTAWESOME/users.puml
+
+Person(user, &quot;Customer&quot;, &quot;People that need products&quot;, $sprite=&quot;users&quot;)
+Container(spa, &quot;SPA&quot;, &quot;angular&quot;, &quot;The main interface that the customer interacts with&quot;, $sprite=&quot;angular&quot;)
+Container(api, &quot;API&quot;, &quot;java&quot;, &quot;Handles all business logic&quot;, $sprite=&quot;java&quot;)
+ContainerDb(db, &quot;Database&quot;, &quot;Microsoft SQL&quot;, &quot;Holds product, order and invoice information&quot;, $sprite=&quot;msql_server&quot;)
+
+Rel(user, spa, &quot;Uses&quot;)
+Rel(spa, api, &quot;Uses&quot;)
+Rel_R(api, db, &quot;Reads/Writes&quot;)
+
+SHOW_FLOATING_LEGEND()
+Lay_Distance(LEGEND(), db, 1)
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/hL5DZzem4BtdLtXH3o0jH5NRIwLAYu3THUA30bkEqH0FuCgnKyy4r7_VCIIxKQjAFVGKvptFUtvl7eWXS5NOvCwut5OQrOcvfCzf6k0oE1e-LVkACEJUCJeUvBv8ImikplI9jJNxTFInluhGotoM5a2CGQ1i91DW78P16VMJEuq7-LNZoRVfQBdO_8CHLoNeyE7Dq0ZRFyYDFfN1C5BZf_4SENfrULmkjiFTPBESJ_whqHM32v8liF-fQUqjLGhkM5ceG_z9VuSp_8qhw8VD2CCPVnjlfqdZswdkT2L7xxeHkbUTKKNi2mmTEQ_GbnOLdu2LGzIg35vNEPEGxswPldIkKfrUyhggBfKWmvlLC6hKKU9nUq9Lo1Lb76CuG5vBi-1vRNlZG3pKHLfk6pLARIieZGWFLzEe7sk9tsTmsY8fi5R9bkGYaRB-QFAsNBpTrXhlktelqsDWs0DXL9gRF7Zo1rQRhxEhjBUQcXhkbGyQWn8xUVRPcnpbU_2X03RUjSrQMn7FP8ssxllMrGiX2HxXAn1ZjT5iVKjwVU0QGLEwYyAHJZRFortsE5iEjzF5KpQRF4qMusulcS7FR6o8mUNORT2RnFjUye1Eo_P_0G00&quot; alt=&quot;db below legend, 1 unit distance&quot; title=&quot;db below legend, 1 unit distance&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;布局选项&quot;&gt;布局选项&lt;/h2&gt;
+
+&lt;p&gt;C4-PlantUML 还带有一些布局选项，使创建漂亮有用的图表变得容易和可重用：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;LayoutOptions.md#layout_top_down-or-layout_left_right-or-layout_landscape&quot;&gt;LAYOUT_TOP_DOWN() or LAYOUT_LEFT_RIGHT() or LAYOUT_LANDSCAPE()&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LayoutOptions.md#layout_with_legend-or-show_legend&quot;&gt;LAYOUT_WITH_LEGEND() or SHOW_LEGEND(?hideStereotype)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LayoutOptions.md#show_floating_legendalias-hidestereotype-and-legend&quot;&gt;SHOW_FLOATING_LEGEND(?alias, ?hideStereotype) and LEGEND()&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LayoutOptions.md#layout_as_sketch&quot;&gt;LAYOUT_AS_SKETCH()&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LayoutOptions.md#hide_stereotype&quot;&gt;HIDE_STEREOTYPE()&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;C4-PlantUML 还带有一些 person sprite/portrait 选项:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;LayoutOptions.md#hide_person_sprite&quot;&gt;HIDE_PERSON_SPRITE()&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LayoutOptions.md#show_person_sprite&quot;&gt;SHOW_PERSON_SPRITE(?sprite)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LayoutOptions.md#show_person_portrait&quot;&gt;SHOW_PERSON_PORTRAIT()&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LayoutOptions.md#show_person_outline&quot;&gt;SHOW_PERSON_OUTLINE()&lt;/a&gt; (requires PlantUML version &amp;gt;= 1.2021.4)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;custom-tagsstereotypes-支持和皮肤参数更新&quot;&gt;Custom tags/stereotypes 支持和皮肤参数更新&lt;/h2&gt;
+
+&lt;p&gt;可以将附加标签构造型添加到现有元素构造型（组件、…）和突出显示、…特定方面：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddElementTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?techn, ?legendText, ?legendSprite)&lt;/code&gt;:
+Introduces a new element tag. The styles of the tagged elements are updated and the tag is displayed in the calculated legend.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddRelTag(tagStereo, ?textColor, ?lineColor, ?lineStyle, ?sprite, ?techn, ?legendText, ?legendSprite)&lt;/code&gt;:
+Introduces a new relation tag. The styles of the tagged relations are updated and the tag is displayed in the calculated legend.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UpdateElementStyle(elementName, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?techn, ?legendText, ?legendSprite)&lt;/code&gt;:
+This call updates the default style of the elements (component, …) and creates no additional legend entry.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UpdateRelStyle(textColor, lineColor)&lt;/code&gt;:
+This call updates the default relationship colors and creates no additional legend entry.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RoundedBoxShape()&lt;/code&gt;: This call returns the name of the rounded box shape and can be used as ?shape argument.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EightSidedShape()&lt;/code&gt;: This call returns the name of the eight sided shape and can be used as ?shape argument.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DashedLine()&lt;/code&gt;: This call returns the name of the dashed line and can be used as ?lineStyle argument.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DottedLine()&lt;/code&gt;: This call returns the name of the dotted line and can be used as ?lineStyle argument.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BoldLine()&lt;/code&gt;: This call returns the name of the bold line and can be used as ?lineStyle argument.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Each element can be extended with one or multiple custom tags via the keyword argument &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$tags=&quot;...&quot;&lt;/code&gt;, like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Container(spaAdmin, &quot;Admin SPA&quot;, $tags=&quot;v1.1&quot;)&lt;/code&gt;.
+Multiple tags can be combined with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;+&lt;/code&gt;, like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Container(api, &quot;API&quot;, $tags=&quot;v1.0+v1.1&quot;)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Element specific tag definitions&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Sometimes an added element tag is element specific and all element specific colors should be used, e.g. a specific user role should be defined as element tag with the specific colors &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;...PERSON_...&lt;/code&gt; like&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;AddElementTag(&quot;admin&quot;, $fontColor=$ELEMENT_FONT_COLOR, $bgColor=$PERSON_BG_COLOR, $borderColor=$PERSON_BORDER_COLOR, $sprite=&quot;osa_user_audit&quot;, $legendText=&quot;administration user&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Therefore element Add…Tag() shortcuts are added which use the specific colors as default values and the call can be simplified like&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;AddPersonTag(&quot;admin&quot;, $sprite=&quot;osa_user_audit&quot;, $legendText=&quot;administration user&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Following calls introduces new element tags with element specific default colors:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddPersonTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?legendText, ?legendSprite)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddExternalPersonTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?legendText, ?legendSprite)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddSystemTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?legendText, ?legendSprite)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddExternalSystemTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?legendText, ?legendSprite)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddComponentTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?techn, ?legendText, ?legendSprite)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddExternalComponentTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?techn, ?legendText, ?legendSprite)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddContainerTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?techn, ?legendText, ?legendSprite)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddExternalContainerTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?techn, ?sprite, ?legendText, ?legendSprite)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddNodeTag(tagStereo, ?bgColor, ?fontColor, ?borderColor, ?shadowing, ?shape, ?sprite, ?techn, ?legendText, ?legendSprite)&lt;/code&gt;
+(node specific: $type reuses $techn definition of $tags)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Comments&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SHOW_LEGEND()&lt;/code&gt; supports the customized stereotypes
+    (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LAYOUT_WITH_LEGEND()&lt;/code&gt; cannot be used, if the custom tags/stereotypes should be displayed in the legend).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SHOW_LEGEND()&lt;/code&gt; has to be last line in diagram.&lt;/li&gt;
+  &lt;li&gt;Don’t use space between &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$tags&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;=&lt;/code&gt; (PlantUML does not support it).&lt;/li&gt;
+  &lt;li&gt;Don’t use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;,&lt;/code&gt; as part of the tag names (PlantUML does not support it in combination with keyword arguments).&lt;/li&gt;
+  &lt;li&gt;If 2 tags defines the same skinparam, the first definition is used.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;If specific skinparams have to be merged (e.g. 2 tags change the font color) an additional combined tag has to be defined. Use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;amp;&lt;/code&gt; as part of combined tag names.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Colors of relationship tags cannot be automatically merged (PlantUML does not support it).
+If one tag modifies the line color and the other the text color, an additional combined tag has to be defined and used.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Sample with different tag combinations&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+UpdateElementStyle(person, $fontColor=&quot;green&quot;)
+AddElementTag(&quot;v1.0&quot;, $fontColor=&quot;#d73027&quot;, $borderColor=&quot;#d73027&quot;)
+AddElementTag(&quot;v1.1&quot;, $fontColor=&quot;#ffffbf&quot;, $borderColor=&quot;#ffffbf&quot;)
+AddElementTag(&quot;v1.0&amp;amp;v1.1&quot;, $fontColor=&quot;#fdae61&quot;, $borderColor=&quot;#fdae61&quot;)
+AddElementTag(&quot;fallback&quot;, $bgColor=&quot;#444444&quot;)
+
+AddElementTag(&quot;micro service&quot;, $shape=EightSidedShape())
+AddElementTag(&quot;storage&quot;, $shape=RoundedBoxShape())
+
+UpdateRelStyle(black, black)
+AddRelTag(&quot;service1&quot;, $textColor=&quot;red&quot;)
+AddRelTag(&quot;service2&quot;, $lineColor=&quot;red&quot;)
+AddRelTag(&quot;service1&amp;amp;service2&quot;, $textColor=&quot;red&quot;, $lineColor=&quot;red&quot;)
+
+Container(spa, &quot;SPA&quot;, &quot;angular&quot;, &quot;The main interface that the customer interacts with via v1.0&quot;, $tags=&quot;v1.0&quot;)
+Container(spaAdmin, &quot;Admin SPA&quot;, &quot;angular&quot;, &quot;The administrator interface that the customer interacts with via new v1.1&quot;, $tags=&quot;v1.1&quot;)
+Container(api, &quot;API&quot;, &quot;java&quot;, &quot;Handles all business logic (incl. new v1.1 extensions)&quot;, $tags=&quot;v1.0&amp;amp;v1.1+v1.0+v1.1&quot;)
+Container(spa2, &quot;SPA2&quot;, &quot;angular&quot;, &quot;The main interface that the customer interacts with via v1.0&quot;, $tags=&quot;v1.0+fallback&quot;)
+Container(spaAdmin2, &quot;Admin SPA2&quot;, &quot;angular&quot;, &quot;The administrator interface that the customer interacts with via new v1.1&quot;, $tags=&quot;fallback+v1.1&quot;)
+
+Container(services, &quot;Services&quot;, &quot;techn&quot;, $tags=&quot;micro service&quot;)
+Container(fileStorage, &quot;File storage&quot;, &quot;techn&quot;, $tags=&quot;storage&quot;)
+
+Rel(spa, api, &quot;Uses&quot;, &quot;https&quot;)
+Rel(spaAdmin, api, &quot;Uses&quot;, &quot;https&quot;)
+Rel_L(spa, spa2, &quot;Updates&quot;, &quot;https&quot;)
+Rel_R(spaAdmin, spaAdmin2, &quot;Updates&quot;, &quot;https&quot;)
+
+Rel_D(api, services, &quot;uses service1 via this call&quot;, $tags=&quot;service1&quot;)
+Rel_D(api, services, &quot;uses service2 via this call&quot;, $tags=&quot;service2&quot;)
+Rel_D(services, fileStorage, &quot;both services stores via this call&quot;, $tags=&quot;service1&amp;amp;service2+service1+service2&quot;)
+
+SHOW_LEGEND(false)
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/jLLHRzCm47xlhp01JQswjMkOc8GqQMCh36d0r6xYSRh4byJWs97jTEFVOyTrI9l0nCFwOllkk-_Ed-_ISsr0cRhaerTCfBocI0fZAlr-FbVmECkPAUgargXIAGmACqjbEQyu21Tpf0tbB9bVdXpTEjFzbvjv2TgWigQ7Ini1JA2QLOv_T5zHCBZaM5gUjVd5SLoXqb8SaZUPnLvABjLPb2j44Kr65vHkiNUGZwFDOdOSxI9VqzEtn_6fioPIKLIxza6EnJv7Pdz9rkVmzk4w3WQ9AE2xHP_8s_j46N2UGFgpYSW3-gJvMVG-l6IfaaIZsh0KNOmkeCAp9SiBisOKwTgTnvDU7csaWhmJifAriFWFyYc4XBTP8VVlad1Rs25fbeRGUZoPpzzSq-1JkBn26WtXOeVZJE0pkCL12EWJ3rACskOQwmeEIRI-lOZi0YAlEIYtlIkGb1P2c32eCaYHc08CCTQUrbQL4fNtGMeqUMIc81i693IQWLoV-RQRxAQxe2KJDaEpak7Cu7nC6mLM_lyjGU0Z2ItMbh7OAGCgvYgu_UmI_e0DkFKQ1EMe2N1ExD1QeDQ4ovobPEocUzOo4oin2isaq9DEbj3RKxURkjt-tMElTVnYOa_3N0og7dTbZrzUzr1CqA9RakzOxGJPRbqH1jD2j0HxOzkzKiOuhlrish2FzaJ2gFPfWiTMi4BkUzwtmBtsUPkljlLxjrVh7vY76q-oVL8__ptGgaCLTd-1D_WhtvSTQMgREfmNZSYcO9gam7ddTbk_fNcU9Nw69MvP_X3iQfr8KxJiZUXs6IRjVw2cmJBjv1kjhxzzVxXPVbf-lHfdm3LEHkSegFlV-mq0&quot; alt=&quot;merged tags&quot; title=&quot;merged tags&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Sample with tag dependent sprites and custom legend text&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define osaPuml https://raw.githubusercontent.com/Crashedmind/PlantUML-opensecurityarchitecture2-icons/master
+!include osaPuml/Common.puml
+!include osaPuml/User/all.puml
+
+!include &amp;lt;office/Servers/database_server&amp;gt;
+!include &amp;lt;office/Servers/file_server&amp;gt;
+!include &amp;lt;office/Servers/application_server&amp;gt;
+!include &amp;lt;office/Concepts/service_application&amp;gt;
+!include &amp;lt;office/Concepts/firewall&amp;gt;
+
+AddExternalPersonTag(&quot;anonymous_ext&quot;, $sprite=&quot;osa_user_black_hat&quot;, $legendText=&quot;anonymous user&quot;)
+AddPersonTag(&quot;customer&quot;, $sprite=&quot;osa_user_large_group&quot;, $legendText=&quot;aggregated user&quot;)
+AddPersonTag(&quot;admin&quot;, $sprite=&quot;osa_user_audit,color=red&quot;, $legendSprite=&quot;osa_user_audit,scale=0.25,color=red&quot;, $legendText=&quot;administration user&quot;)
+
+AddContainerTag(&quot;webApp&quot;, $sprite=&quot;application_server&quot;, $legendText=&quot;web app container&quot;)
+AddContainerTag(&quot;db&quot;, $sprite=&quot;database_server&quot;, $legendText=&quot;database container&quot;)
+AddContainerTag(&quot;files&quot;, $sprite=&quot;file_server&quot;, $legendText=&quot;file server container&quot;)
+AddContainerTag(&quot;conApp&quot;, $sprite=&quot;service_application&quot;, $legendText=&quot;console app container&quot;)
+
+AddRelTag(&quot;firewall&quot;, $textColor=&quot;$ARROW_COLOR&quot;, $lineColor=&quot;$ARROW_COLOR&quot;, $sprite=&quot;firewall,scale=0.3,color=red&quot;, $legendText=&quot;firewall&quot;)
+
+Person_Ext(anonymous_user, &quot;Bob&quot;, $tags=&quot;anonymous_ext&quot;)
+Person(aggregated_user, &quot;Sam, Ivone&quot;, $tags=&quot;customer&quot;)
+Person(administration_user, &quot;Bernd&quot;, $tags=&quot;admin&quot;)
+
+System_Boundary(c1, &quot;techtribes.js&quot;){
+    Container(web_app, &quot;Web Application&quot;, &quot;Java, Spring MVC, Tomcat 7.x&quot;, $tags=&quot;webApp&quot;)
+    ContainerDb(rel_db, &quot;Relational Database&quot;, &quot;MySQL 5.5.x&quot;, $tags=&quot;db&quot;)
+    Container(filesystem, &quot;File System&quot;, &quot;FAT32&quot;, $tags=&quot;files&quot;)
+    ContainerDb(nosql, &quot;NoSQL Data Store&quot;, &quot;MongoDB 2.2.x&quot;, $tags=&quot;db&quot;)
+    Container(updater, &quot;Updater&quot;, &quot;Java 7 Console App&quot;, $tags=&quot;conApp&quot;)
+}
+
+Rel(anonymous_user, web_app, &quot;Uses&quot;, &quot;HTTPS&quot;, $tags=&quot;firewall&quot;)
+Rel(aggregated_user, web_app, &quot;Uses&quot;, &quot;HTTPS&quot;, $tags=&quot;firewall&quot;)
+Rel(administration_user, web_app, &quot;Uses&quot;, &quot;HTTPS&quot;, $tags=&quot;firewall&quot;)
+
+Rel(web_app, rel_db, &quot;Reads from and writes to&quot;, &quot;SQL/JDBC, port 3306&quot;)
+Rel(web_app, filesystem, &quot;Reads from&quot;)
+Rel(web_app, nosql, &quot;Reads from&quot;, &quot;MongoDB wire protocol, port 27017&quot;)
+
+Rel_U(updater, rel_db, &quot;Reads from and writes data to&quot;, &quot;SQL/JDBC, port 3306&quot;)
+Rel_U(updater, filesystem, &quot;Writes to&quot;)
+Rel_U(updater, nosql, &quot;Reads from and writes to&quot;, &quot;MongoDB wire protocol, port 27017&quot;)
+
+Lay_R(rel_db, filesystem)
+
+SHOW_LEGEND()
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/dLJTRkCs4xttKt2DlN00nyewNxu0HRDOnqwxNJYRr3_DfJ0Inx9QYbH9AevHzDqxf6tHiPMVDbSHvvmpXpE7_c8iQ5iLelKXbwceEBAbjQNv8Oeqh7fPRfTLKXdKgP8MfUsbgeXA0T9nJetb8a-YuVzExztH_7OS5M0iQZgAXyI0NABkbKw_zO7ZWZwPCd1F1-_eCzHWbiYBNF9er-1KbIWDffNExHfqkimjfhRIs3_DYMks1i9rjksYeIeA9RsNu-BSa6SGObCEzH_LOf6d64rHFw8s4GSB2HYCZJ_u_39oaOjteA0iHPw2pPLy6Ko3JB6q9d88EeZtMA_15xd65GZnkTKQS7xpP55B4FVKLyaPP9qsI2NNXQfCZ4-stMKVJKbJnQksCX2xPSI9WFIFU0c-AZ13oMU4lGfKvd3j4zTXJpcjZ5K5waPH0Jh3EDEgAezaiqnZ1XPviowuC3IAGiLpsqsLKFfA8m_2qsQaIK7WrLclVn58HsvSjznOxKUzS-GirTdshbQO3CfotzRnNW-rYSC8nTAT4YaV2VDaNpI4hq4nb5-NTBaq-whke5dHbzYczBee5Gy6q13LGtKY6INmQ0fEVeB22-yYxBYMM4E_glR7mMHozn0FxyPt4ozBrAPIC5GhrOi_Vsdl0UlCRC8Nq-lfr9dtEUgozhLAl378pDN1OphP4ZiXqJlM58ek--LHIGpa-hq4thFirHrHInve7kHSJjV6OX5VgqfoqEjE-ed05jEbrNc2flUxQP_yrMBqLo-kGmbqwo7W0sLny6nHxM_m25tctexCsErlmowRgOBAxBBt5FflWt_oN7cKT3IAc2UaGulqcY3OQ9jF9t-xdluwPXUzYtqrdXmgTNnQ_Ts8z9EBu-QcRVSvc9tt0zj36wn8PVuK1F-kN4jdWasjqXiRIcPgTCtwlVuRHggIW_Khc6_-sms9NJgK3x8RHTYeaflH_DrgqH2EmXEcFpTedDhNsUn-6WH223q_vEY_2Xm6wj-AU9MQiBTXu8Ojj2eOICvMxhaPPfKJeub7tqRNb9vIQSlEpy_-lt4JTCA6dsaTmdPR38Zz_Qt89IkriYfLOjkiVtdswN9hEvw71RvXd53mbliWT-3_eRxy4IvSe7bSxxxE6DRnf7vWeJsLfb_fbszyy_FDzr7dfFK59QyAyGy0&quot; alt=&quot;tags with sprites and custom legend&quot; title=&quot;tags with sprites and custom legend&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Custom schema definition&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;If the custom (color) schema is defined via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UpdateElementStyle()&lt;/code&gt; then the legend of existing elements is updated too.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+!$COLOR_A_5 = &quot;#7f3b08&quot;
+!$COLOR_A_4 = &quot;#b35806&quot;
+!$COLOR_A_3 = &quot;#e08214&quot;
+!$COLOR_A_2 = &quot;#fdb863&quot;
+!$COLOR_A_1 = &quot;#fee0b6&quot;
+!$COLOR_NEUTRAL = &quot;#f7f7f7&quot;
+!$COLOR_B_1 = &quot;#d8daeb&quot;
+!$COLOR_B_2 = &quot;#b2abd2&quot;
+!$COLOR_B_3 = &quot;#8073ac&quot;
+!$COLOR_B_4 = &quot;#542788&quot;
+!$COLOR_B_5 = &quot;#2d004b&quot;
+!$COLOR_REL_LINE = &quot;#8073ac&quot;
+!$COLOR_REL_TEXT = &quot;#8073ac&quot;
+
+UpdateElementStyle(&quot;person&quot;, $bgColor=$COLOR_A_5, $fontColor=$COLOR_NEUTRAL, $borderColor=$COLOR_A_1, $shadowing=&quot;true&quot;)
+UpdateElementStyle(&quot;external_person&quot;, $bgColor=$COLOR_B_5, $fontColor=$COLOR_NEUTRAL, $borderColor=$COLOR_B_1)
+UpdateElementStyle(&quot;system&quot;, $bgColor=$COLOR_A_4, $fontColor=$COLOR_NEUTRAL, $borderColor=$COLOR_A_2)
+UpdateElementStyle(&quot;external_system&quot;, $bgColor=$COLOR_B_4, $fontColor=$COLOR_NEUTRAL, $borderColor=$COLOR_B_2)
+UpdateRelStyle($lineColor=$COLOR_REL_LINE, $textColor=$COLOR_REL_TEXT)
+
+Person(customer, &quot;Personal Banking Customer&quot;)
+System(banking_system, &quot;Internet Banking System&quot;)
+
+System_Ext(mail_system, &quot;E-mail system&quot;)
+System_Ext(mainframe, &quot;Mainframe Banking System&quot;)
+
+Rel(customer, banking_system, &quot;Uses&quot;)
+Rel_Back(customer, mail_system, &quot;Sends e-mails to&quot;)
+Rel_Neighbor(banking_system, mail_system, &quot;Sends e-mails&quot;)
+Rel(banking_system, mainframe, &quot;Uses&quot;)
+
+SHOW_LEGEND()
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/dPHVRzem5CNVyodI34qWyIU4KA99I6rOj5LAeUAFjhV8YIyGrN6GxQZqsy-9iyMqwIeXNk1tpxdt7jlYZWl4H94HuoQb2Iamc4SXJlpRQCJGo_2GYcCH5nnOabC1L0oJF1kT2AAbPy059cayMhY3fnBj7iDHXhW09b6qA1rdCJoLtOsRpc8LhjRHVJGrvwRrPRQVnBPdQTojU3oPUlQjpYSL1zjpngxEdOhlSUpTJdG-LXp0ZhK-os2tNT-7gZOhFqtDhptOmmXYdQiPiODYxEXSxUJPimbATAuoJ5rdvdawLvaTRDkkrdyTX57ui0nQcgdYDlYzlIWQknD60W826L2n4Qy4kjO96C-frJSxyM6HavpDcxEMS9zJeV3bKPJwd65WRpnZMU17XFENb1xcbc05MBtMmN0Mm2WYqOSR-5Ti86-ZVHn_vGAorfpk5JcTJq9zECw_OfpVZ5i3KQCw9AMWgPe7qJU_2ZXhxRNtq3ECf-gukqd1HPu1wvkM8eYOFgBFyjhCHLsJDxUfSdHZLQbZISy3BOE2-ETHGkceBL5m5jqCfQJn18FojybhvHiXtJEKWPGz_ltUqbl6rpP_jzME0vSogOfyb3nhqijDDa0nDw7QXviYhprBI0z7UVxlulx7hQnj3XMYsShO_5pzYiBWHx3ytkqPTx9B-UVs1m00&quot; alt=&quot;custom schema&quot; title=&quot;custom schema&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;element-properties&quot;&gt;Element properties&lt;/h2&gt;
+
+&lt;p&gt;A model can be extended with (a table of) properties that concrete deployments or more detailed concepts can be documented:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SetPropertyHeader(col1Name, col2Name, ?col3Name, ?col4Name)&lt;/code&gt;
+The properties table can have up to 4 columns. The default header uses the column names “Name”, “Description”.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WithoutPropertyHeader()&lt;/code&gt;
+If no header is used, then the second column is bold.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddProperty(col1, col2, ?col3, ?col4)&lt;/code&gt;
+(All columns of) a property which will be added to the next element.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Following sample uses all 3 different property definitions (and the aligned deployment node).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+
+' default header Property, Value
+AddProperty(&quot;Name&quot;, &quot;Flash&quot;)
+AddProperty(&quot;Organization&quot;, &quot;Zootopia&quot;)
+AddProperty(&quot;Tool&quot;, &quot;Internet Explorer 7.0&quot;)
+Person(personAlias, &quot;Label&quot;, &quot;Optional Description (with default property header)&quot;)
+
+SetPropertyHeader(&quot;Property&quot;,&quot;Value&quot;, &quot;Description&quot;)
+AddProperty(&quot;Prop1&quot;, &quot;Value1&quot;, &quot;Details1&quot;)
+AddProperty(&quot;Prop2&quot;, &quot;Value2&quot;, &quot;Details2&quot;)
+Deployment_Node_L(nodeAlias, &quot;Label&quot;, &quot;Optional Type&quot;, &quot;Optional Description (with custom property header)&quot;) {
+
+  WithoutPropertyHeader()
+  AddProperty(&quot;PropC1&quot;, &quot;ValueC1&quot;)
+  AddProperty(&quot;PropC2&quot;, &quot;ValueC2&quot;)
+  Container(containerAlias, &quot;Label&quot;, &quot;Technology&quot;, &quot;Optional Description (without property header)&quot;)
+}
+
+System(systemAlias, &quot;Label&quot;, &quot;Optional Description (without properties)&quot;)
+
+Rel(personAlias, containerAlias, &quot;Label&quot;, &quot;Optional Technology&quot;)
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/ZP9HRzCm4CVVyobCNaYbhc4L4X9FcpeGI6Mhe834ItLDZiQIuxFiiqP0V7VEqRfiQO0z-NB--P_xnRa839vZQx9dsbOcrgWQPXTUbwM7syL1SnFtCQ2lo39QNbJKbiw0JMVE0jT6xylLoxDDQdt-i2vR28nUMhihT8QwDXrowGNPSrNZTuY6LODGerSRJmuzTtFr1Kp4xBAkZwqYluOMyxdAtne8JJvxl7dZ3s3rJs1DDa7VY9YSXZ6t9J9f_xrbz1PPlVaXGtdqwjNYXS0Rz85iuVhbqcW80gzXZ_sf6vVomQWh39NN_PCgRZKtzoRkxbLtIZF9p3uX7oTurtUB_FYSp_Easeiz21sFdQhpnFImL8bcq2QSJw7BUtJv05qAEjp1xffgtAqBAylVHRUTm_-OLp4mjHFYwbUMAVLL68hZ3p2JdPEnLuEYbDF8e2PbGbPanSvAPdMiJdIsM3MM31swVxjGdBp0ttA5NM1iYz0lu_od9MeC_T_m4StZ_sjgxb7k82095sZhs9e_&quot; alt=&quot;properties sample&quot; title=&quot;properties sample&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;version-information&quot;&gt;Version information&lt;/h2&gt;
+
+&lt;p&gt;C4-PlantUML offers version information like PlantUML with its &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%version()&lt;/code&gt; call.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C4Version()&lt;/code&gt;: Current C4-PlantUML version (e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2.4.0beta1&lt;/code&gt;).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C4VersionDetails()&lt;/code&gt;: (Floating) version details with the current PlantUML and C4-PlantUML version. (It can be referenced via the alias &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C4VersionDetailsArea&lt;/code&gt;.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-plantuml&quot;&gt;@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+' existing plantuml version as text
+%version()
+
+' new C4-Plantuml version as text 
+C4Version()
+
+' new C4-Plantuml version details (incl. PlantUML version) as table
+C4VersionDetails()
+
+' version functions used in e.g. footer
+footer drawn with PlantUML v. %version() and C4-PlantUML v. C4Version()
+@enduml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/ZOynJyCm48Nt_8fZGBH3dQKJKwKmWiG2Axh4r-GavnBvpgG_dvXWjGjIfqJltllytaaDewKnL0yiNKYUO32RzRck8owkPnjIcvHYDucHcEkciPu3IiuSr7pWjcwEX_SiVRozrYEgKLobhsPD80j5DsT-zGHqOJMM7We0lYagJmAeO7Inwl5FsEspNsY1pFx73LLp_Bp7xycGWy8kJtHGkfRx_XU8RQ0hy6MBRDp2EIVfRFrHI4eUM81Sx-0yJKQnsZxW8ou22zjmyv23wp90yQLckTuEEP7ujVqF&quot; alt=&quot;version sample&quot; title=&quot;version sample&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;snippets-for-visual-studio-code&quot;&gt;Snippets for Visual Studio Code&lt;/h2&gt;
+
+&lt;p&gt;Because the PlantUML support inside of Visual Studio Code is excellent with the &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml&quot;&gt;PlantUML extension&lt;/a&gt;, you can also find VS Code snippets for C4-PlantUML at &lt;a href=&quot;.vscode/C4.code-snippets&quot;&gt;.vscode/C4.code-snippets&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Project level snippets are now supported in &lt;a href=&quot;https://code.visualstudio.com/updates/v1_28#_project-level-snippets&quot;&gt;VSCode 1.28&lt;/a&gt;.
+Just include the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C4.code-snippets&lt;/code&gt; file in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.vscode&lt;/code&gt; folder of your project.&lt;/p&gt;
+
+&lt;p&gt;It is possible to save them directly inside VS Code: &lt;a href=&quot;https://code.visualstudio.com/docs/editor/userdefinedsnippets#_creating-your-own-snippets&quot;&gt;Creating your own snippets&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/vscode_c4plantuml_snippets.gif&quot; alt=&quot;C4-PlantUML Snippets Video&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;live-templates-for-intellij&quot;&gt;Live Templates for IntelliJ&lt;/h2&gt;
+
+&lt;h3 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://graphviz.gitlab.io/download/&quot;&gt;Graphviz download&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://plugins.jetbrains.com/plugin/7017-plantuml-integration&quot;&gt;PlantUML Integration&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;install&quot;&gt;Install&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Download &lt;a href=&quot;intellij/c4_live_template.zip&quot;&gt;IntelliJ live template&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;File | Manage IDE Settings | Import Settings&lt;/code&gt; from the IntelliJ IDEA menu.&lt;/li&gt;
+  &lt;li&gt;Specify the path to the downloaded ZIP file: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;c4_live_template.zip&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;In the Import Settings dialog, select the Live templates checkbox and click OK.&lt;/li&gt;
+  &lt;li&gt;Restart IntelliJ.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;usage&quot;&gt;Usage&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Create new PlantUML file (.puml).&lt;/li&gt;
+  &lt;li&gt;Type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;c4_&lt;/code&gt; for displaying artifacts templates for C4-PlantUML&lt;/li&gt;
+  &lt;li&gt;Live template create correct C4 model artifact with stubbed arguments.
+    &lt;ul&gt;
+      &lt;li&gt;E.g. alias, label, type, technology, description&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Replace stubbed arguments with desired values.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/intellij_c4plantum_live_template1.gif&quot; alt=&quot;C4-PlantUML Snippets Video&quot; /&gt;
+&lt;img src=&quot;images/intellij_c4plantum_live_template2.gif&quot; alt=&quot;C4-PlantUML Snippets Video&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;layout-options&quot;&gt;Layout Options&lt;/h2&gt;
+
+&lt;p&gt;C4-PlantUML also comes with some layout options to make it easy and reuseable to create nice and useful diagrams:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;LayoutOptions.md#layout_top_down-or-layout_left_right&quot;&gt;LAYOUT_TOP_DOWN or LAYOUT_LEFT_RIGHT&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LayoutOptions.md#layout_with_legend&quot;&gt;LAYOUT_WITH_LEGEND&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;LayoutOptions.md#layout_as_sketch&quot;&gt;LAYOUT_AS_SKETCH&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;advanced-samples&quot;&gt;Advanced Samples&lt;/h2&gt;
+
+&lt;p&gt;The following advanced samples are reproductions with C4-PlantUML from official &lt;a href=&quot;https://c4model.com/#examples&quot;&gt;C4 model samples&lt;/a&gt; created by &lt;a href=&quot;https://simonbrown.je/&quot;&gt;Simon Brown&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The core diagram samples from &lt;a href=&quot;https://c4model.com/#coreDiagrams&quot;&gt;c4model.com&lt;/a&gt; are available &lt;a href=&quot;samples/C4CoreDiagrams.md&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;techtribesjs&quot;&gt;techtribes.js&lt;/h3&gt;
+
+&lt;p&gt;Source: &lt;a href=&quot;samples/C4_Container%20Diagram%20Sample%20-%20techtribesjs.puml&quot;&gt;C4_Container Diagram Sample - techtribesjs.puml&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/ZLHDR-Cs4BthLqnzMGVGshj9jm5wMYTEazqw7uta1Zq9b3YMcLAaIb9nZAB_lKDAaQsuWEk39G_V3D-RUUElrZ7Zcah2o66nTaRaQ9_jAFf1g48s767jN6r_dauDsqnAuTPDtbWqXLOEbPiKkfhMaYbVugDrN8fyUldZnmSVMjukfXMp3Ws5ialAO4AXcTI4ZJv0eoYveYBWrWWhBQNU25M2910mnM5mB8obDmrqEKXTC2ctLADdUNX1j9ZzSRzCi_J-8PlVFzsDJw8FNMYMPCclL-db3SMwqDEtz2PRN5rVtSqf64KFQAnMsTMh6pEbrRRIZSsyy1X6ixS0B2amEkd0OrQM1alcaFV8Fl8UoYkXX7M6EQ5L3nz4trAYP6iTLjc5RXHdPZikFiVxqvhGk4x-Ze0-uQllmtY3USRgcj1FcCEihgKeGkaHXRwp5nP3KXlVyzlVBsD8TKN7S3vvzUSpFmyBdfhrZNyHk84QTIqnXlRc63eRn80lzA30iyxf6rqnWPNH5Ssk6nTumZ5mGHvYCiptMmeM2wUzo27pUJusA3EU4uz7b84p9SsPOpcpwEdTRfFV5l1bygLbcr0Pj0VymXCgh79IiHOrHPZyqxxdcpDUUlYrS3TD3WPhtQaue3PU2OasJ8Ik_OL-G3kVaVyvIyzEz-XOPAPOWr0SNz7-bqobxL-I4kuqoGa28UG6YLgLUdu1fvFJWSZGsCSacSuSlQmGkOLnBdK9HDlPaz1Sjq5qzf1-KtFcWjkMxTkR5-3SewoMw9qowW4MQgE3wBWhEknJkAtp0MW536onHjv8v4334fx3Fxs9_KAvZN0jXRHz8yJUSVidGwVjBSD3BzFIsGKzWxg8_76meZlZqmvPh-KcJHyImXDwkAV7uSDTFPeISlhZFHiptetEDsnZX6-jqpwLHZ_zFh-W5QorSN1szkadAZIeitFTeDPxMB3J4B5df8qmwAVfTA5bTzdf-QVFvntjRDdRunXnGh4Zx0Vb1loVUl47k23WIBl-hvnTrPtZhj7rXWQXLjfKOQoxdUdRrazqK6hdJe8EA-IwSL0tkHG559fZkn_2QIFmIDNErg5elqoD5QhqYnx8zSi-BEMrBjWsU-p_CNUjfgElg7XJoNy1&quot; alt=&quot;techtribesjs&quot; title=&quot;techtribesjs&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;message-bus-and-microservices&quot;&gt;Message Bus and Microservices&lt;/h3&gt;
+
+&lt;p&gt;Source: &lt;a href=&quot;samples/C4_Container%20Diagram%20Sample%20-%20message%20bus.puml&quot;&gt;C4_Container Diagram Sample - message bus.puml&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.plantuml.com/plantuml/png/bLLDZzis4BtxLqpL7ho0TuqKFHLO8FumcWJUNSUoaQCmeiOI4OeaICgkM_I_bvHiXN7LJRA7jJYSUU_D38TyQnqQrzG2afginPBonYQZdxXaeYa8AkUq_NqwDNXwABch6hzDXYdfIBe7fkgf5YW3mBrrXU3vTF7R_IQOza_hQOtMaV6cRE4Za4io3zhxZaQpebW9gZt83ijnKdDc57Za8sUKJE0NMw6cnnKlAvVoWeeqhCTtVYSl5qeeyvWib947eKvavg9fWmwUvB9vghYZvEwMnpfbi8mOjggH7dwk_XnW42tzv_Ch-AFqtSkdRBFQfY_FsSj-jtx_l1fxyuQCLNBC6izOavd0elzAPd0rjm1dwwZEva48clEOlV4kLszuBm_ArEYuaiaT_3q2_zVNSenQnyuphGLddREtVy0ZMcQuTXEOoR8HQ89v9dpHRA_1WbDGeyIIm5N43MYZ3bpux6xOhX7PfKynTTgPhhGJIBNXieIvKYuOTnM1LbmwK0T0niXQy9drAe17YVfIEomjFCBDmRXLT3coMTvOp_7KhM3Us42vnJpdxkbZIszGMgsCQqczEvT10Hr9EliVM4F1rSkFCjrURN6gsoO_Xz-58NHaGOOK1BTKG84EMx8U37HZjB9alpy_R0hk8X6pi8u5B7wUFZolTk5pOzIH5sH1cH8bjsqfxq_U12rCK710neN__04Do_nBtuiyRlaI7UPeMnql1faWUFCh2wlKAKFscxtjXd60CMg0funh7tC-dTEFwuWEh-N_Ymeuah6UhZrjGlGT_z8MBA1IxBNkn0g7--9teww4LP2pEfBibxswg0Q0kMhSvV21gz11XKVo_xGcISMmWdz6eos9R1dTATtuxplHoRlTRfDwnywhtHkOsBqkqFrFSo1KgGnOQC-IJU23lzMcCUv-u1BeLAGa2zldf0B89yfJnJwJUoKuck0Uf9VMj5eZq1Pd02KweNt5krRpxYPSpXUNuAy81mRzEpN4CDry_J3407bl6aoa2xiXYuzY7z5HTJ6ZDPwpxH3RLqZNfsoz-cFrlFHFs5kVH7Yg_mK0&quot; alt=&quot;messagebus&quot; title=&quot;messagebus&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://plantuml.com/&quot;&gt;PlantUML&lt;/a&gt; is an open source project that allows you to create UML diagrams.
+Diagrams are defined using a simple and intuitive language.
+Images can be generated in PNG, in SVG or in LaTeX format.&lt;/p&gt;
+
+&lt;p&gt;PlantUML was created to allow the drawing of UML diagrams, using a simple and human readable text description.
+Because it does not prevent you from drawing inconsistent diagrams, it is a drawing tool and not a modeling tool.
+It is the most used text-based diagram drawing tool with &lt;a href=&quot;https://plantuml.com/running&quot;&gt;extensive support into wikis and forums, text editors and IDEs, use by different programming languages and documentation generators&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://c4model.com/&quot;&gt;C4 model&lt;/a&gt; for software architecture is an “abstraction-first” approach to diagramming, based upon abstractions that reflect how software architects and developers think about and build software.
+The small set of abstractions and diagram types makes the C4 model easy to learn and use.
+C4 stands for context, containers, components, and code — a set of hierarchical diagrams that you can use to describe your software architecture at different zoom levels, each useful for different audiences.&lt;/p&gt;
+
+&lt;p&gt;The C4 model was created as a way to help software development teams describe and communicate software architecture, both during up-front design sessions and when retrospectively documenting an existing codebase.&lt;/p&gt;
+
+&lt;p&gt;More information can be found here:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://c4model.com/&quot;&gt;The C4 model for software architecture&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://real-world-plantuml.com/&quot;&gt;REAL WORLD PlantUML - Sample Gallery&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.codingthearchitecture.com/2017/04/27/visualising_and_documenting_software_architecture_cheat_sheets.html&quot;&gt;Visualising and documenting software architecture cheat sheets&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.codingthearchitecture.com/2016/12/08/plantuml_and_structurizr.html&quot;&gt;PlantUML and Structurizr - Create models not diagrams&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;license&quot;&gt;License&lt;/h2&gt;
+
+&lt;p&gt;This project is licensed under the MIT License - see the &lt;a href=&quot;LICENSE&quot;&gt;LICENSE&lt;/a&gt; file for details&lt;/p&gt;</content><author><name>steven lu</name><email>lwpk110@163.com</email></author><category term="UML" /><category term="UML" /><category term="C4" /><summary type="html">C4-PlantUML 结合了 PlantUML 和 C4 模型的优点，通过使用开源和平台独立工具的直观语言，提供了一种描述和交流软件架构的简单方法——尤其是在前期设计会议期间。 C4-PlantUML 包括用于使用 PlantUML 创建 C4 图的宏、构造型和其他好东西（如 VSCode 片段）。</summary></entry><entry><title type="html">OSGI</title><link href="http://blog.lwpk110.top/jekyll-blog/java/OSGI/" rel="alternate" type="text/html" title="OSGI" /><published>2021-09-27T00:00:00+08:00</published><updated>2021-09-27T00:00:00+08:00</updated><id>http://blog.lwpk110.top/jekyll-blog/java/OSGI</id><content type="html" xml:base="http://blog.lwpk110.top/jekyll-blog/java/OSGI/">&lt;p&gt;OSGi（开放服务网关计划）是一个用于开发和部署模块化软件程序和库的Java框架。&lt;br /&gt;
+OSGi 有两个部分。第一部分是称为 bundles 的模块化组件的规范，它们通常被称为插件。该规范为 bundle 的生命周期定义了基础设施，并确定了 bundle 将如何交互。OSGi 的第二部分是 Java 虚拟机 ( JVM ) 级别的服务注册表，捆绑包可用于发布、发现和绑定到面向服务架构 ( SOA )中的服务.&lt;/p&gt;
+
+&lt;p&gt;OSGi 背后的工作始于 1999 年，当时嵌入式系统供应商和网络供应商齐心协力，为可远程管理的基于 Java 的服务框架创建了一套标准。OSGi 最初的构想是作为一种网关，用于管理家庭中的智能电器和其他支持 Internet 的设备。网关由嵌入在硬件平台（如电缆调制解调器或机顶盒）中的 Java 软件框架组成。该框架充当家庭局域网 ( LAN )上设备的中央消息代理。本质上，目标是为智能设备创建标准化的中间件，并使软件开发人员更容易管理交叉依赖项。&lt;/p&gt;
+
+&lt;aside class=&quot;sidebar__right&quot;&gt;
+&lt;nav class=&quot;toc&quot;&gt;
+    &lt;header&gt;&lt;h4 class=&quot;nav__title&quot;&gt;&lt;i class=&quot;fas fa-file-alt&quot;&gt;&lt;/i&gt; 目录&lt;/h4&gt;&lt;/header&gt;
+&lt;ul class=&quot;toc__menu&quot; id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#osgi-优秀开源项目&quot; id=&quot;markdown-toc-osgi-优秀开源项目&quot;&gt;osgi 优秀开源项目&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#todo&quot; id=&quot;markdown-toc-todo&quot;&gt;todo…&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/nav&gt;
+&lt;/aside&gt;
+
+&lt;h2 id=&quot;osgi-优秀开源项目&quot;&gt;osgi 优秀开源项目&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.opendaylight.org/&quot;&gt;Open Daylight&lt;/a&gt;;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://karaf.apache.org/&quot;&gt;Apache Karaft&lt;/a&gt;；&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://felix.apache.org/&quot;&gt;felix&lt;/a&gt;;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.openhab.org/&quot;&gt;Open HAB&lt;/a&gt;;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;todo&quot;&gt;todo…&lt;/h2&gt;</content><author><name>steven lu</name><email>lwpk110@163.com</email></author><category term="JAVA" /><category term="java" /><category term="osgi" /><summary type="html">OSGi（开放服务网关计划）是一个用于开发和部署模块化软件程序和库的Java框架。 OSGi 有两个部分。第一部分是称为 bundles 的模块化组件的规范，它们通常被称为插件。该规范为 bundle 的生命周期定义了基础设施，并确定了 bundle 将如何交互。OSGi 的第二部分是 Java 虚拟机 ( JVM ) 级别的服务注册表，捆绑包可用于发布、发现和绑定到面向服务架构 ( SOA )中的服务.</summary></entry><entry><title type="html">vim 常用命令</title><link href="http://blog.lwpk110.top/jekyll-blog/linux/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="alternate" type="text/html" title="vim 常用命令" /><published>2021-08-30T00:00:00+08:00</published><updated>2021-08-30T00:00:00+08:00</updated><id>http://blog.lwpk110.top/jekyll-blog/linux/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4</id><content type="html" xml:base="http://blog.lwpk110.top/jekyll-blog/linux/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">&lt;p&gt;作为开发者，我们将经常处理文本——词表、配置文件等。我们将在本地机器上进行很多工作，我们可以使用我们喜欢的任何文本编辑器。在远程机器上，
+编辑工具将受到限制。如果安装了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nano&lt;/code&gt; ，一个易于使用的终端文本编辑器，但它不是很强大。&lt;/p&gt;
+
+&lt;p&gt;幸运的是，大多数系统都安装了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Vi&lt;/code&gt; 或 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Vim&lt;/code&gt; 。 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Vi&lt;/code&gt; 代表 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;visual&lt;/code&gt; ，是一个强大、快速的模态文本编辑器，可以在 “插入模式”（文档中输入）或正常模式（输入会话命令）下工作。
+在这些会话之间切换就像敲击键盘一样简单，因此对于那些不喜欢将手从键盘上移开的人来说，这非常有用。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Vim&lt;/code&gt; 代表 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Vi IMproved&lt;/code&gt; ，它具有 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Vi&lt;/code&gt; 的所有功能，并添加了一些有助于编辑源代码的出色功能。还有一个全面的帮助系统和许多可用的自定义选项。许多系统将 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Vi&lt;/code&gt; 符号链接到 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Vim&lt;/code&gt;，
+包括 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;macOS&lt;/code&gt; 。就我个人而言，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Vim&lt;/code&gt; 适用于我在远程主机上的所有编辑。&lt;/p&gt;
+
+&lt;h2 id=&quot;常用命令&quot;&gt;常用命令&lt;/h2&gt;
+
+&lt;h3 id=&quot;基操&quot;&gt;基操&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;y&lt;/code&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yank&lt;/code&gt;（复制）的缩写;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;paste&lt;/code&gt;(粘贴)的缩写;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;d&lt;/code&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;delete&lt;/code&gt;(粘贴)的缩写;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;view&lt;/code&gt; 缩写，标识进入视图模式，从 &lt;strong&gt;光标当前的位置&lt;/strong&gt; 开始光标经过的文档将被选中;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;V&lt;/code&gt;: 同 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt; 命令, 不同的是起点是从 &lt;strong&gt;光标位置的当前行&lt;/strong&gt;开始;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ctrl + v&lt;/code&gt;: 同 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;命令， 从光标当前位置开始和终点光标位置组成矩形区域块，作为选中区域;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;常用组合命令&quot;&gt;常用组合命令&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ggyG&lt;/code&gt;: 全选复制. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gg&lt;/code&gt;-光标移动到文档最前面, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;y&lt;/code&gt;-复制， &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;G&lt;/code&gt; 光标移动到末尾;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ggdG&lt;/code&gt;: 全选复制. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gg&lt;/code&gt;-光标移动到文档最前面, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;y&lt;/code&gt;-删除， &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;G&lt;/code&gt; 光标移动到末尾;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p class=&quot;notice--primary&quot;&gt;&lt;strong&gt;技巧:&lt;/strong&gt; 命令模式下，命令是按照顺序执行的，多个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vi&lt;/code&gt; 或者 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vim&lt;/code&gt; 命令组合成一个操作。比如 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ggyG&lt;/code&gt; 组合命令的一个操作就是 光标移动到头，然后复制，最后光标移动到末尾,完成 “全选复制” 操作.&lt;/p&gt;</content><author><name>steven lu</name><email>lwpk110@163.com</email></author><category term="Linux" /><category term="vim" /><summary type="html">作为开发者，我们将经常处理文本——词表、配置文件等。我们将在本地机器上进行很多工作，我们可以使用我们喜欢的任何文本编辑器。在远程机器上， 编辑工具将受到限制。如果安装了 nano ，一个易于使用的终端文本编辑器，但它不是很强大。</summary></entry><entry><title type="html">使用微服务架构语言</title><link href="http://blog.lwpk110.top/jekyll-blog/microservice/%E5%BA%94%E7%94%A8%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84/" rel="alternate" type="text/html" title="使用微服务架构语言" /><published>2021-08-03T00:00:00+08:00</published><updated>2021-08-03T00:00:00+08:00</updated><id>http://blog.lwpk110.top/jekyll-blog/microservice/%E5%BA%94%E7%94%A8%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84</id><content type="html" xml:base="http://blog.lwpk110.top/jekyll-blog/microservice/%E5%BA%94%E7%94%A8%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84/">&lt;p&gt;微服务架构模式语言由多个模式组构成。模式语言的价值超过了其各个模式的总和，因为它定义了模式之间的这些关系：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Predecessor – Predecessor模式是激发对这种模式的需求的模式。例如，微服务架构模式是模式语言中除单体架构模式之外的其他模式的前身。&lt;/li&gt;
+  &lt;li&gt;Successor – 解决此模式引入的问题的模式。例如，如果您应用微服务架构模式，则必须应用许多后继模式，包括服务发现模式和断路器模式。&lt;/li&gt;
+  &lt;li&gt;Alternative – 为该模式提供了替代解决方案的模式。例如，单体架构模式和微服务架构模式是构建应用程序的替代方法。你选一个。这些关系在使用模式语言时提供了宝贵的指导。应用模式会产生问题，然后您必须通过应用后继模式来解决这些问题。模式的选择不断递归，直到您达到没有后继的模式。如果有两种或多种模式可供选择，那么您通常必须只选择一种。在许多方面，这类似于遍历图。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;决策1单体架构还是微服务架构&quot;&gt;决策#1：单体架构还是微服务架构？&lt;/h2&gt;
+
+&lt;p&gt;您必须做出的第一个决定是使用单体架构模式还是微服务架构模式。如果您选择微服务架构模式，您必须选择许多其他模式来处理您的决定的后果。&lt;/p&gt;
+
+&lt;figure style=&quot;width: 700px&quot;&gt;
+  &lt;img src=&quot;http://blog.lwpk110.top/jekyll-blog/assets/images/micro-service/PatternsRelatedToMicroservices.jpg&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;sentinel dashboard&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&quot;决策2如何将应用程序分解为服务&quot;&gt;决策#2：如何将应用程序分解为服务？&lt;/h2&gt;
+
+&lt;p&gt;如果您决定使用微服务架构，则必须定义您的服务。有两个主要方向：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;按业务能力分解——定义业务能力对应的服务；&lt;/li&gt;
+  &lt;li&gt;按子域分解——定义DDD子域对应的服务；&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;这种模式产生等效的结果：围绕业务概念而非技术概念组织的一组服务。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;决策3如何保持数据一致性并执行查询&quot;&gt;决策#3：如何保持数据一致性并执行查询？&lt;/h2&gt;
+
+&lt;p&gt;微服务的一个关键特性是每个服务的数据库模式。作为替代方案，共享数据库模式本质上是一种反模式，最好避免。每个服务的数据库模式极大地改变了您维护数据一致性和执行查询的方式。您将需要使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Saga&lt;/code&gt; 模式。您经常需要使用命令查询职责分离 (CQRS) 模式来实现查询。&lt;/p&gt;</content><author><name>steven lu</name><email>lwpk110@163.com</email></author><category term="MicroService" /><category term="MicroService" /><summary type="html">微服务架构模式语言由多个模式组构成。模式语言的价值超过了其各个模式的总和，因为它定义了模式之间的这些关系：</summary></entry><entry><title type="html">Alibaba Sentinel介绍</title><link href="http://blog.lwpk110.top/jekyll-blog/spring%20cloud/Alibaba-Sentinel%E4%BB%8B%E7%BB%8D/" rel="alternate" type="text/html" title="Alibaba Sentinel介绍" /><published>2021-08-02T00:00:00+08:00</published><updated>2021-08-02T00:00:00+08:00</updated><id>http://blog.lwpk110.top/jekyll-blog/spring%20cloud/Alibaba%20Sentinel%E4%BB%8B%E7%BB%8D</id><content type="html" xml:base="http://blog.lwpk110.top/jekyll-blog/spring%20cloud/Alibaba-Sentinel%E4%BB%8B%E7%BB%8D/">&lt;p&gt;顾名思义，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sentinel&lt;/code&gt; 是微服务的强大守护者。它提供&lt;strong&gt;流量控制&lt;/strong&gt;、&lt;strong&gt;并发限制&lt;/strong&gt;、&lt;strong&gt;断路&lt;/strong&gt;和&lt;strong&gt;自适应系统保护&lt;/strong&gt;等功能，以保证其可靠性。它是阿里巴巴集团积极维护的开源组件。此外，它正式成为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Spring Cloud Circuit Breaker.&lt;/code&gt; 的一部分。&lt;/p&gt;
+
+&lt;p&gt;在本文中，我们将了解 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sentinel&lt;/code&gt; 的一些主要功能。此外，我们将看到如何使用它的示例、它的注释支持和它的监控仪表板&lt;/p&gt;
+
+&lt;figure style=&quot;width: 700px&quot;&gt;
+  &lt;img src=&quot;http://blog.lwpk110.top/jekyll-blog/assets/images/spring-cloud/sentinel.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;Sentinel 角色&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;aside class=&quot;sidebar__right&quot;&gt;
+&lt;nav class=&quot;toc&quot;&gt;
+    &lt;header&gt;&lt;h4 class=&quot;nav__title&quot;&gt;&lt;i class=&quot;fas fa-file-alt&quot;&gt;&lt;/i&gt; 目录&lt;/h4&gt;&lt;/header&gt;
+&lt;ul class=&quot;toc__menu&quot; id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#特性&quot; id=&quot;markdown-toc-特性&quot;&gt;特性&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#流量控制&quot; id=&quot;markdown-toc-流量控制&quot;&gt;流量控制&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#熔断和降级&quot; id=&quot;markdown-toc-熔断和降级&quot;&gt;熔断和降级&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#自适应系统保护&quot; id=&quot;markdown-toc-自适应系统保护&quot;&gt;自适应系统保护&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#使用&quot; id=&quot;markdown-toc-使用&quot;&gt;使用&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#1-依赖&quot; id=&quot;markdown-toc-1-依赖&quot;&gt;1. 依赖&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#2-定义资源&quot; id=&quot;markdown-toc-2-定义资源&quot;&gt;2. 定义资源&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#3-定义流量控制规则&quot; id=&quot;markdown-toc-3-定义流量控制规则&quot;&gt;3. 定义流量控制规则&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#4-定义降级规则&quot; id=&quot;markdown-toc-4-定义降级规则&quot;&gt;4. 定义降级规则&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#5-定义系统保护规则&quot; id=&quot;markdown-toc-5-定义系统保护规则&quot;&gt;5. 定义系统保护规则&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#注解支持&quot; id=&quot;markdown-toc-注解支持&quot;&gt;注解支持&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#监控仪表盘&quot; id=&quot;markdown-toc-监控仪表盘&quot;&gt;监控仪表盘&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#1-启动仪表盘服务&quot; id=&quot;markdown-toc-1-启动仪表盘服务&quot;&gt;1. 启动仪表盘服务&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#2-添加依赖&quot; id=&quot;markdown-toc-2-添加依赖&quot;&gt;2. 添加依赖&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#链接服务到仪表盘&quot; id=&quot;markdown-toc-链接服务到仪表盘&quot;&gt;链接服务到仪表盘&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/nav&gt;
+&lt;/aside&gt;
+
+&lt;h2 id=&quot;特性&quot;&gt;特性&lt;/h2&gt;
+
+&lt;h3 id=&quot;流量控制&quot;&gt;流量控制&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sentinel&lt;/code&gt; 控制随机请求传入的速度，以避免微服务过载。这可确保我们的服务不会因流量激增而中断。它支持多种流量整形策略。当每秒查询数 (QPS) 过高时，这些策略会自动将流量调整为适当的策略。&lt;/p&gt;
+
+&lt;p&gt;其中一些流量整形策略是：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;直接拒绝模式–当每秒请求数超过设定的阈值时，它会自动拒绝进一步的请求；&lt;/li&gt;
+  &lt;li&gt;慢启动预热模式–如果流量突然激增，此模式可确保请求计数逐渐增加，直到达到上限;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;熔断和降级&quot;&gt;熔断和降级&lt;/h3&gt;
+
+&lt;p&gt;当一个服务同步调用另一个服务时，另一个服务可能会因某种原因关闭。在这种情况下，线程会被阻塞，因为它们一直在等待其他服务响应。这可能会导致资源耗尽，并且调用方服务也将无法处理进一步的请求。&lt;strong&gt;这称为级联效应，可以摧毁我们的整个微服务架构&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;为了防止这种情况，断路器出现在架构中。它将立即阻止对其他服务的所有后续调用。超时时间过后，会传递一些请求。如果它们成功，则断路器恢复正常流程。否则，超时时间将重新开始。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sentinel&lt;/code&gt; 使用最大并发限制原理来实现熔断&lt;/strong&gt;。它通过限制并发线程数来减少不稳定资源的影响。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sentinel&lt;/code&gt; 还会降级不稳定的资源。当资源的响应时间太长时，对资源的所有调用都会在指定的时间窗口内被拒绝。这可以防止调用变得非常缓慢，从而导致级联效应的情况。&lt;/p&gt;
+
+&lt;h3 id=&quot;自适应系统保护&quot;&gt;自适应系统保护&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sentinel&lt;/code&gt; 会在系统负载过高时保护我们的服务器&lt;/strong&gt; 。它使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;load1&lt;/code&gt;（系统负载）作为指标来启动流量控制。请求将在以下情况下被阻止：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;当前系统负载（&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;load1&lt;/code&gt;）&amp;gt; 阈值（&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;highestSystemLoad&lt;/code&gt;）；&lt;/li&gt;
+  &lt;li&gt;当前并发请求（线程数）&amp;gt; 估算容量（最小响应时间 * 最大 QPS）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;使用&quot;&gt;使用&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-依赖&quot;&gt;1. 依赖&lt;/h3&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;com.alibaba.csp&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;sentinel-core&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;1.8.0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;2-定义资源&quot;&gt;2. 定义资源&lt;/h3&gt;
+
+&lt;p&gt;使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sentinel API&lt;/code&gt; 在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;try-catch&lt;/code&gt; 块中定义具有相应业务逻辑的资源：&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Entry&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entry&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SphU&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;entry&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;HelloWorld&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Our business logic here.&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;hello world&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;BlockException&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Handle rejected request.&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;3-定义流量控制规则&quot;&gt;3. 定义流量控制规则&lt;/h3&gt;
+
+&lt;p&gt;这些规则控制流向我们的资源，例如阈值计数或控制行为——例如，直接拒绝或缓慢启动。我们使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FlowRuleManager.loadRules()&lt;/code&gt; 来配置流规则：&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;FlowRule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flowRules&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;FlowRule&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flowRule&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FlowRule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;flowRule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setResource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;RESOURCE_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;flowRule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setGrade&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;RuleConstant&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;FLOW_GRADE_QPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;flowRule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setCount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;flowRules&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flowRule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;FlowRuleManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;loadRules&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flowRules&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;此规则定义了我们的资源&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RESOURCE_NAME&lt;/code&gt;每秒最多可以响应一个请求。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;4-定义降级规则&quot;&gt;4. 定义降级规则&lt;/h3&gt;
+
+&lt;p&gt;使用降级规则，我们可以配置断路器的阈值 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;请求计数&lt;/code&gt;、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;恢复超时&lt;/code&gt;和其他设置。 我们使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DegradeRuleManager.loadRules(&lt;/code&gt;) 配置降级规则：&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;DegradeRule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rules&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;DegradeRule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;();&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;DegradeRule&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rule&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DegradeRule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setResource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;RESOURCE_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setCount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setTimeWindow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;DegradeRuleManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;loadRules&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;此规则指定，当我们的资源 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RESOURCE_NAME&lt;/code&gt; 无法满足 10 个请求（阈值计数）时，请求链路将中断。对资源的所有后续请求都将被 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sentinel&lt;/code&gt; 阻止 10 秒（时间窗口）。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;5-定义系统保护规则&quot;&gt;5. 定义系统保护规则&lt;/h3&gt;
+
+&lt;p&gt;使用系统保护规则，我们可以配置和确保自适应系统保护（&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;load1 阈值&lt;/code&gt;、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;平均响应时间&lt;/code&gt;、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;并发线程数&lt;/code&gt;）。我们使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SystemRuleManager.loadRules()&lt;/code&gt; 方法配置系统规则：&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nc&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;SystemRule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rules&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;SystemRule&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rule&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SystemRule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setHighestSystemLoad&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;SystemRuleManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;loadRules&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;此规则指定，对于我们的系统，最高系统负载为每秒 10 个请求。如果当前负载超过此阈值，则所有进一步的请求都将被阻止。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;注解支持&quot;&gt;注解支持&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sentinel&lt;/code&gt; 还为定义资源提供了面向方面的注释支持。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;添加依赖&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;com.alibaba.csp&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;sentinel-annotation-aspectj&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;1.8.0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;将 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sentinel aspect &lt;/code&gt; 注入为bean;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SentinelAspectConfiguration&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SentinelResourceAspect&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sentinelResourceAspect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SentinelResourceAspect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@SentinelResource&lt;/code&gt; 表示资源定义。它有 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;value&lt;/code&gt; 之类的属性，它定义了资源名称。属性&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fallback&lt;/code&gt;是回退方法名称。当断路器断开时，这种回退方法定义了我们程序的替代流程。让我们使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@SentinelResource&lt;/code&gt; 注释定义资源：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@SentinelResource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;resource_name&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fallback&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;doFallback&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Hello &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;doFallback&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Throwable&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Return fallback value.&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;fallback&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;这定义了名为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;resource_name&lt;/code&gt; 的资源以及回退方法。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;监控仪表盘&quot;&gt;监控仪表盘&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sentinel&lt;/code&gt; 还提供了一个监控仪表板。有了这个，我们可以监控客户端并动态配置规则。我们可以实时查看我们定义的资源的传入流量。&lt;/p&gt;
+
+&lt;h3 id=&quot;1-启动仪表盘服务&quot;&gt;1. 启动仪表盘服务&lt;/h3&gt;
+
+&lt;p&gt;首先，我们需要下载 &lt;a href=&quot;https://github.com/alibaba/Sentinel/releases&quot;&gt;Sentinel Dashboard jar&lt;/a&gt; 。然后，我们可以使用以下命令启动仪表板：&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;java &lt;span class=&quot;nt&quot;&gt;-Dserver&lt;/span&gt;.port&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8080 &lt;span class=&quot;nt&quot;&gt;-Dcsp&lt;/span&gt;.sentinel.dashboard.server&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;localhost:8080 &lt;span class=&quot;nt&quot;&gt;-Dproject&lt;/span&gt;.name&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;sentinel-dashboard &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; sentinel-dashboard.jar
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;TIP&lt;/strong&gt;： 一旦仪表板应用程序启动，我们就可以按照下一节中的步骤连接我们的应用程序。&lt;/p&gt;
+
+&lt;h3 id=&quot;2-添加依赖&quot;&gt;2. 添加依赖&lt;/h3&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;com.alibaba.csp&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;sentinel-transport-simple-http&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;1.8.0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;链接服务到仪表盘&quot;&gt;链接服务到仪表盘&lt;/h3&gt;
+
+&lt;p&gt;启动应用程序时，我们需要添加仪表板IP地址：&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;-Dcsp&lt;/span&gt;.sentinel.dashboard.server&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;consoleIp:port
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;现在，无论何时调用资源，仪表板都会从我们的应用程序接收心跳：&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;figure style=&quot;width: 700px&quot;&gt;
+  &lt;img src=&quot;http://blog.lwpk110.top/jekyll-blog/assets/images/spring-cloud/sentinel_dashboard.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption&gt;sentinel dashboard&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;TIP&lt;/strong&gt;: 我们还可以使用仪表板动态地操纵流、降级和系统规则。&lt;/p&gt;</content><author><name>steven lu</name><email>lwpk110@163.com</email></author><category term="Spring Cloud" /><category term="Spring Cloud Config" /><category term="Sentinel" /><summary type="html">顾名思义，Sentinel 是微服务的强大守护者。它提供流量控制、并发限制、断路和自适应系统保护等功能，以保证其可靠性。它是阿里巴巴集团积极维护的开源组件。此外，它正式成为 Spring Cloud Circuit Breaker. 的一部分。</summary></entry><entry><title type="html">RabbitMQ最佳实践</title><link href="http://blog.lwpk110.top/jekyll-blog/mq/RabbitMQ%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" rel="alternate" type="text/html" title="RabbitMQ最佳实践" /><published>2021-07-30T00:00:00+08:00</published><updated>2021-07-30T00:00:00+08:00</updated><id>http://blog.lwpk110.top/jekyll-blog/mq/RabbitMQ%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5</id><content type="html" xml:base="http://blog.lwpk110.top/jekyll-blog/mq/RabbitMQ%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">&lt;p&gt;有些应用程序需要非常高的吞吐量，而其他一些应用程序却正在发布批处理作业，这些作业可能会延迟一段时间。在设计系统时，目标应该是最大限度地将性能和可用性结合起来，这对您的特定应用程序是有意义的。错误的体系结构设计决策或客户端错误，可能会损坏中间件或影响吞吐量。&lt;/p&gt;
+
+&lt;p&gt;您的发布服务器可能会停止运行，或者由于内存使用过多而导致服务器崩溃。本系列文章重点关注rabbitmq的最佳实践。应做和不应做两种不同使用类别的最佳实践相混合;高可用性和高性能（高吞吐量）。我们将讨论队列大小、常见错误、延迟队列、预取值、连接和通道、HIPE和集群中的节点数。这些通常都是最佳实践规则，基于我们在使用rabbitmq时获得的经验。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;AMQP 0-9-1模型： https://blog.csdn.net/gaoyang8320/article/details/78312587 &lt;br /&gt;
+ 原文:  https://www.cloudamqp.com/blog/2017-12-29-part1-rabbitmq-best-practice.html&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;aside class=&quot;sidebar__right&quot;&gt;
+&lt;nav class=&quot;toc&quot;&gt;
+    &lt;header&gt;&lt;h4 class=&quot;nav__title&quot;&gt;&lt;i class=&quot;fas fa-file-alt&quot;&gt;&lt;/i&gt; 目录&lt;/h4&gt;&lt;/header&gt;
+&lt;ul class=&quot;toc__menu&quot; id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#rabbitmq最佳实践&quot; id=&quot;markdown-toc-rabbitmq最佳实践&quot;&gt;RabbitMQ最佳实践&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#queues&quot; id=&quot;markdown-toc-queues&quot;&gt;Queues&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#尽可能少排队&quot; id=&quot;markdown-toc-尽可能少排队&quot;&gt;尽可能少排队&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#启用延迟队列以获得可预测的性能&quot; id=&quot;markdown-toc-启用延迟队列以获得可预测的性能&quot;&gt;启用延迟队列以获得可预测的性能&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#限制队列大小ttl或最大长度&quot; id=&quot;markdown-toc-限制队列大小ttl或最大长度&quot;&gt;限制队列大小（TTL或最大长度）&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#队列数量&quot; id=&quot;markdown-toc-队列数量&quot;&gt;队列数量&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#将你的对列拆分到不同的核心上&quot; id=&quot;markdown-toc-将你的对列拆分到不同的核心上&quot;&gt;将你的对列拆分到不同的核心上&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#不要在临时队列上设置自己的名称&quot; id=&quot;markdown-toc-不要在临时队列上设置自己的名称&quot;&gt;不要在临时队列上设置自己的名称&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#自动删除不再使用的队列&quot; id=&quot;markdown-toc-自动删除不再使用的队列&quot;&gt;自动删除不再使用的队列&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#为优先级队列设置使用限制&quot; id=&quot;markdown-toc-为优先级队列设置使用限制&quot;&gt;为优先级队列设置使用限制&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#payload---rabbitmq-message-的大小和类型&quot; id=&quot;markdown-toc-payload---rabbitmq-message-的大小和类型&quot;&gt;Payload - RabbitMQ message 的大小和类型&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#连接和通道connections-and-channels&quot; id=&quot;markdown-toc-连接和通道connections-and-channels&quot;&gt;连接和通道（Connections and channels）&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#不要在线程之间共享通道channels&quot; id=&quot;markdown-toc-不要在线程之间共享通道channels&quot;&gt;不要在线程之间共享通道（channels）&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#不要频繁打开和关闭连接或通道&quot; id=&quot;markdown-toc-不要频繁打开和关闭连接或通道&quot;&gt;不要频繁打开和关闭连接或通道&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#为发布者和消费者区分连接connections-&quot; id=&quot;markdown-toc-为发布者和消费者区分连接connections-&quot;&gt;为发布者和消费者区分连接（connections ）&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#大量的连接和通道可能会影响rabbitmq管理接口的性能&quot; id=&quot;markdown-toc-大量的连接和通道可能会影响rabbitmq管理接口的性能&quot;&gt;大量的连接和通道可能会影响rabbitmq管理接口的性能&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#acknowledgements-和confirms&quot; id=&quot;markdown-toc-acknowledgements-和confirms&quot;&gt;Acknowledgements 和Confirms&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#未确认的消息&quot; id=&quot;markdown-toc-未确认的消息&quot;&gt;未确认的消息&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#持久消息和持久队列&quot; id=&quot;markdown-toc-持久消息和持久队列&quot;&gt;持久消息和持久队列&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#tls-and-amqps&quot; id=&quot;markdown-toc-tls-and-amqps&quot;&gt;TLS and AMQPS&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#预取prefetch&quot; id=&quot;markdown-toc-预取prefetch&quot;&gt;预取（Prefetch）&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#如何设置合适的预取值&quot; id=&quot;markdown-toc-如何设置合适的预取值&quot;&gt;如何设置合适的预取值？&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#hipe&quot; id=&quot;markdown-toc-hipe&quot;&gt;HiPE&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#群集中的节点数群集和高可用性&quot; id=&quot;markdown-toc-群集中的节点数群集和高可用性&quot;&gt;群集中的节点数（群集和高可用性）&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#记住在新vhosts上启用ha&quot; id=&quot;markdown-toc-记住在新vhosts上启用ha&quot;&gt;记住在新vhosts上启用HA&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#routing-exchanges-设置&quot; id=&quot;markdown-toc-routing-exchanges-设置&quot;&gt;Routing (exchanges 设置)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#disable-无用的-plugins&quot; id=&quot;markdown-toc-disable-无用的-plugins&quot;&gt;Disable 无用的 plugins&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#不要在生产环境将rabbitmq管理统计速率模式设置为生产中的详细信息&quot; id=&quot;markdown-toc-不要在生产环境将rabbitmq管理统计速率模式设置为生产中的详细信息&quot;&gt;不要在生产环境将rabbitmq管理统计速率模式设置为生产中的“详细信息”&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#使用更新的rabbitmq客户端库&quot; id=&quot;markdown-toc-使用更新的rabbitmq客户端库&quot;&gt;使用更新的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rabbitmq&lt;/code&gt;客户端库&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#使用最新稳定的rabbitmq和erlang版本&quot; id=&quot;markdown-toc-使用最新稳定的rabbitmq和erlang版本&quot;&gt;使用最新稳定的rabbitmq和erlang版本&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#小心使用ttl&quot; id=&quot;markdown-toc-小心使用ttl&quot;&gt;小心使用TTL&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#dead-lettering&quot; id=&quot;markdown-toc-dead-lettering&quot;&gt;Dead lettering&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#ttl&quot; id=&quot;markdown-toc-ttl&quot;&gt;TTL&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/nav&gt;
+&lt;/aside&gt;
+
+&lt;h1 id=&quot;rabbitmq最佳实践&quot;&gt;RabbitMQ最佳实践&lt;/h1&gt;
+
+&lt;h2 id=&quot;queues&quot;&gt;Queues&lt;/h2&gt;
+
+&lt;h3 id=&quot;尽可能少排队&quot;&gt;尽可能少排队&lt;/h3&gt;
+&lt;p&gt;队列中的许多消息会对RAM的使用造成很大的负担。为了释放RAM，rabbitmq将（页面输出）消息刷新到磁盘。此过程会降低排队速度。当有许多消息需要分页取出时，分页过程通常会花费时间并阻止队列处理消息。许多消息可能会对中间件的性能产生负面影响。&lt;/p&gt;
+
+&lt;p&gt;当有许多消息重启集群时，也是费时的，因为必须重建索引。重新启动后，在群集中的节点之间同步消息也需要时间。&lt;/p&gt;
+
+&lt;h3 id=&quot;启用延迟队列以获得可预测的性能&quot;&gt;启用延迟队列以获得可预测的性能&lt;/h3&gt;
+
+&lt;p&gt;在rabbitmq 3.6中添加了一个名为lazy queues的功能。懒惰队列是消息自动存储到磁盘上的队列。只有在需要时才将消息加载到内存中。对于懒惰的队列，消息直接进入磁盘，因此RAM的使用被最小化，但是吞吐时间将花费更长的时间。&lt;/p&gt;
+
+&lt;p&gt;我们已经看到，懒惰的队列以更好的可预测性的方式，创建了一个更稳定的集群。要让您的消息不出现警告，请刷新到磁盘。你不会突然被一个性能冲击问题所困扰。如果您一次发送大量消息（例如处理批处理作业），或者如果您认为您的消费者一直无法跟上发布者的速度，我们建议您启用延迟队列。&lt;/p&gt;
+
+&lt;p class=&quot;notice--warning&quot;&gt;&lt;strong&gt;Warning Notice:&lt;/strong&gt; 请注意，如果需要非常高的性能，您应该禁用延迟队列-如果队列时间总是很短，或者设置最大长度策略。.&lt;/p&gt;
+
+&lt;h3 id=&quot;限制队列大小ttl或最大长度&quot;&gt;限制队列大小（TTL或最大长度）&lt;/h3&gt;
+
+&lt;p&gt;对于经常受到消息峰值冲击的应用程序，以及要求吞吐量比其他任何东西都重要的应用程序，可以推荐的另一做法是设置队列的最大长度。这样可以通过丢弃来自队列头部的消息来保持队列的简短性，从而使队列永远不会超过max-length设置。&lt;/p&gt;
+
+&lt;h3 id=&quot;队列数量&quot;&gt;队列数量&lt;/h3&gt;
+
+&lt;p&gt;队列在rabbitmq中是单线程的，一个队列可以处理大约50k条消息/秒。如果您有多个队列和消费者，您可以在多核系统上获得更好的吞吐量。如果在底层节点上拥有与核心一样多的队列，那么您将获得最佳吞吐量。&lt;/p&gt;
+
+&lt;p&gt;rabbitmq管理接口为集群中的每个队列收集和计算度量。如果您有数千个活动队列和使用者，这可能会减慢服务器的运行速度。如果队列太多，CPU和RAM的使用也可能受到负面影响。&lt;/p&gt;
+
+&lt;h3 id=&quot;将你的对列拆分到不同的核心上&quot;&gt;将你的对列拆分到不同的核心上&lt;/h3&gt;
+
+&lt;p&gt;队列性能受限于一个CPU核心。因此，如果将队列拆分到不同的核心，您将获得更好的性能；如果您拥有rabbitmq集群，您也可以将他们拆分到不同的节点。&lt;/p&gt;
+
+&lt;p&gt;rabbitmq队列绑定到最初声明它们的节点。即使您创建了一个rabbitmq中间件集群，所有路由到特定队列的消息都将转到该队列所在的节点。您可以在节点之间平均地手动拆分队列，但缺点是您需要记住队列的位置。&lt;/p&gt;
+
+&lt;p&gt;如果您有多个节点或具有多个核心的单节点集群，我们建议使用两个插件来帮助您:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Consistent hash exchange plugin&lt;/strong&gt;
+一致的哈希交换插件允许您使用exchange 在队列之间加载平衡消息。通过消息的路由密钥，发送到exchange 的消息在多个队列中均匀一致地分布。该插件创建路由密钥的散列，并在绑定到该exchange 的队列之间传播消息。如果不向发布服务器中添加充足的有关队列数量及其bindings 的信息，手动执行此操作可能很快就会出现问题。
+如果需要最大限度地使用集群中的多个核心，可以使用一致的哈希交换插件。请注意，从所有队列中消耗是很重要的。阅读&lt;a href=&quot;https://github.com/rabbitmq/rabbitmq-consistent-hash-exchange&quot;&gt;此处&lt;/a&gt;有关一致哈希交换插件的更多信息。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;RabbitMQ sharding&lt;/strong&gt;
+rabbitmq sharding插件为您自动对队列进行分区，也就是说，一旦您将一个exchange 定义为sharded，那么在每个集群节点上自动创建支持队列，并在它们之间共享消息。rabbitmq sharding向使用者显示了一个队列，但它可能是后台运行在它后面的多个队列。rabbitmq sharding插件为您提供了一个集中的位置，通过向集群中的其他节点添加队列，您可以将消息以及跨多个节点的负载平衡发送到该位置。在这里阅读更多关于&lt;a href=&quot;https://github.com/rabbitmq/rabbitmq-sharding&quot;&gt;RabbitMQ sharding&lt;/a&gt;的信息。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;不要在临时队列上设置自己的名称&quot;&gt;不要在临时队列上设置自己的名称&lt;/h3&gt;
+
+&lt;p&gt;当您想要在生产者和消费者之间共享队列时，为队列命名是很重要的，但是如果您使用临时队列，则不重要。相反，您应该让服务器使用一个随机的队列名称，而不是你自己命名一个——或者修改rabbitmq策略。&lt;/p&gt;
+
+&lt;h3 id=&quot;自动删除不再使用的队列&quot;&gt;自动删除不再使用的队列&lt;/h3&gt;
+
+&lt;p&gt;客户机连接可能会失败，并可能留下未使用的资源（队列），留下许多队列可能会影响性能。自动删除队列有三种方法:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;您可以在队列上设置TTL策略。例如，28天的TTL策略将删除28天内未使用的队列。&lt;/li&gt;
+  &lt;li&gt;当自动删除队列的最后一个使用者已取消或通道/连接已关闭时（或当它与服务器失去TCP连接时），自动删除队列将被删除;&lt;/li&gt;
+  &lt;li&gt;专用队列只能通过声明连接被使用（从哪里使用、清除、删除等）。专用队列在其声明连接关闭或消失时被删除（例如，由于底层TCP连接丢失）。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;为优先级队列设置使用限制&quot;&gt;为优先级队列设置使用限制&lt;/h3&gt;
+
+&lt;p&gt;在 Erlang VM 的内部队列每个队列均使用用了一个优先级别，他们耗费了一些资源。在大多数情况下，不超过5个优先级就足够了。&lt;/p&gt;
+
+&lt;h2 id=&quot;payload---rabbitmq-message-的大小和类型&quot;&gt;Payload - RabbitMQ message 的大小和类型&lt;/h2&gt;
+
+&lt;p&gt;一个常见的问题是如何处理发送到rabbitmq的消息的palyload（消息大小）。当然，您不应该在消息中发送非常大的文件信息，但是每秒的消息数是一个比它本身的消息大小更大的瓶颈。发送多个小消息可能是一个坏的选择。一个更好的办法是将它们捆绑成一个更大的消息，让消费者将其拆分。但是，如果捆绑多条消息，则需要记住这可能会影响处理时间。如果其中一条捆绑消息失败，是否需要重新处理所有这些消息？如何设置这个取决于带宽和体系结构。&lt;/p&gt;
+
+&lt;h2 id=&quot;连接和通道connections-and-channels&quot;&gt;连接和通道（Connections and channels）&lt;/h2&gt;
+
+&lt;p&gt;每个连接使用大约100kb的RAM（如果使用TLS，甚至更多）。数千个连接可能是rabbitmq服务器的沉重负担。在最坏的情况下，服务器可能由于内存不足而崩溃。AMQP协议有一种称为“多路复用”的机制，它“复用”单个TCP连接。它建议每个进程只创建一个TCP连接，并在这个唯一一个连接的基础上为不同的线程使用多个通道。连接也应该是长连接的。AMQP连接的握手过程非常复杂，至少需要7个TCP数据包（如果使用了TLS，则需要更多）。&lt;/p&gt;
+
+&lt;p&gt;相反，如果需要，可以更频繁地打开和关闭通道。如果可能的话，甚至通道也应该是长寿命的，例如，在每个发布信息线程中复用相同的通道。每次发布信息时不用打开频道。最佳实践是复用连接，使用各通道在一个连接的基础上实现多路复用。理想情况下，每个进程只能有一个连接，然后在应用程序中为每个线程使用一个通道，而每个channel 复用同一个连接即可。&lt;/p&gt;
+
+&lt;h3 id=&quot;不要在线程之间共享通道channels&quot;&gt;不要在线程之间共享通道（channels）&lt;/h3&gt;
+
+&lt;p&gt;您还应该确保不在线程之间共享通道，因为大多数客户机不保证通道是线程安全的（因为这样会对性能产生严重的负面影响）。&lt;/p&gt;
+
+&lt;h3 id=&quot;不要频繁打开和关闭连接或通道&quot;&gt;不要频繁打开和关闭连接或通道&lt;/h3&gt;
+
+&lt;p&gt;确保不要在线程之间共享通道，因为大多数客户机不会使通道线程安全（因为这样会对性能产生严重的负面影响）。&lt;/p&gt;
+
+&lt;h3 id=&quot;为发布者和消费者区分连接connections-&quot;&gt;为发布者和消费者区分连接（connections ）&lt;/h3&gt;
+
+&lt;p&gt;为发布者和消费者区分连接以获得高吞吐量。当发布服务器向服务器发送太多要处理的消息时，rabbitmq可以对TCP连接施加反向压力。如果消费者使用相同的TCP连接，服务器可能不会从客户机接收消息确认。因此，消费性能也会受到影响。而随着消费速度的降低，服务器将不堪重负。&lt;/p&gt;
+
+&lt;h3 id=&quot;大量的连接和通道可能会影响rabbitmq管理接口的性能&quot;&gt;大量的连接和通道可能会影响rabbitmq管理接口的性能&lt;/h3&gt;
+
+&lt;p&gt;具有大量连接和通道的另一个影响为rabbitmq管理接口的性能。对于每个连接和通道性能，指标必须收集、分析和显示度量。&lt;/p&gt;
+
+&lt;h2 id=&quot;acknowledgements-和confirms&quot;&gt;Acknowledgements 和Confirms&lt;/h2&gt;
+
+&lt;p&gt;在连接失败的情况下，传输中的消息可能会丢失，并且可能需要重新传输此类消息。Acknowledgements 让服务器和客户机知道何时重新传输消息。客户机可以在收到消息时对其进行确认，也可以在客户机完全处理完消息后对其进行确认。Acknowledgement 具有性能影响，因此为了实现最快的吞吐量，应该禁用手动确认。&lt;/p&gt;
+
+&lt;p&gt;接收重要消息的消费应用程序在完成需要对其进行的任何操作之前不应确认消息，这样未处理的消息（工作进程崩溃、异常等）就不会丢失。&lt;/p&gt;
+
+&lt;p&gt;发布确认，是相同的事情，但用于发布。服务器收到来自发布服务器的消息时会进行确认。发布确认也会影响性能。但是，应该记住，如果发布者至少需要处理一次消息，就需要这样做。&lt;/p&gt;
+
+&lt;h3 id=&quot;未确认的消息&quot;&gt;未确认的消息&lt;/h3&gt;
+
+&lt;p&gt;所有未确认的消息必须驻留在服务器上的RAM中。如果您有太多未确认的消息，您将耗尽内存。限制未确认消息的一个有效方法是客户端预取的消息数做出相关设置。在预取部分了解有关预取的更多信息。&lt;/p&gt;
+
+&lt;h2 id=&quot;持久消息和持久队列&quot;&gt;持久消息和持久队列&lt;/h2&gt;
+
+&lt;p&gt;如果您不能承受丢失任何消息的代价，请确保您的队列声明为“持久”，并且您的消息以传递模式“持久”发送。&lt;/p&gt;
+
+&lt;p&gt;为了避免在中间件中丢失消息，需要为中间件重新启动、中间件硬件故障或中间件崩溃时做好准备。为了确保消息和中间件定义在重新启动后仍然存在，我们需要确保它们在磁盘上。在中间件重新启动期间，不持久的消息、交换和队列将会被丢失。&lt;/p&gt;
+
+&lt;p&gt;持久性消息更重，因为它们必须写入磁盘。请记住，即使您发送的是临时消息，懒惰的队列也会对性能产生相同的影响。对于高性能-请使用瞬态消息。&lt;/p&gt;
+
+&lt;h2 id=&quot;tls-and-amqps&quot;&gt;TLS and AMQPS&lt;/h2&gt;
+
+&lt;p&gt;您可以通过amqps连接到rabbitmq，这是用tls包装的amqp协议。由于所有流量都必须加密和解密，因此TLS会影响性能。为了获得最大的性能，我们建议使用vpc对等，那么流量是私有的，并且是独立的，不涉及AMQP客户机/服务器。&lt;/p&gt;
+
+&lt;p&gt;在cloudamqp中，我们将rabbitmq服务器配置为只接受快速但安全的加密密码并确定其优先级。&lt;/p&gt;
+
+&lt;h2 id=&quot;预取prefetch&quot;&gt;预取（Prefetch）&lt;/h2&gt;
+
+&lt;p&gt;预取值用于指定多少条消息将同时被发送给消费者。它被用来从你的消费者那里得到尽可能多的东西(饱和工作)。&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;来自rabbitmq.com：“我们的目标是让消费者饱和工作，但要最大限度地减小客户机的缓冲区大小，因此更多的消息被留在Rabbit的队列中，从而对新的消费者可用，或者发送给那些变得空闲的消者。”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;rabbitmq的默认预取设置为客户端提供了一个不受限制的缓冲区，这意味着rabbitmq在默认情况下会将尽可能多的消息发送给任何看起来准备接受它们的客户机。发送的消息由rabbitmq客户端库（在使用者中）缓存，直到对其进行处理。预取限制了在确认消息之前客户端可以接收的消息数。所有预取的消息都将从队列中删除，并且对其他使用者不可见。&lt;/p&gt;
+
+&lt;p&gt;预取数太小可能会影响性能，因为rabbitmq大多数时间都在等待获得发送更多消息的许可。下图显示的是长时间的空转时间。在本例中，QoS预取设置为1。这意味着rabbitmq在往返完成（传递、处理、确认）之前不会发送下一条消息。图片中的整个周期时间总共为125ms，处理时间仅为5ms。&lt;/p&gt;
+
+&lt;p&gt;另一方面，大量的预取数可以接收队列中的大量消息并将其传递给同一个消费者，但是其他使用者却处于空闲状态。&lt;/p&gt;
+
+&lt;h3 id=&quot;如何设置合适的预取值&quot;&gt;如何设置合适的预取值？&lt;/h3&gt;
+
+&lt;p&gt;如果您有一个或几个消费者快速处理消息，我们建议您一次预取多个消息。尽量让你的客户端繁忙。如果您一直有大约相同的处理时间，并且网络行为保持不变-您只需在客户机上为每个消息计算总的往返时间/处理时间，即可获得估计的预取值。&lt;/p&gt;
+
+&lt;p&gt;如果您有许多消费者，并且处理时间很短，我们建议预取值设置的应该比单个或少数使用者要低一些。太低的值会让消费者空转很多，因为他们需要等待消息到达。过高的值可能会使一个消费者忙碌，而其他消费者则处于空闲状态。&lt;/p&gt;
+
+&lt;p&gt;如果您有许多使用者和/或处理时间较长，我们建议您将预取计数设置为1，以便消息在所有消费者中均匀分布。&lt;/p&gt;
+
+&lt;p&gt;请注意，如果客户端自动确认消息，则预取值将不起作用。&lt;/p&gt;
+
+&lt;p&gt;一个典型的错误是有一个无限的预取，其中一个客户机接收所有的消息，耗尽内存并崩溃，然后所有的消息都被重新传递。&lt;/p&gt;
+
+&lt;p&gt;有关rabbitmq预取的信息，请参阅推荐的rabbitmq文档。&lt;/p&gt;
+
+&lt;h2 id=&quot;hipe&quot;&gt;HiPE&lt;/h2&gt;
+
+&lt;p&gt;HIPE将以增加启动时间为代价增加服务器吞吐量。启用HIPE时，将在启动时编译rabbitmq。根据我们的基准测试，吞吐量增加了20-80%。HIPE的缺点是启动时间也增加了很多，大约1-3分钟。在rabbitmq的文档中，hipe仍然被标记为实验性的。&lt;/p&gt;
+
+&lt;p&gt;如果您需要高可用性，请不要启用HIPE。&lt;/p&gt;
+
+&lt;h2 id=&quot;群集中的节点数群集和高可用性&quot;&gt;群集中的节点数（群集和高可用性）&lt;/h2&gt;
+
+&lt;p&gt;当您用一个节点创建一个cloudamqp实例时，您将得到一个具有高性能的单个节点。一个节点将为您提供&lt;strong&gt;最高的性能&lt;/strong&gt;，因为消息不需要在多个节点之间进行镜像。&lt;/p&gt;
+
+&lt;p&gt;当您使用两个节点创建一个CloudAMQP实例时，与单个节点的相比，您将获得一半的性能。节点位于不同的可用性区域，队列在可用性区域之间自动镜像。两个节点将为您提供&lt;strong&gt;高可用性&lt;/strong&gt;，因为一个节点可能崩溃或被标记为受损，但另一个节点仍将启动并运行，准备接收消息。&lt;/p&gt;
+
+&lt;p&gt;当您使用三个节点创建一个CloudAMQP实例时，与单个节点的相同计划大小相比，您将获得1/4的性能。节点位于不同的可用性区域，队列在可用性区域之间自动镜像。您也可以暂停少数组件-与允许每个节点响应相比，通过关闭少数组件，您减少了重复传递。暂停少数组件是三节点集群中的一种分区处理策略，它可以防止由于网络拆分而导致数据不一致。&lt;/p&gt;
+
+&lt;h3 id=&quot;记住在新vhosts上启用ha&quot;&gt;记住在新vhosts上启用HA&lt;/h3&gt;
+
+&lt;p&gt;我们在cloudamqp集群中注意到的一个常见错误是，用户创建了一个新的vhost，但忘记为新的vhost启用一个ha策略。如果没有HA策略，则不会在节点之间同步消息。&lt;/p&gt;
+
+&lt;h2 id=&quot;routing-exchanges-设置&quot;&gt;Routing (exchanges 设置)&lt;/h2&gt;
+
+&lt;p&gt;直接交换是最快速。如果有许多&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bindings&lt;/code&gt; ，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rabbitmq&lt;/code&gt;必须计算将消息发送到何处。&lt;/p&gt;
+
+&lt;h2 id=&quot;disable-无用的-plugins&quot;&gt;Disable 无用的 plugins&lt;/h2&gt;
+
+&lt;p&gt;有些插件可能非常好用，但它们可能会消耗大量的CPU或RAM。因此，不建议将它们用于生产服务器。确保禁用不使用的插件。您可以通过CloudAmqp中的控制面板启用许多不同的插件。&lt;/p&gt;
+&lt;h2 id=&quot;不要在生产环境将rabbitmq管理统计速率模式设置为生产中的详细信息&quot;&gt;不要在生产环境将rabbitmq管理统计速率模式设置为生产中的“详细信息”&lt;/h2&gt;
+
+&lt;p&gt;将&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rabbitmq&lt;/code&gt;管理统计速率模式设置为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;detailed&lt;/code&gt;会严重影响性能，不应在生产中使用。&lt;/p&gt;
+
+&lt;h2 id=&quot;使用更新的rabbitmq客户端库&quot;&gt;使用更新的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rabbitmq&lt;/code&gt;客户端库&lt;/h2&gt;
+
+&lt;p&gt;确保您使用的是最新推荐的客户端库版本&lt;/p&gt;
+&lt;h2 id=&quot;使用最新稳定的rabbitmq和erlang版本&quot;&gt;使用最新稳定的rabbitmq和erlang版本&lt;/h2&gt;
+
+&lt;p&gt;保持最新稳定版本的rabbitmq和erlang。在为客户发布新的主要版本之前，我们通常会在很大程度上对其进行测试。请注意，在为新集群选择版本的下拉列表中，我们始终使用最推荐的版本作为所选选项（默认）。&lt;/p&gt;
+
+&lt;h2 id=&quot;小心使用ttl&quot;&gt;小心使用TTL&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Dead lettering&lt;/code&gt;和TTL是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rabbitmq&lt;/code&gt;中的两个流行功能，应该谨慎使用。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TTL&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Dead lettering&lt;/code&gt;可以产生您没有预料到的性能影响。&lt;/p&gt;
+
+&lt;h3 id=&quot;dead-lettering&quot;&gt;Dead lettering&lt;/h3&gt;
+
+&lt;p&gt;使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x-dead-letter-exchange&lt;/code&gt;属性声明的队列将向指定的dead-letter-exchange 发送被拒绝、非确认或过期（带有ttl）的消息。如果您指定了&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x-dead-letter-routing-key&lt;/code&gt;，则消息的路由键将在dead lettered时更改。&lt;/p&gt;
+
+&lt;h3 id=&quot;ttl&quot;&gt;TTL&lt;/h3&gt;
+&lt;p&gt;通过使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x-message-ttl&lt;/code&gt;属性声明队列，如果消息在指定的时间内未被使用，则将从队列中丢弃消息。&lt;/p&gt;</content><author><name>steven lu</name><email>lwpk110@163.com</email></author><category term="MQ" /><category term="Rabbit Mq" /><summary type="html">有些应用程序需要非常高的吞吐量，而其他一些应用程序却正在发布批处理作业，这些作业可能会延迟一段时间。在设计系统时，目标应该是最大限度地将性能和可用性结合起来，这对您的特定应用程序是有意义的。错误的体系结构设计决策或客户端错误，可能会损坏中间件或影响吞吐量。</summary></entry><entry><title type="html">spring cloud config快速入门</title><link href="http://blog.lwpk110.top/jekyll-blog/spring%20cloud/spring-cloud-config%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" rel="alternate" type="text/html" title="spring cloud config快速入门" /><published>2021-07-30T00:00:00+08:00</published><updated>2021-07-30T00:00:00+08:00</updated><id>http://blog.lwpk110.top/jekyll-blog/spring%20cloud/spring-cloud-config%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8</id><content type="html" xml:base="http://blog.lwpk110.top/jekyll-blog/spring%20cloud/spring-cloud-config%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Spring Cloud Config&lt;/code&gt; 跨多个应用程序和环境，用于存储和提供分布式配置的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;clinet/server&lt;/code&gt;方案。
+理想情况下，此配置存储在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Git&lt;/code&gt; 版本控制下进行版本控制，并且可以在应用程序运行时进行修改。
+虽然它非常适合&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Spring applications&lt;/code&gt;所有支持的配置文件格式以及 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Environment&lt;/code&gt;、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PropertySource&lt;/code&gt; 或 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@Value&lt;/code&gt; 等结构的 Spring 应用程序，但它也可以用于任何编程语言运行的任何环境使用。&lt;/p&gt;
+
+&lt;p&gt;在这篇文章中，我们将重点介绍如何设置 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Git&lt;/code&gt; 支持的配置服务器、在简单的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;REST&lt;/code&gt; 应用程序服务器中使用它以及设置包括加密属性值在内的安全环境的示例。&lt;/p&gt;
+
+&lt;figure class=&quot;half &quot;&gt;
+  
+    
+      &lt;a href=&quot;https://spring.io/projects/spring-cloud-config&quot;&gt;
+          &lt;img src=&quot;/jekyll-blog/assets/images/spring-cloud/spring-cloud-config1.jpeg&quot; alt=&quot;Black and grays with a hint of green&quot; /&gt;
+      &lt;/a&gt;
+    
+  
+    
+      &lt;a href=&quot;https://spring.io/projects/spring-cloud-config&quot;&gt;
+          &lt;img src=&quot;/jekyll-blog/assets/images/spring-cloud/spring-cloud-config3.jpg&quot; alt=&quot;Fog in the trees&quot; /&gt;
+      &lt;/a&gt;
+    
+  
+  
+    &lt;figcaption&gt;spring cloud config 架构
+&lt;/figcaption&gt;
+  
+&lt;/figure&gt;
+
+&lt;aside class=&quot;sidebar__right&quot;&gt;
+&lt;nav class=&quot;toc&quot;&gt;
+    &lt;header&gt;&lt;h4 class=&quot;nav__title&quot;&gt;&lt;i class=&quot;fas fa-file-alt&quot;&gt;&lt;/i&gt; 目录&lt;/h4&gt;&lt;/header&gt;
+&lt;ul class=&quot;toc__menu&quot; id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#项目依赖&quot; id=&quot;markdown-toc-项目依赖&quot;&gt;项目依赖&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#server端配置&quot; id=&quot;markdown-toc-server端配置&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server&lt;/code&gt;端配置&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#初始化-配置仓库&quot; id=&quot;markdown-toc-初始化-配置仓库&quot;&gt;初始化 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;配置仓库&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#查询配置&quot; id=&quot;markdown-toc-查询配置&quot;&gt;查询配置&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#client配置&quot; id=&quot;markdown-toc-client配置&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;client&lt;/code&gt;配置&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#加密和解密&quot; id=&quot;markdown-toc-加密和解密&quot;&gt;加密和解密&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#csrf&quot; id=&quot;markdown-toc-csrf&quot;&gt;CSRF&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#key管理&quot; id=&quot;markdown-toc-key管理&quot;&gt;key管理&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#使用多个keys&quot; id=&quot;markdown-toc-使用多个keys&quot;&gt;使用多个keys&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#加密配置&quot; id=&quot;markdown-toc-加密配置&quot;&gt;加密配置&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#总结&quot; id=&quot;markdown-toc-总结&quot;&gt;总结&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/nav&gt;
+&lt;/aside&gt;
+
+&lt;h2 id=&quot;项目依赖&quot;&gt;项目依赖&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;首先创建两个新的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Maven&lt;/code&gt; 项目。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server&lt;/code&gt; 项目依赖于 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;spring-cloud-config-server&lt;/code&gt; 模块，以及 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;spring-boot-starter-security&lt;/code&gt; 和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;spring-boot-starter-web&lt;/code&gt; 启动包.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.cloud&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-cloud-config-server&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-security&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-web&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;对于&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;client&lt;/code&gt;项目，我们将只需要 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;spring-cloud-starter-config&lt;/code&gt; 和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;spring-boot-starter-web&lt;/code&gt; 模块.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.cloud&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-cloud-starter-config&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-web&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;server端配置&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server&lt;/code&gt;端配置&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server&lt;/code&gt;应用程序的主要部分是一个配置类——更具体地说是一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@SpringBootApplication&lt;/code&gt;——它通过自动配置注释&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@EnableConfigServer&lt;/code&gt; 引入所有需要的设置：&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@SpringBootApplication&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@EnableConfigServer&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ConfigServer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;SpringApplication&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ConfigServer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;配置服务器端口和一个提供版本控制的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Git-url&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;TIP:&lt;/strong&gt; 如果您计划使用指向同一个配置存储库的多个配置服务器实例，您可以将服务器配置为将您的存储库克隆到本地临时文件夹中。但是请注意具有双因素身份验证的私有存储库，它们很难处理！在这种情况下，在本地文件系统上克隆它们并使用副本会更容易。&lt;/p&gt;
+
+&lt;p&gt;还有一些占位符变量和搜索模式用于配置可用的存储库 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;url&lt;/code&gt;.但这超出了我们文章的范围。官方文档是一个很好的起点。 我们还需要在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application.properties&lt;/code&gt; 中为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Basic-Authentication&lt;/code&gt; 设置用户名和密码，以避免每次都自动生成密码 应用程序重启：&lt;/p&gt;
+
+&lt;div class=&quot;language-properties highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;py&quot;&gt;server.port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;8888&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;spring.cloud.config.server.git.uri&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ssh://localhost/config-repo&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;spring.cloud.config.server.git.clone-on-start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;spring.security.user.name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;root&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;spring.security.user.password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s3cr3t&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;初始化-配置仓库&quot;&gt;初始化 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;配置仓库&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;为了完成我们的服务器，我们必须在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server&lt;/code&gt;  配置的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;spring.cloud.config.server.git.uri&lt;/code&gt; 初始化一个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Git repository&lt;/code&gt;。 
+配置文件的名称像普通的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Spring&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application.properties&lt;/code&gt; 一样组成，但不是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application&lt;/code&gt;这个词。例如：&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt; git init
+&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'user.role=Developer'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; config-client-development.properties
+&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'user.role=User'&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; config-client-production.properties
+&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt; git add &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt; git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Initial config-client properties'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;查询配置&quot;&gt;查询配置&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;启动&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server&lt;/code&gt; 端。&lt;/li&gt;
+  &lt;li&gt;使用以下api 查询 配置信息.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-txt&quot;&gt;  /{application}/{profile}[/{label}]
+  /{application}-{profile}.yml
+  /{label}/{application}-{profile}.yml
+  /{application}-{profile}.properties
+  /{label}/{application}-{profile}.properties
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其中 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{label}&lt;/code&gt; 占位符指的是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Git&lt;/code&gt; 分支，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{application}&lt;/code&gt; 指的是客户端的应用程序名称，而 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{profile}&lt;/code&gt; 指的是客户端当前活动的应用程序配置文件。&lt;/p&gt;
+
+&lt;p&gt;比如， 我们可以通过以下方式检索在分支 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt; 下 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;profile=development&lt;/code&gt;的配置属性.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt; curl http://root:s3cr3t@localhost:8888/config-client/development/master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;client配置&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;client&lt;/code&gt;配置&lt;/h2&gt;
+
+&lt;p&gt;这是一个非常简单的客户端应用程序，由一个带有一个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GET&lt;/code&gt; 方法的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;REST&lt;/code&gt; 控制器组成。 用于获取服务器的配置必须放在名为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bootstrap.application&lt;/code&gt; 的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;resource&lt;/code&gt;文件中，因为该文件（顾名思义）将在应用程序启动时很早加载：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;app:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@SpringBootApplication&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@RestController&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ConfigClient&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    
+    &lt;span class=&quot;nd&quot;&gt;@Value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${user.role}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;SpringApplication&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;ConfigClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@GetMapping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/whoami/{username}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;  
+      &lt;span class=&quot;n&quot;&gt;produces&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MediaType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;TEXT_PLAIN_VALUE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;whoami&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@PathVariable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;username&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Hello! 
+          You're %s and you'll become a(n) %s...\n&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;bootstrap.properties:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-properties highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;py&quot;&gt;spring.application.name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;config-client&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;spring.profiles.active&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;development&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;spring.cloud.config.uri&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;http://localhost:8888&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;spring.cloud.config.username&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;root&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;spring.cloud.config.password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s3cr3t&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;test:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt; curl http://localhost:8080/whoami/Mr_Pink
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ol&gt;
+  &lt;li&gt;结果’&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-txt&quot;&gt;Hello! You're Mr_Pink and you'll become a(n) Developer...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;加密和解密&quot;&gt;加密和解密&lt;/h2&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;必须&lt;/strong&gt;：要将“密码学“中强加密与 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Spring&lt;/code&gt; 加密和解密功能一起使用，您需要在 JVM 中安装 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files&lt;/code&gt;。这些可以从 Oracle 官网下载。&lt;/p&gt;
+
+&lt;p&gt;由于配置服务器正在支持属性值的加密和解密，您可以使用公共存储库来存储诸如用户名和密码等敏感数据。加密值以字符串 {cipher} 为前缀。如果服务器配置为使用对称密钥或密钥对，则可以通过对路径&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/encrypt&lt;/code&gt;的 REST 调用生成加密信息。&lt;/p&gt;
+
+&lt;p&gt;当然解密的端点也是可用的。加解密这两个端点都接受包含应用程序名称及其当前&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;profile&lt;/code&gt;配置文件的占位符的路径：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/*/{name}/{profile}&lt;/code&gt;。这对于控制每​​个客户端的加密特别有用。但是，在它们变得有用之前，您必须配置一个加密密钥，我们将在下一节中进行。&lt;/p&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;TIP&lt;/strong&gt;: 如果您使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;curl&lt;/code&gt; 调用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;en-/decryption&lt;/code&gt; API，最好使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;–data-urlencode&lt;/code&gt; 选项（而不是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;–data/-d&lt;/code&gt;），或者将 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Content-Type&lt;/code&gt; 标头显式设置为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;text/plain&lt;/code&gt;。这确保正确处理加密值中的特殊字符，如&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;+&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;如果通过客户端获取配置时发现无法自动解密某个值，那么其keys将使用名称本身重命名，并以 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;invalid&lt;/code&gt;一词为前缀。这种情况应该避免发生，例如使用加密值作为密码。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TIP:&lt;/strong&gt;: 在设置包含 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YAML&lt;/code&gt; 文件的存储库时，您必须用单引号将加密和前缀值括起来！对于&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Properties&lt;/code&gt;，情况并非如此。&lt;/p&gt;
+
+&lt;h2 id=&quot;csrf&quot;&gt;CSRF&lt;/h2&gt;
+
+&lt;p&gt;默认情况下，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Spring Security&lt;/code&gt; 为发送到我们应用程序的所有请求启用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CSRF&lt;/code&gt; 保护。 因此，为了能够使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/encrypt&lt;/code&gt; 和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/decrypt&lt;/code&gt; 端点，让我们为它们禁用 CSRF：&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SecurityConfiguration&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;WebSecurityConfigurerAdapter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;configure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;HttpSecurity&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;csrf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ignoringAntMatchers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/encrypt/**&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ignoringAntMatchers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/decrypt/**&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;configure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;key管理&quot;&gt;key管理&lt;/h2&gt;
+
+&lt;p&gt;配置服务器默认启用以对称或非对称方式加密属性值。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;对称加密&lt;/strong&gt;，您只需将 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application.properties&lt;/code&gt; 中的属性 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;encrypt.key&lt;/code&gt; 设置为您选择的机密。或者，您可以传入环境变量 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ENCRYPT_KEY&lt;/code&gt;。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;非对称加密&lt;/strong&gt;， 您可以将 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;encrypt.key&lt;/code&gt; 设置为 PEM编码 的字符串值或 配置使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;keystore&lt;/code&gt;。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;因为我们的演示服务器需要一个高度安全的环境，所以我们选择了后一个选项并生成一个新的密钥库，包括一个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RSA&lt;/code&gt; 密钥对.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;使用 Java 密钥工具：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt; keytool &lt;span class=&quot;nt&quot;&gt;-genkeypair&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-alias&lt;/span&gt; config-server-key &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+       &lt;span class=&quot;nt&quot;&gt;-keyalg&lt;/span&gt; RSA &lt;span class=&quot;nt&quot;&gt;-keysize&lt;/span&gt; 4096 &lt;span class=&quot;nt&quot;&gt;-sigalg&lt;/span&gt; SHA512withRSA &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+       &lt;span class=&quot;nt&quot;&gt;-dname&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'CN=Config Server,OU=Spring Cloud,O=Baeldung'&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+       &lt;span class=&quot;nt&quot;&gt;-keypass&lt;/span&gt; my-k34-s3cr3t &lt;span class=&quot;nt&quot;&gt;-keystore&lt;/span&gt; config-server.jks &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+       &lt;span class=&quot;nt&quot;&gt;-storepass&lt;/span&gt; my-s70r3-s3cr3t
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;我们将创建的密钥库添加到我们服务器的 bootstrap.properties 并重新运行它：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-properties highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;py&quot;&gt;encrypt.keyStore.location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;classpath:/config-server.jks&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;encrypt.keyStore.password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;my-s70r3-s3cr3t&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;encrypt.keyStore.alias&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;config-server-key&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;encrypt.keyStore.secret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;my-k34-s3cr3t&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;我们可以查询加密端点并将响应作为值添加到我们存储库中的配置中：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PASSWORD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-X&lt;/span&gt; POST &lt;span class=&quot;nt&quot;&gt;--data-urlencode&lt;/span&gt; d3v3L &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+       http://root:s3cr3t@localhost:8888/encrypt&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;user.password={cipher}&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PASSWORD&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; config-client-development.properties
+&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt; git commit &lt;span class=&quot;nt&quot;&gt;-am&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Added encrypted password'&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt; curl &lt;span class=&quot;nt&quot;&gt;-X&lt;/span&gt; POST http://root:s3cr3t@localhost:8888/refresh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;验证。 如果我们的设置工作正常，修改 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ConfigClient&lt;/code&gt; 相关类并重新启动我们的客户端：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@SpringBootApplication&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@RestController&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ConfigClient&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+    
+    &lt;span class=&quot;nd&quot;&gt;@Value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;${user.password}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;whoami&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@PathVariable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;username&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Hello! 
+          You're %s and you'll become a(n) %s, &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;&quot;but only if your password is '%s'!\n&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; 
+          &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;结果. 如果我们的配置值被正确解密，对我们的客户端的最终查询为:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt; curl http://localhost:8080/whoami/Mr_Pink
+Hello! You&lt;span class=&quot;s1&quot;&gt;'re Mr_Pink and you'&lt;/span&gt;ll become a&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;n&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; Developer, &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  but only &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;your password is &lt;span class=&quot;s1&quot;&gt;'d3v3L'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;使用多个keys&quot;&gt;使用多个keys&lt;/h2&gt;
+
+&lt;p&gt;如果您想使用多个密钥进行加密和解密，例如：为每个服务的应用程序使用一个专用密钥，您可以在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{cipher}&lt;/code&gt; 前缀和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BASE64&lt;/code&gt; 编码的属性值之间以 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{name:value}&lt;/code&gt; 的形式添加另一个前缀.&lt;/p&gt;
+
+&lt;p&gt;配置服务器理解如&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{secret:my-crypto-secret}&lt;/code&gt; 或 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{key:my-key-alias}&lt;/code&gt;的前缀，, 几乎是开箱即用的。非对称加密 需要在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application.properties&lt;/code&gt; 中配置&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;keystore&lt;/code&gt;。密钥库以所匹配密钥别名来搜索出来。例如：&lt;/p&gt;
+
+&lt;div class=&quot;language-properties highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;py&quot;&gt;user.password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{cipher}{secret:my-499-s3cr3t}AgAMirj1DkQC0WjRv...&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;user.password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{cipher}{key:config-client-key}AgAMirj1DkQC0WjRv...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;TIP&lt;/strong&gt;: 对于没有密钥库的场景，您必须实现一个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TextEncryptorLocator&lt;/code&gt; 类型的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@Bean&lt;/code&gt;，它处理查找并为每个密钥返回一个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TextEncryptor-Object&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;加密配置&quot;&gt;加密配置&lt;/h2&gt;
+
+&lt;p&gt;如果要禁用服务器端加密并在本地处理属性值的解密，可以将以下内容放入服务器的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application.properties&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-properites&quot;&gt;spring.cloud.config.server.encrypt.enabled=false
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
+
+&lt;p&gt;现在我们能够创建一个配置服务器来从 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Git&lt;/code&gt; 存储库向客户端应用程序提供一组配置文件。您还可以使用此类服务​​器执行其他一些操作。 例如：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;以 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YAML&lt;/code&gt; 或 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Properties&lt;/code&gt; 格式而不是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JSON &lt;/code&gt;提供配置——也解决了占位符问题。 在非 Spring 环境中使用它时，这可能很有用，其中配置不直接映射到 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PropertySource&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;提供纯文本配置文件。 依次可选地使用已解析的占位符。例如，这对于提供依赖于环境的日志记录配置很有用。&lt;/li&gt;
+  &lt;li&gt;将配置服务器嵌入到应用程序中，它从 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Git&lt;/code&gt; 存储库配置自身，而不是作为独立的应用程序运行，为客户端提供服务。因此，必须设置一些引导程序属性和/或必须删除 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;@EnableConfigServer&lt;/code&gt; 注释，这取决于用例。&lt;/li&gt;
+  &lt;li&gt;使配置服务器可用于 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Spring Netflix Eureka&lt;/code&gt;服务发现并启用 配置客户端中的自动服务器发现。 如果服务器没有固定位置或在其位置移动，这将变得很重要。&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>steven lu</name><email>lwpk110@163.com</email></author><category term="Spring Cloud" /><category term="Spring Cloud Config" /><summary type="html">Spring Cloud Config 跨多个应用程序和环境，用于存储和提供分布式配置的 clinet/server方案。 理想情况下，此配置存储在 Git 版本控制下进行版本控制，并且可以在应用程序运行时进行修改。 虽然它非常适合Spring applications所有支持的配置文件格式以及 Environment、PropertySource 或 @Value 等结构的 Spring 应用程序，但它也可以用于任何编程语言运行的任何环境使用。</summary></entry><entry><title type="html">武汉小米面试八股文</title><link href="http://blog.lwpk110.top/jekyll-blog/interview/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E6%96%87-%E6%AD%A6%E6%B1%89%E5%B0%8F%E7%B1%B3/" rel="alternate" type="text/html" title="武汉小米面试八股文" /><published>2021-07-04T03:34:30+08:00</published><updated>2021-07-04T03:34:30+08:00</updated><id>http://blog.lwpk110.top/jekyll-blog/interview/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E6%96%87:%E6%AD%A6%E6%B1%89%E5%B0%8F%E7%B1%B3</id><content type="html" xml:base="http://blog.lwpk110.top/jekyll-blog/interview/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E6%96%87-%E6%AD%A6%E6%B1%89%E5%B0%8F%E7%B1%B3/">&lt;p&gt;武汉小米面试题&lt;/p&gt;
+
+&lt;aside class=&quot;sidebar__right&quot;&gt;
+&lt;nav class=&quot;toc&quot;&gt;
+    &lt;header&gt;&lt;h4 class=&quot;nav__title&quot;&gt;&lt;i class=&quot;fas fa-file-alt&quot;&gt;&lt;/i&gt; 目录&lt;/h4&gt;&lt;/header&gt;
+&lt;ul class=&quot;toc__menu&quot; id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#object-awaitnotify区别直接可以用await吗&quot; id=&quot;markdown-toc-object-awaitnotify区别直接可以用await吗&quot;&gt;Object await。notify。区别，直接可以用await吗？&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#hashcode-和equals-区别有什么作用&quot; id=&quot;markdown-toc-hashcode-和equals-区别有什么作用&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hashcode&lt;/code&gt; 和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;equals&lt;/code&gt; 区别，有什么作用?&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#线程池运行原理&quot; id=&quot;markdown-toc-线程池运行原理&quot;&gt;线程池运行原理&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#多线程同步的几种方式&quot; id=&quot;markdown-toc-多线程同步的几种方式&quot;&gt;多线程同步的几种方式&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#maven的生命周期&quot; id=&quot;markdown-toc-maven的生命周期&quot;&gt;maven的生命周期&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#开闭原则解锁一下&quot; id=&quot;markdown-toc-开闭原则解锁一下&quot;&gt;开闭原则解锁一下&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#单一指责解释一下&quot; id=&quot;markdown-toc-单一指责解释一下&quot;&gt;单一指责解释一下&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#hashmap-怎么根据key取得值说一下流程&quot; id=&quot;markdown-toc-hashmap-怎么根据key取得值说一下流程&quot;&gt;hashmap 怎么根据key取得值，说一下流程&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#cas-聊一下&quot; id=&quot;markdown-toc-cas-聊一下&quot;&gt;CAS 聊一下&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#git-和-svn-什么区别&quot; id=&quot;markdown-toc-git-和-svn-什么区别&quot;&gt;git 和 svn 什么区别？&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#http协议&quot; id=&quot;markdown-toc-http协议&quot;&gt;Http协议&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/nav&gt;
+&lt;/aside&gt;
+
+&lt;h2 id=&quot;object-awaitnotify区别直接可以用await吗&quot;&gt;Object await。notify。区别，直接可以用await吗？&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wait()&lt;/code&gt; - 方法&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wait()&lt;/code&gt;的作用是使当前执行代码的线程进行等待，它是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Object&lt;/code&gt;类的方法，该方法用来将当前线程置入预执行队列中，并且在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wait&lt;/code&gt;所在的代码行处停止执行，直到接到通知或被中断为止。在调用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wait&lt;/code&gt;方法之前，线程必须获得该对象的对象级别锁，即只能在同步方法或同步块中调用wait方法。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;notify()&lt;/code&gt; - 同&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wait&lt;/code&gt;方法一样，也需要在同步方法或同步块中调用，即在调用前，线程也必须获得该对象的对象级别锁。
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;wait&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;notify&lt;/code&gt;调用时，如果没有持有适当的锁，将会抛出&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IllegalMonitorStateException&lt;/code&gt;的异常。它是一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RuntimeException&lt;/code&gt;的子类。&lt;/p&gt;
+
+&lt;h2 id=&quot;hashcode-和equals-区别有什么作用&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hashcode&lt;/code&gt; 和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;equals&lt;/code&gt; 区别，有什么作用?&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;equal()&lt;/code&gt;相等的两个对象他们的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hashCode()&lt;/code&gt;肯定相等，也就是用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;equal()&lt;/code&gt;对比是绝对可靠的。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hashCode()&lt;/code&gt;相等的两个对象他们的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;equal()&lt;/code&gt;不一定相等，也就是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hashCode()&lt;/code&gt;不是绝对可靠的。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;一致性&lt;/strong&gt;，即：当两个对象 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;equals&lt;/code&gt; 比较为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;true&lt;/code&gt;，那么 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hashcode&lt;/code&gt; 值应当相等，反之亦然，因为当两个对象&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hashcode&lt;/code&gt; 值相等，但是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;equals&lt;/code&gt; 比较为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;false&lt;/code&gt;，那么在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HashMap&lt;/code&gt; 中会产生链表，影响查询性能。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;成对重写&lt;/strong&gt;，即重写 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;equals&lt;/code&gt; 就应当重写 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hashcode&lt;/code&gt;。实际上这只是一条规范，如果不这样做程序也可以执行，只不过会隐藏bug。一般一个类的对象如果会存储在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HashTable&lt;/code&gt;，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HashSet&lt;/code&gt;,&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HashMap&lt;/code&gt;等散列存储结构中，那么重写&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;equals&lt;/code&gt;后最好也重写&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hashCode&lt;/code&gt;，否则会导致存储数据的不唯一性（存储了两个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;equals&lt;/code&gt;相等的数据）,因为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;map&lt;/code&gt;结构中的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;key&lt;/code&gt;可以是对象，两个对象的值相同但地址不同，则取出&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;value&lt;/code&gt;会出现问题。而如果确定不会存储在这些散列结构中，则可以不重写&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hashCode&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;线程池运行原理&quot;&gt;线程池运行原理&lt;/h2&gt;
+
+&lt;p&gt;首先线程池有几个核心的参数概念：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;最大线程数&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;maximumPoolSize&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;核心线程数&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;corePoolSize&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;活跃时间&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;keepAliveTime&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;阻塞队列&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;workQueue&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;拒绝策略&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RejectedExecutionHandler&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;当提交一个新任务到线程池时，具体的执行流程如下：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;当我们提交任务，线程池会根据&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;corePoolSize&lt;/code&gt;大小创建若干任务数量线程执行任务&lt;/li&gt;
+  &lt;li&gt;当任务的数量超过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;corePoolSize&lt;/code&gt;数量，后续的任务将会进入阻塞队列阻塞排队&lt;/li&gt;
+  &lt;li&gt;当阻塞队列也满了之后，那么将会继续创建(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;maximumPoolSize-corePoolSize&lt;/code&gt;)个数量的线程来执行任务，如果任务处理完成，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;maximumPoolSize-corePoolSize&lt;/code&gt;额外创建的线程等待&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;keepAliveTime&lt;/code&gt;之后被自动销毁&lt;/li&gt;
+  &lt;li&gt;如果达到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;maximumPoolSize&lt;/code&gt;，阻塞队列还是满的状态，那么将根据不同的拒绝策略对应处理.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;多线程同步的几种方式&quot;&gt;多线程同步的几种方式&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;参考: https://blog.csdn.net/yoonerloop/article/details/81154596&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;通过Object的wait和notify&lt;/li&gt;
+  &lt;li&gt;通过Condition的awiat和signal&lt;/li&gt;
+  &lt;li&gt;通过一个阻塞队列&lt;/li&gt;
+  &lt;li&gt;通过两个阻塞队列&lt;/li&gt;
+  &lt;li&gt;通过SynchronousQueue&lt;/li&gt;
+  &lt;li&gt;通过线程池的Callback回调&lt;/li&gt;
+  &lt;li&gt;通过同步辅助类CountDownLatch&lt;/li&gt;
+  &lt;li&gt;通过同步辅助类CyclicBarrier&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;maven的生命周期&quot;&gt;maven的生命周期&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Maven&lt;/code&gt;的生命周期就是对所有的构建过程进行抽象和统一。包含了项目的清理、初始化、编译、测试、打包、集成测试、验证、部署和站点生成等几乎所有的构建步骤。
+Maven的生命周期是抽象的，即生命周期不做任何实际的工作，实际任务由插件完成，类似于设计模式中的模板方法。
+clean、validate、complie、test、package、verify、install、site、deploy 主要把这个流程说清楚我觉得也挺好的了&lt;/p&gt;
+
+&lt;h2 id=&quot;开闭原则解锁一下&quot;&gt;开闭原则解锁一下&lt;/h2&gt;
+
+&lt;p&gt;开闭原则就是说对扩展开放，对修改关闭。在程序需要进行拓展的时候，不能去修改原有的代码，实现一个热插拔的效果。所以一句话概括就是：为了使程序的扩展性好，易于维护和升级。&lt;/p&gt;
+
+&lt;h2 id=&quot;单一指责解释一下&quot;&gt;单一指责解释一下&lt;/h2&gt;
+
+&lt;p&gt;单一性原则一般指设计接口时，接口的功能单一不可分。目的还是提高接口的通用性，做到实现一个接口，其方法尽量都可以用的到。
+单一职责原则规定一个类应该有且仅有一个引起它变化的原因，否则类应该被拆分。
+在实际应用中，类的设计尽量做到只有一个原因引起变化，接口一定要做到单一职责原则，方法一定要做到单一职责原则，即一个方法只实现一个功能。
+模板设计模式说一下
+一个抽象类中，有一个主方法，再定义1…n个方法，可以是抽象的，也可以是实际的方法，定义一个类，继承该抽象类，重写抽象方法，通过调用抽象类，实现对子类的调用。
+应用场景，抽象的上传文件接口，定义一个抽象的获取图片接口的地址，根据子类具体的实现获取不同上传地址。&lt;/p&gt;
+
+&lt;h2 id=&quot;hashmap-怎么根据key取得值说一下流程&quot;&gt;hashmap 怎么根据key取得值，说一下流程&lt;/h2&gt;
+
+&lt;p&gt;HashMap主要由数组和链表组成，他不是线程安全的。核心的点就是put插入数据的过程，get查询数据以及扩容的方式。JDK1.7和1.8的主要区别在于头插和尾插方式的修改，头插容易导致HashMap链表死循环，并且1.8之后加入红黑树对性能有提升。&lt;/p&gt;
+
+&lt;p&gt;put插入数据流程&lt;/p&gt;
+
+&lt;p&gt;往map插入元素的时候首先通过对key hash然后与数组长度-1进行与运算((n-1)&amp;amp;hash)，都是2的次幂所以等同于取模，但是位运算的效率更高。找到数组中的位置之后，如果数组中没有元素直接存入，反之则判断key是否相同，key相同就覆盖，否则就会插入到链表的尾部，如果链表的长度超过8，则会转换成红黑树，最后判断数组长度是否超过默认的长度*负载因子也就是12，超过则进行扩容。&lt;/p&gt;
+
+&lt;p&gt;get查询数据&lt;/p&gt;
+
+&lt;p&gt;查询数据相对来说就比较简单了，首先计算出hash值，然后去数组查询，是红黑树就去红黑树查，链表就遍历链表查询就可以了。&lt;/p&gt;
+
+&lt;p&gt;resize扩容过程&lt;/p&gt;
+
+&lt;p&gt;扩容的过程就是对key重新计算hash，然后把数据拷贝到新的数组。&lt;/p&gt;
+
+&lt;h2 id=&quot;cas-聊一下&quot;&gt;CAS 聊一下&lt;/h2&gt;
+
+&lt;p&gt;CAS叫做CompareAndSwap，比较并交换，主要是通过处理器的指令来保证操作的原子性，它包含三个操作数：&lt;/p&gt;
+
+&lt;p&gt;变量内存地址，V表示
+旧的预期值，A表示
+准备设置的新值，B表示
+当执行CAS指令时，只有当V等于A时，才会用B去更新V的值，否则就不会执行更新操作。
+那么CAS有什么缺点吗？&lt;/p&gt;
+
+&lt;p&gt;CAS的缺点主要有3点：&lt;/p&gt;
+
+&lt;p&gt;ABA问题：ABA的问题指的是在CAS更新的过程中，当读取到的值是A，然后准备赋值的时候仍然是A，但是实际上有可能A的值被改成了B，然后又被改回了A，这个CAS更新的漏洞就叫做ABA。只是ABA的问题大部分场景下都不影响并发的最终效果。
+Java中有AtomicStampedReference来解决这个问题，他加入了预期标志和更新后标志两个字段，更新时不光检查值，还要检查当前的标志是否等于预期标志，全部相等的话才会更新。
+循环时间长开销大：自旋CAS的方式如果长时间不成功，会给CPU带来很大的开销。
+只能保证一个共享变量的原子操作：只对一个共享变量操作可以保证原子性，但是多个则不行，多个可以通过AtomicReference来处理或者使用锁synchronized实现。&lt;/p&gt;
+
+&lt;h2 id=&quot;git-和-svn-什么区别&quot;&gt;git 和 svn 什么区别？&lt;/h2&gt;
+
+&lt;p&gt;GIT是分布式的，SVN不是：&lt;/p&gt;
+
+&lt;p&gt;这是GIT和其它非分布式的版本控制系统，例如SVN，CVS等，最核心的区别。如果你能理解这个概念，那么你就已经上手一半了。需要做一点声明，GIT并不是目前第一个或唯一的分布式版本控制系统。还有一些系统，例如Bitkeeper, Mercurial等，也是运行在分布式模式上的。但GIT在这方面做的更好，而且有更多强大的功能特征。
+GIT跟SVN一样有自己的集中式版本库或服务器。但，GIT更倾向于被使用于分布式模式，也就是每个开发人员从中心版本库/服务器上chect out代码后会在自己的机器上克隆一个自己的版本库。可以这样说，如果你被困在一个不能连接网络的地方时，就像在飞机上，地下室，电梯里等，你仍然能够提交文件，查看历史版本记录，创建项目分支，等。对一些人来说，这好像没多大用处，但当你突然遇到没有网络的环境时，这个将解决你的大麻烦。
+GIT把内容按元数据方式存储，而SVN是按文件：&lt;/p&gt;
+
+&lt;p&gt;所有的资源控制系统都是把文件的元信息隐藏在一个类似.svn,.cvs等的文件夹里。如果你把.git目录的体积大小跟.svn比较，你会发现它们差距很大。因为,.git目录是处于你的机器上的一个克隆版的版本库，它拥有中心版本库上所有的东西，例如标签，分支，版本记录等。&lt;/p&gt;
+
+&lt;p&gt;GIT分支和SVN的分支不同：&lt;/p&gt;
+
+&lt;p&gt;分支在SVN中一点不特别，就是版本库中的另外的一个目录。如果你想知道是否合并了一个分支，你需要手工运行像这样的命令svn propget svn:mergeinfo，来确认代码是否被合并。感谢Ben同学指出这个特征。所以，经常会发生有些分支被遗漏的情况。然而，处理GIT的分支却是相当的简单和有趣。你可以从同一个工作目录下快速的在几个分支间切换。你很容易发现未被合并的分支，你能简单而快捷的合并这些文件。&lt;/p&gt;
+
+&lt;h2 id=&quot;http协议&quot;&gt;Http协议&lt;/h2&gt;
+
+&lt;p&gt;Http特点&lt;/p&gt;
+
+&lt;p&gt;HTTP是无状态的。同一个客户第二次访问同一个服务器上的页面时。服务器的响应与第一次被访问时的相同，因为服务器并不记得曾经访问过的这个客户，也不记得为该客户曾经服务过多少次。这个特性简化了服务器的设计，使服务器更容易支持大量并发的HTTP请求。在实际应用中，通常使用Cookie加数据库的方式跟踪用户的活动。Cookie是存储在用户主机中的文本文件，里面有一串“识别码”，用于Web服务识别用户。Web服务器根据Cookie就能从数据库中查询到该用户的活动记录，进而执行一些个性化的工作，如根据用户之前浏览过的商品向其推荐新产品等。
+HTTP采用TCP作为运输层协议，保证了数据的可靠传输。HTTP不必考虑数据在传输过程中被丢弃后又怎样被重传。但是HTTP协议本身是无连接的，虽然HTTP使用了TCP连接，但通信的双方在交换HTTP报文之前不需要先建立HTTP连接。
+HTTP既可以使用非持久连接也可以使用持久连接。
+对于非持久连接，每一个网页元素对象的传输都需要单独建立一个TCP连接。如图所示。第三次握手的报文段中捎带了客户对万维网文档的请求，请求一个万维网文档所需的时间是该文档的传输时间（与文档大小成正比）加上两倍往返时间RTT。
+持久连接是万维网服务器在发送响应后仍然保持这条连接，使同一个客户和服务器可以继续在这条连接上传送后续的HTTP请求和响应报文。持久连接又分为非流水线和流水线两种方式。对于非流水线方式，客户在收到前一个响应后才能发出下一个请求。HTTP/1.1的默认模式是使用流水线的持久连接。这种情况下，客户每遇到一个对象引用就立即发出一个请求，因而客户可以一个接一个地连续发出对各个引用对象的请求。如果所有的请求和响应都是连续发送的，那么所有引用到的对象共计经历一个RTT延迟，而不是像非流水线版本那样，每个引用都必须有一个RTT延迟。
+HTTP的报文结构&lt;/p&gt;
+
+&lt;p&gt;HTTP有两类报文：请求报文从客户向服务器发送的请求报文；响应报文从服务器到客户的应答。
+HTTP两种报文都是由三个部分组成，即开始行、首部行、实体主体，从上图可以看出主要是开始行不同。
+开始行用于区别是请求报文还是响应报文。在请求报文中的开始行叫请求行，响应报文的开始行叫状态行。开始行的三个字段之间都以空格分割开，最后回车换行。请求报文的“请求行”有三个内容：方法、请求资源的URL以及HTTP版本。常用的方法如下：
+GET：请求读取由URL所标志的信息；
+HEAD：请求读取URL所标志的信息的首部；
+POST：给服务器添加信息（如注释）；
+CONNECT：用于代理服务器。
+首部行用于说明浏览器、服务器或报文主体的一些信息。在每个首部行都有首部字段名和它的值，每一行在结束的地方都要有回车和换行。在整个首部结束时，还有一空行将首部行和实体主体分开。实体主体在请求报文中一般不使用这个字段，响应报文也可能没有&lt;/p&gt;</content><author><name>steven lu</name><email>lwpk110@163.com</email></author><category term="interview" /><category term="interview" /><category term="面试八股文" /><summary type="html">武汉小米面试题</summary></entry><entry><title type="html">Welcome to Jekyll!</title><link href="http://blog.lwpk110.top/jekyll-blog/blog/welcome-to-jekyll/" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2019-04-19T03:34:30+08:00</published><updated>2019-04-19T03:34:30+08:00</updated><id>http://blog.lwpk110.top/jekyll-blog/blog/welcome-to-jekyll</id><content type="html" xml:base="http://blog.lwpk110.top/jekyll-blog/blog/welcome-to-jekyll/">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+
+&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+
+&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name>steven lu</name><email>lwpk110@163.com</email></author><category term="blog" /><category term="Jekyll" /><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry></feed>
